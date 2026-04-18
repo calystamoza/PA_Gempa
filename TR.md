@@ -1,269 +1,334 @@
 # Technical Requirements
-## Chatbot Analisis Gempa Indonesia Berbasis LLM + Pandas Query Engine (LlamaIndex)
+
+## Earthquake Data Chatbot with RAG (Tabular Approach)
 
 ---
 
-## 1. Overview Sistem
+## 1. Project Overview
 
-Sistem ini merupakan web-based chatbot untuk analisis data gempa Indonesia yang memungkinkan pengguna mengajukan pertanyaan dalam bahasa natural.
+This project aims to develop a web-based chatbot application similar to ChatGPT that provides insights and answers related to earthquake data in Indonesia. The system utilizes a Retrieval-Augmented Generation (RAG) approach with structured (tabular) data instead of unstructured text.
 
-Berbeda dengan pendekatan RAG tradisional yang berbasis text retrieval, sistem ini menggunakan:
-- **Pandas Query Engine (LlamaIndex)** untuk analisis data tabular
-- **LLM** untuk interpretasi query dan generasi jawaban
+The chatbot will allow users to:
 
-Sistem mampu:
-- Memahami pertanyaan user
-- Mengubahnya menjadi query terhadap data tabular
-- Menghasilkan jawaban berbasis data secara deskriptif
+* Ask questions about earthquake statistics
+* Explore trends and patterns
+* Retrieve contextual insights based on data
+* Multi-turn conversation
 
 ---
 
-## 2. Arsitektur Sistem
+## 2. System Architecture
 
 ### 2.1 High-Level Architecture
 
-User → Frontend → Backend API → Query Engine (LlamaIndex) → Pandas DataFrame → LLM → Response
+Frontend (Next.js)
+↓
+Backend API (Python - FastAPI)
+↓
+Database (PostgreSQL via Supabase)
+↓
+LLM (Gemini / OpenAI)
 
 ---
 
-### 2.2 Komponen Utama
+## 3. Core Features
 
-1. **Frontend (Web UI)**
-2. **Backend API (Python)**
-3. **LlamaIndex Query Engine**
-4. **Pandas DataFrame (Data Gempa)**
-5. **LLM (Inference Engine)**
+### 3.1 Chat Interface
 
----
+* Chat input and response display
+* Streaming or real-time response (optional)
+* Chat history per user
+* UI menyerupai ChatGPT
+* Mudah digunakan non-technical user
 
-## 3. Functional Requirements
+### 3.2 Chat History Management
 
-### 3.1 Chat System
-- User dapat menginput pertanyaan dalam bahasa natural
-- Sistem memberikan jawaban berbasis data
-- Mendukung multi-turn conversation (optional)
+* Save previous conversations
+* Allow user to revisit past queries
 
-### 3.2 Data Analysis Capability
-Sistem harus mampu menjawab:
+### 3.3 Information Page
 
-#### Statistik
-- Rata-rata magnitudo
-- Jumlah gempa dalam periode tertentu
+* Description of the system
+* Explanation of earthquake data usage
+* Disclaimer on AI limitations
 
-#### Temporal Analysis
-- Tren gempa per tahun / bulan
-- Perbandingan antar periode
+### 3.4 Search Functionality
 
-#### Spasial Analysis
-- Wilayah dengan frekuensi gempa tertinggi
-- Distribusi lokasi gempa
+* Search past chats
+* Search based on keywords
 
-#### Filtering
-- Berdasarkan:
-  - waktu
-  - magnitudo
-  - lokasi
-  - kedalaman
+### 3.5 Data-Driven Insights (RAG)
 
----
+* Answer questions based on earthquake dataset
+* Perform statistical reasoning using structured data
+* **Data Analysis Capability**
 
-### 3.3 Chat History
-- Menyimpan riwayat percakapan
-- Sidebar untuk navigasi chat
+  Sistem harus mampu menjawab:
 
-### 3.4 Search Chat
-- Pencarian chat berdasarkan keyword
+  * **Statistik** - Rata-rata magnitudo - Jumlah gempa dalam periode tertentu
 
-### 3.5 Information Page
-- Penjelasan sistem
-- Cara kerja LLM + Query Engine
+  * **Temporal Analysis**
+    - Tren gempa per tahun / bulan
+    - Perbandingan antar periode
+
+  * **Spasial Analysis**
+    - Wilayah dengan frekuensi gempa tertinggi
+    - Distribusi lokasi gempa
 
 ---
 
-## 4. Non-Functional Requirements
+## 4. Data Specification
 
-### 4.1 Performance
-- Response time < 5 detik
-- Query Pandas efisien
+### 4.1 Dataset Structure
 
-### 4.2 Usability
-- UI menyerupai ChatGPT
-- Mudah digunakan non-technical user
+The dataset consists of ~150,000 rows with the following columns:
 
-### 4.3 Reliability
-- Error handling jika query tidak valid
-- Fallback jika LLM gagal generate query
+* id
+* province
+* date
+* month
+* month_name
+* year
+* latitude
+* longitude
+* magnitude
+* depth
+* depth_category
+* fault_megathrust_id
+* time
 
----
+### 4.2 Data Characteristics
 
-## 5. Teknologi yang Digunakan
-
-### 5.1 Frontend
-- Next.js (recommended)
-- React.js
-- (Prototype: Streamlit)
-
-### 5.2 Backend
-- Python (FastAPI)
-
-### 5.3 Data Processing
-- Pandas
-
-### 5.4 LLM Framework
-- LlamaIndex
-
-### 5.5 Query Engine
-- **Pandas Query Engine (LlamaIndex)**
-
-### 5.6 LLM
-- Groq (LLaMA 3 / LLaMA 3.3)
-- OpenAI (optional)
+* Fully structured (tabular)
+* Numeric and categorical data
+* Time-series capable
 
 ---
 
-## 6. Data Handling
+## 5. RAG Approach (Tabular-Based)
 
-### 6.1 Data Source
-- Dataset gempa (BMKG / historical dataset)
+##
 
-### 6.2 Format
-- CSV / DataFrame
+### 5.1 Retrieval Strategy
 
-### 6.3 Preprocessing
-- Cleaning data
-- Normalisasi format waktu
-- Handling missing values
+Instead of vector embeddings, the system uses:
 
----
+* SQL queries for filtering
 
-## 7. Query Engine Design
+* Aggregation (AVG, COUNT, MAX, MIN)
 
-### 7.1 Alur Query
-
-1. User Input (Natural Language)
-2. LLM memahami intent
-3. LlamaIndex mengubah query → Pandas operation
-4. Eksekusi pada DataFrame
-5. Hasil dikembalikan ke LLM
-6. LLM generate jawaban deskriptif
+* Conditional selection (WHERE clauses)
 
 ---
 
-### 7.2 Contoh Transformasi Query
+### 5.2 LLM-Assisted Query Understanding (Hybrid RAG)
 
-User:
-"Berapa rata-rata magnitudo gempa tahun 2023?"
+Sistem menggunakan pendekatan **LLM-assisted retrieval**, di mana LLM tidak langsung menjawab pertanyaan, tetapi digunakan untuk memahami intent pengguna dan membantu menentukan data yang perlu diambil dari database.
 
-→ LLM generate:
-df[df['year'] == 2023]['magnitude'].mean()
+#### Flow Proses:
 
----
+1. User mengirim pertanyaan (natural language)
 
-User:
-"Wilayah mana paling sering gempa?"
+2. LLM melakukan parsing dan menghasilkan struktur query (JSON)
 
-→ LLM generate:
-df['location'].value_counts()
+3. Backend melakukan validasi terhadap output LLM
 
----
+4. Backend membangun SQL query berdasarkan hasil parsing
 
-## 8. (Optional) Hybrid RAG Integration
+5. Database mengeksekusi query dan mengembalikan data
 
-Meskipun fokus utama adalah tabular query, sistem dapat dikembangkan menjadi hybrid:
+6. Data digunakan sebagai context untuk LLM
 
-### Kapan RAG digunakan?
-- Penjelasan konsep gempa
-- Informasi non-numerik
-- Knowledge tambahan
+7. LLM menghasilkan jawaban dalam bahasa natural
 
-### Tools:
-- ChromaDB / FAISS
-- Embedding model
+#### Contoh Output LLM (Parsing):
 
----
+```json
 
-## 9. UI/UX Requirements
-
-### 9.1 Layout
-
-#### Sidebar
-- Chat history
-- New chat
-- Search chat
-
-#### Main Area
-- Chat conversation
-- Input box
-
-#### Navigation
-- Home
-- Information page
-
----
-
-## 10. API Design
-
-### POST /chat
-Request:
 {
-  "message": "string",
-  "chat_id": "string"
-}
 
-Response:
-{
-  "response": "string",
-  "type": "tabular | rag | hybrid"
-}
+  "intent": "average",
+
+  "metric": "magnitude",
+
+  "filters": {
+
+    "province": "Jawa Barat",
+
+    "year": 2024
+
+  }
+
+}5. RAG Approach (Tabular-Based)
+
+### 5.1 Retrieval Strategy
+
+Instead of vector embeddings, the system uses:
+
+* SQL queries for filtering
+* Aggregation (AVG, COUNT, MAX, MIN)
+* Conditional selection (WHERE clauses)
+
+### 5.2 Augmentation
+
+Retrieved data is formatted into structured context:
+
+Example:
+
+* Average magnitude in West Java (2024): 4.3
+* Total earthquakes: 1200 events
+
+### 5.3 Generation
+
+The LLM generates natural language responses based on:
+
+* Retrieved statistics
+* User question
+* Prompt template
 
 ---
 
-### GET /history
-- Mengambil riwayat chat
+## 6. Backend Requirements
+
+### 6.1 Framework
+
+* Python (FastAPI)
+
+### 6.2 Responsibilities
+
+* Handle API requests
+* Query database
+* Construct prompts
+* Call LLM API
+* Return generated responses
+
+### 6.3 API Endpoints
+
+POST /chat
+
+* Input: user query
+* Output: generated response
+
+GET /history
+
+* Retrieve chat history
 
 ---
 
-## 11. Deployment
+## 7. Database Requirements
 
-### Development
-- Local environment
+### 7.1 Database System (masih dalam csv data/data_gempa_processed.csv)
 
-### Production
-- Frontend: Vercel
-- Backend: Railway / Render
-- LLM: API (Groq/OpenAI)
+* PostgreSQL (via Supabase)
+
+### 7.2 Tables
+
+#### earthquakes
+
+* id (primary key)
+* province
+* date
+* magnitude
+* depth
+* year
+* etc.
+
+#### chat_history
+
+* id
+* user_id
+* query
+* response
+* timestamp
 
 ---
 
-## 12. Risks & Limitations
+## 8. Frontend Requirements
+
+### 8.1 Framework
+
+* Next.js
+
+### 8.2 UI Components
+
+* Chat window
+* Sidebar (chat history)
+* Input field
+* Search bar
+* Information page
+
+---
+
+## 9. LLM Integration
+
+### 9.1 Model Options
+
+* Gemini API
+* OpenAI API
+
+### 9.2 Prompt Engineering
+
+Two modes:
+
+#### Global Analysis
+
+* Trends over time
+* Regional comparisons
+
+#### Specific Query
+
+* Filtered data insights
+
+---
+
+## 10. Non-Functional Requirements
+
+### 10.1 Performance
+
+* Query response < 5 seconds
+* Efficient SQL indexing
+
+### 10.2 Scalability
+
+* Support multiple users
+
+### 10.3 Security
+
+* API key protection
+* Secure database access
+
+  - Error handling jika query tidak valid
+
+  - Fallback jika LLM gagal generate query
+
+---
+
+## 11. Key Design Decisions
+
+* No vector database used
+* Tabular query-based RAG
+* Focus on structured data reasoning
+
+**12. Risks & Limitations**
 
 - Query salah dari LLM (hallucinated code)
+
 - Error pada Pandas execution
+
 - Ambiguous query dari user
+
 - Data tidak lengkap
 
 ---
 
 ## 13. Future Improvements
 
-- Visualisasi grafik (matplotlib / plotly)
-- Auto-generated charts dari query
-- Real-time data integration
-- Advanced analytics
+* Hybrid RAG (vector + SQL)
+* Visualization (charts, maps)
+* Real-time earthquake data integration
 
 ---
 
-## 14. Kesimpulan Teknis
+## 14. Conclusion
 
-Sistem ini mengadopsi pendekatan:
-- **LLM + Pandas Query Engine (LlamaIndex)**
-
-Keunggulan:
-- Tidak perlu transformasi data ke text
-- Lebih akurat untuk analisis numerik
-- Lebih efisien dibanding RAG tradisional
-
-Pendekatan ini menjadikan sistem lebih:
-- Data-driven
-- Scalable
-- Modern dalam konteks NLP dan data analysis
+This system leverages structured earthquake data with a SQL-based RAG approach to provide accurate and explainable responses without relying on vector embeddings.
