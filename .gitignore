@@ -7,3 +7,5 @@ __pycache__/
 node_modules/
 .next/
 chroma_gempa_db/
+chroma.sqlite3
+chroma_gempa_db/c8f65a46-2f62-42be-b0e3-edf7a87027c7
