@@ -76,7 +76,9 @@ Panduan Intent:
 - "gempa terdalam" -> intent "max", metric "depth", order_by "depth", order_dir "DESC"
 - "daftar gempa" -> intent "list"
 - "apa itu gempa", "edukasi", "penjelasan umum" -> intent "knowledge"
-- Singkatan wilayah WAJIB dieja penuh untuk kolom place (misal: "jatim" -> "Jawa Timur", "jabar" -> "Jawa Barat", "jateng" -> "Jawa Tengah", "jogja/diy" -> "Yogyakarta", "dki" -> "DKI Jakarta").
+- Singkatan wilayah WAJIB dieja penuh untuk kolom place (misal: "jatim" -> "Jawa Timur", "jabar" -> "Jawa Barat", "jateng" -> "Jawa Tengah", "jogja/diy" -> "Yogyakarta", "dki" -> "Jakarta").
+- Jika user menyebutkan nama kota besar (misal: Surabaya, Bandung, Malang, Medan), petakan ke nama Provinsinya (misal: Jawa Timur, Jawa Barat, Jawa Timur, Sumatera Utara).
+- Jika user menyebutkan "Ibu Kota Indonesia", petakan ke "Jakarta".
 - Jika user bertanya tentang "Indonesia" secara umum, kosongkan filter place (null).
 
 Kembalikan HANYA JSON."""
@@ -215,7 +217,9 @@ TUGAS UTAMA: Jawablah pertanyaan user dengan panduan berikut:
 1. Jika pertanyaan berkaitan dengan DATA (angka, statistik, lokasi, tanggal), gunakan HANYA "Data Database" yang diberikan. Jangan berhalusinasi angka.
 2. Jika pertanyaan bersifat UMUM/EDUKASI (misal: "Apa itu gempa?", "Tips keselamatan"), gunakan pengetahuanmu sebagai ahli seismologi untuk menjawab secara jelas dan ramah.
 3. JIKA data database mencakup tanggal dan lokasi, sebutkan informasi tersebut. Jika tidak ada, cukup jelaskan angka yang tersedia.
-4. Jika database kosong padahal user meminta data statistik, katakan dengan sopan bahwa data tersebut belum tersedia."""
+4. Jika database kosong padahal user meminta data statistik, katakan dengan sopan bahwa data tersebut belum tersedia.
+5. JIKA user bertanya tentang kota spesifik (misal: Surabaya) tetapi data yang tersedia adalah tingkat Provinsi (misal: Jawa Timur), JELASKAN secara jujur bahwa Anda tidak memiliki data tingkat kota namun akan memberikan data untuk provinsi terkait. (Contoh: "Saya tidak memiliki data spesifik untuk kota Surabaya, namun berikut adalah data gempa untuk provinsi Jawa Timur...")
+"""
 
 CORRECTION_SYSTEM = """Kamu adalah asisten ahli seismologi yang sangat teliti.
 PERINGATAN: Jawaban sebelumnya mungkin salah atau kurang tepat.
