@@ -6,6 +6,12 @@ export interface Message {
   role: "user" | "assistant";
   content: string;
   created_at?: string;
+  // metadata validasi (hanya ada untuk pesan assistant dari API)
+  validated?: boolean;
+  source?: string;
+  method?: string;
+  data_count?: number;
+  fetched_data?: any[];
 }
 
 export interface Session {
@@ -18,8 +24,12 @@ export interface Session {
 export interface ChatResponse {
   session_id: string;
   answer: string;
+  validated: boolean;
+  source: string;
+  method: string;
   sql_query?: string;
   data_count?: number;
+  fetched_data?: any[];
 }
 
 export async function sendMessage(

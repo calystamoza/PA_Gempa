@@ -57,6 +57,11 @@ export default function HomePage() {
       const assistantMsg: Message = {
         role: "assistant",
         content: res.answer,
+        validated: res.validated,
+        source: res.source,
+        method: res.method,
+        data_count: res.data_count,
+        fetched_data: res.fetched_data,
       };
       setMessages((prev) => [...prev, assistantMsg]);
     } catch {
@@ -96,7 +101,7 @@ export default function HomePage() {
           <div>
             <div className="chat-header-title">{currentTitle}</div>
             <div className="chat-header-subtitle">
-              Powered by Gemini · Data Gempa Indonesia
+              Powered by Groq · Data Gempa Indonesia
             </div>
           </div>
         </div>

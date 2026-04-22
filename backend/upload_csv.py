@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-CSV_PATH = os.path.join(os.path.dirname(__file__), "../Data/data_gempa_processed.csv")
+CSV_PATH = os.path.join(os.path.dirname(__file__), "../Data/data_gempa_preprocessed.csv")
 BATCH_SIZE = 1000
 
 
@@ -47,10 +47,10 @@ def clean_val(v):
 
 
 def upload():
-    print(f"📂 Membaca CSV: {CSV_PATH}")
+    print(f"Reading CSV: {CSV_PATH}")
     df = pd.read_csv(CSV_PATH)
     df.rename(columns={"province": "place"}, inplace=True)
-    print(f"✅ Total rows: {len(df):,}")
+    print(f"Total rows: {len(df):,}")
 
     columns = [
         "id", "province_id", "place", "date", "month", "month_name",
@@ -61,11 +61,11 @@ def upload():
     # Pastikan kolom ada di df
     df = df[[c for c in columns if c in df.columns]]
 
-    print(f"📡 Menghubungkan ke Supabase...")
+    print(f"Connecting to Supabase...")
     conn = get_connection()
     cur = conn.cursor()
 
-    print(f"⬆️  Mengupload {len(df):,} baris dalam batch {BATCH_SIZE}...")
+    print(f"Uploading {len(df):,} rows in batch {BATCH_SIZE}...")
     total_uploaded = 0
     total_batches = (len(df) + BATCH_SIZE - 1) // BATCH_SIZE
 
@@ -89,14 +89,14 @@ def upload():
             conn.commit()
             total_uploaded += len(batch)
             batch_num = i // BATCH_SIZE + 1
-            print(f"  Batch {batch_num}/{total_batches} ✓ ({total_uploaded:,}/{len(df):,})")
+            print(f"  Batch {batch_num}/{total_batches} DONE ({total_uploaded:,}/{len(df):,})")
         except Exception as e:
             conn.rollback()
-            print(f"  ❌ Error pada batch {i//BATCH_SIZE + 1}: {e}")
+            print(f"  Error on batch {i//BATCH_SIZE + 1}: {e}")
 
     cur.close()
     conn.close()
-    print(f"\n🎉 Selesai! Total {total_uploaded:,} baris berhasil diupload.")
+    print(f"\nFinished! Total {total_uploaded:,} rows successfully uploaded.")
 
 
 if __name__ == "__main__":

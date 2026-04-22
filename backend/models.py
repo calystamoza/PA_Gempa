@@ -10,6 +10,9 @@ class ChatRequest(BaseModel):
 class ChatResponse(BaseModel):
     session_id: str
     answer: str
+    validated: bool = False
+    source: Optional[str] = "supabase"
+    method: Optional[str] = "sql-comparison"
     sql_query: Optional[str] = None
     data_count: Optional[int] = 0
 

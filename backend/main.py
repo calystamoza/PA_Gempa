@@ -54,8 +54,12 @@ async def chat(request: ChatRequest):
     return {
         "session_id": session_id,
         "answer": result["answer"],
+        "validated": result.get("validated", False),
+        "source": result.get("source", "supabase"),
+        "method": result.get("method", "sql-comparison"),
         "sql_query": result.get("sql_query"),
         "data_count": result.get("data_count", 0),
+        "fetched_data": result.get("fetched_data", []),
     }
 
 
