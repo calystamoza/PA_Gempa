@@ -4,7 +4,7 @@ import pandas as pd
 from datasets import Dataset
 from ragas import evaluate
 from ragas.metrics import faithfulness, answer_relevancy
-from langchain_groq import ChatGroq
+from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,13 +21,18 @@ def run_evaluation():
     # Konversi ke HuggingFace Dataset
     hf_dataset = Dataset.from_dict(data)
     
-    # Inisialisasi Evaluator LLM (menggunakan Groq)
-    # Sangat disarankan menggunakan model yang besar untuk evaluator
-    print("Inisialisasi Groq Evaluator...")
-    evaluator_llm = ChatGroq(
-        model="llama-3.3-70b-versatile", # Atau gunakan "llama-3.1-8b-instant" jika limit 70b habis
+    # Inisialisasi Evaluator LLM (menggunakan Gemini)
+    print("Inisialisasi Gemini Evaluator...")
+    evaluator_llm = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash",
         temperature=0,
-        api_key=os.getenv("GROQ_API_KEY")
+        google_api_key=os.getenv("GEMINI_API_KEY")
+    )
+
+    print("Inisialisasi Gemini Embeddings...")
+    evaluator_embeddings = GoogleGenerativeAIEmbeddings(
+        model="text-embedding-004",
+        google_api_key=os.getenv("GEMINI_API_KEY")
     )
 
     print("\nMemulai evaluasi Ragas (proses ini mungkin memakan waktu beberapa menit)...")
@@ -37,6 +42,7 @@ def run_evaluation():
             dataset=hf_dataset,
             metrics=[faithfulness, answer_relevancy],
             llm=evaluator_llm,
+            embeddings=evaluator_embeddings,
             raise_exceptions=False 
         )
         
@@ -54,11 +60,11 @@ def run_evaluation():
         # Tampilkan ringkasan
         print("\nPreview Skor Detail:")
         # Tangani kemungkinan kolom belum ada jika API gagal
-        cols = ['question']
-        if 'faithfulness' in df.columns: cols.append('faithfulness')
-        if 'answer_relevancy' in df.columns: cols.append('answer_relevancy')
-        
-        print(df[cols].head(5))
+        cols = [c for c in ['question', 'faithfulness', 'answer_relevancy'] if c in df.columns]
+        if cols:
+            print(df[cols].head(5))
+        else:
+            print(df.head(5))
         
     except Exception as e:
         print(f"\nTerjadi error saat evaluasi: {e}")

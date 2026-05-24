@@ -1,0 +1,29 @@
+user_input,retrieved_contexts,response,faithfulness,answer_relevancy
+Berapa rata-rata kekuatan gempa di Jawa Barat?,['📌 Filter Data: Lokasi: Jawa Barat\n------------------------------\n1. avg_magnitude: 3.682 | total_earthquakes: 2060'],"Rata-rata kekuatan gempa di Jawa Barat adalah 3,682.",,
+Di mana gempa paling dalam terjadi tahun 2023?,['📌 Filter Data: Tahun: 2023\n------------------------------\n📋 Data Gempa MAX:\n  1. 9/13/2023 | Jawa Tengah | M5.0 | 650.655 km\n  2. 8/3/2023 | Sulawesi Tengah | M4.5 | 646.537 km\n  3. 4/17/2023 | Jawa Timur | M4.7 | 601.332 km\n  4. 4/14/2023 | Jawa Timur | M7.0 | 597.0 km\n  5. 12/19/2023 | Sulawesi Selatan | M4.9 | 591.214 km\n  6. 5/5/2023 | Sulawesi Selatan | M5.0 | 581.478 km\n  7. 4/14/2023 | Jawa Timur | M5.4 | 578.05 km\n  8. 12/9/2023 | Sulawesi Tengah | M4.6 | 576.502 km\n  9. 8/4/2023 | Jawa Timur | M5.5 | 575.691 km\n  10. 5/14/2023 | Nusa Tenggara Timur | M5.2 | 556.756 km'],"Gempa paling dalam terjadi di Jawa Tengah pada tanggal 13 September 2023, dengan kedalaman 650,655 km.",,
+Berapa total gempa bulan Januari?,['📌 Filter Data: Bulan: 1\n------------------------------\n1. total: 14239 | avg_magnitude: 3.93 | max_magnitude: 8.1 | min_magnitude: 1.2'],Total gempa yang terjadi pada bulan Januari adalah **14.239**.,,
+Sebutkan 3 gempa terbesar di Papua,['📌 Filter Data: Lokasi: Papua\n------------------------------\n📋 Data Gempa LIST:\n  1. 1/10/1971 | Papua | M8.1 | 33.0 km\n  2. 5/26/1914 | Papua | M8.1 | 15.0 km\n  3. 1/13/1916 | Papua Pegunungan | M7.7 | 35.0 km'],"Berikut adalah 3 gempa terbesar di Papua berdasarkan data yang ada:
+
+| No | Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- | --- |
+| 1 | 1/10/1971 | Papua | M8.1 | 33.0 km |
+| 2 | 5/26/1914 | Papua | M8.1 | 15.0 km |
+| 3 | 1/13/1916 | Papua Pegunungan | M7.7 | 35.0 km |
+
+Perlu diingat bahwa Magnitudo Momen (Mw) adalah standar modern yang lebih akurat untuk mengukur energi total gempa dibandingkan Skala Richter.",,
+Hari apa gempa paling sering terjadi?,['📅 Tren gempa per hari:\n  • Sunday: 23698 kejadian | Rata-rata M3.91\n  • Monday: 23076 kejadian | Rata-rata M3.91\n  • Tuesday: 22512 kejadian | Rata-rata M3.93\n  • Wednesday: 22421 kejadian | Rata-rata M3.93\n  • Saturday: 22116 kejadian | Rata-rata M3.94\n  • Thursday: 21922 kejadian | Rata-rata M3.93\n  • Friday: 21587 kejadian | Rata-rata M3.94'],"Menurut tren gempa per hari, hari dengan kejadian gempa paling sering terjadi adalah Minggu (Sunday) dengan 23.698 kejadian.",,
+Apa itu magnitudo momen?,['Pengetahuan umum LLM. Tidak memerlukan konteks spesifik dari database.'],"Magnitudo momen, atau yang sering disingkat sebagai Mw, adalah ukuran energi total gempa bumi. Dalam seismologi, kita menggunakan beberapa skala untuk mengukur besaran gempa, seperti Skala Richter (MR) atau Skala Mercalli (MM). Namun, magnitudo momen adalah standar modern yang lebih akurat dan dipilih sebagai ukuran energi total gempa.
+
+Magnitudo momen dihitung berdasarkan energi yang dilepaskan oleh gempa, yang kemudian dikonversi ke dalam satuan energi. Dengan demikian, Mw dapat memberikan gambaran yang lebih akurat tentang besaran gempa, terutama untuk gempa besar yang memiliki energi yang sangat besar.
+
+Dalam prakteknya, Mw sering digunakan untuk mengukur gempa bumi yang memiliki magnitudo di atas 5,5. Namun, perlu diingat bahwa Mw tidak dapat diukur secara langsung dan harus dihitung berdasarkan data yang diperoleh dari seismograf atau sensor lainnya.",,
+Gempa dangkal terdalam ada di mana?,['📌 Filter Data: Kedalaman: dangkal\n------------------------------\n1. place: Sulawesi Utara | date: 2/19/2023 | magnitude: 4.9 | depth: 59.996 | depth_category: dangkal | time: 2023-02-19 15:17:03.365\n2. place: Sulawesi Utara | date: 11/7/2018 | magnitude: 4.7 | depth: 59.99 | depth_category: dangkal | time: 2018-11-07 00:00:00.000\n3. place: Sulawesi Utara | date: 11/7/2018 | magnitude: 4.7 | depth: 59.99 | depth_category: dangkal | time: 2018-11-07 14:57:06.720\n4. place: Papua | date: 2/13/2017 | magnitude: 4.5 | depth: 59.98 | depth_category: dangkal | time: 2017-02-13 19:56:11.590\n5. place: Maluku Utara | date: 1/29/2016 | magnitude: 4.8 | depth: 59.95 | depth_category: dangkal | time: 2016-01-29 00:00:00.000'],"Gempa dangkal terdalam yang tercatat dalam data ini adalah gempa dengan kedalaman 59,99 km yang terjadi di Sulawesi Utara pada tanggal 11/7/2018.",,
+Tolong berikan daftar gempa di Sulawesi Tengah bulan Desember 2023,"['📌 Filter Data: Lokasi: Sulawesi Tengah, Tahun: 2023, Bulan: 12\n------------------------------\n📋 Data Gempa LIST:\n  1. 12/9/2023 | Sulawesi Tengah | M4.6 | 576.502 km\n  2. 12/26/2023 | Sulawesi Tengah | M4.5 | 133.502 km\n  3. 12/20/2023 | Sulawesi Tengah | M4.5 | 141.084 km']","Berikut adalah daftar gempa di Sulawesi Tengah pada bulan Desember 2023:
+
+| Tanggal | Lokasi | Magnitudo | Jarak dari Pusat Gempa |
+| --- | --- | --- | --- |
+| 9 Desember 2023 | Sulawesi Tengah | M4.6 | 576.502 km |
+| 20 Desember 2023 | Sulawesi Tengah | M4.5 | 141.084 km |
+| 26 Desember 2023 | Sulawesi Tengah | M4.5 | 133.502 km |",,
+Kekuatan gempa maksimal di Indonesia berapa?,['📋 Data Gempa MAX:\n  1. 12/26/2004 | Aceh | M9.0 | 30.0 km\n  2. 3/28/2005 | Aceh | M8.6 | 30.0 km\n  3. 9/12/2007 | Bengkulu | M8.4 | 10.0 km\n  4. 2/1/1938 | Maluku | M8.2 | 25.0 km\n  5. 1/10/1971 | Papua | M8.1 | 33.0 km'],"Kekuatan gempa maksimal di Indonesia adalah M9.0, yang terjadi pada tanggal 12 Desember 2004 di Aceh.",,
+Berapa rata rata kedalaman gempa di Maluku Utara?,['📌 Filter Data: Lokasi: Maluku Utara\n------------------------------\n1. avg_depth: 41.561 | total_earthquakes: 21803'],"Rata-rata kedalaman gempa di Maluku Utara adalah sekitar 41,561 kilometer.",,
