@@ -5,11 +5,17 @@ from datasets import Dataset
 from ragas import evaluate
 from ragas.metrics import faithfulness, answer_relevancy
 from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from ragas.run_config import RunConfig
 from dotenv import load_dotenv
 
 load_dotenv()
 
 def run_evaluation():
+    import sys
+    import asyncio
+    if sys.platform == 'win32':
+        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
     print("Memuat dataset evaluasi...")
     try:
         with open("eval_dataset.json", "r", encoding="utf-8") as f:
@@ -35,6 +41,9 @@ def run_evaluation():
         google_api_key=os.getenv("GEMINI_API_KEY")
     )
 
+    # Batasi concurrency ke 1 (serial) agar tidak memicu rate limit 429 Gemini API (15 RPM)
+    run_config = RunConfig(max_workers=1, timeout=240)
+
     print("\nMemulai evaluasi Ragas (proses ini mungkin memakan waktu beberapa menit)...")
     try:
         # Jalankan evaluasi
@@ -43,7 +52,8 @@ def run_evaluation():
             metrics=[faithfulness, answer_relevancy],
             llm=evaluator_llm,
             embeddings=evaluator_embeddings,
-            raise_exceptions=False 
+            run_config=run_config,
+            raise_exceptions=True 
         )
         
         print("\n=== HASIL EVALUASI RAGAS ===")
