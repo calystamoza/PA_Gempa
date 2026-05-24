@@ -22,6 +22,8 @@ NUMERIC_TOLERANCE = 0.15  # Sedikit lebih longgar untuk mengakomodasi pembulatan
 
 def call_groq(system_prompt: str, user_message: str, max_tokens: int = 512) -> str:
     """Wrapper sederhana untuk Groq Chat Completions."""
+    api_key_preview = f"{groq_client.api_key[:8]}...{groq_client.api_key[-4:]}" if groq_client.api_key else "None"
+    print(f"\n[GROQ API TRACE] Memanggil model: '{GROQ_MODEL}' menggunakan key: {api_key_preview}")
     try:
         response = groq_client.chat.completions.create(
             model=GROQ_MODEL,
@@ -30,11 +32,12 @@ def call_groq(system_prompt: str, user_message: str, max_tokens: int = 512) -> s
                 {"role": "user", "content": user_message},
             ],
             max_tokens=max_tokens,
-            temperature=0.1,
+            temperature=0.1, #ubah
         )
+        print(f"[GROQ API TRACE] SUCCESS! API hit berhasil.")
         return response.choices[0].message.content.strip()
     except Exception as e:
-        print(f"[GROQ ERROR] {e}")
+        print(f"[GROQ API TRACE] FAILED! Error saat memanggil Groq: {e}")
         raise
 
 
@@ -65,21 +68,23 @@ Format JSON yang HARUS dikembalikan:
     "min_magnitude": null,
     "max_magnitude": null
   },
-  "group_by": "year|month|place|null",
+  "group_by": "year|month|place|day_of_week|null",
   "order_by": "magnitude|depth|year|count|null",
   "order_dir": "DESC|ASC",
   "limit": 10
 }
 
 Panduan Intent:
+- JIKA pertanyaan user sangat singkat (misal: "kalo di indo?", "hari apa?"), kamu WAJIB melihat 'Riwayat percakapan' untuk mewarisi intent, metric, dan filter sebelumnya, lalu ubah hanya bagian yang diminta.
+- PENTING UNTUK KONTEKS: Analisis apakah pertanyaan user merujuk pada topik sebelumnya atau menanyakan informasi global/keseluruhan. Jika user bertanya kelanjutan data (misal: "yang paling parah?"), pertahankan filter (seperti lokasi) dari riwayat. NAMUN, jika user jelas menanyakan keseluruhan data (misal: "tahun berapa data terakhir?", "berapa total semua data?"), HAPUS filter lokasi/waktu sebelumnya (set null) agar pencarian dilakukan secara global.
 - "gempa terbesar/terkuat" -> intent "max", metric "magnitude", order_by "magnitude", order_dir "DESC"
 - "gempa terdalam" -> intent "max", metric "depth", order_by "depth", order_dir "DESC"
 - "daftar gempa" -> intent "list"
 - "apa itu gempa", "edukasi", "penjelasan umum" -> intent "knowledge"
 - Singkatan wilayah WAJIB dieja penuh untuk kolom place (misal: "jatim" -> "Jawa Timur", "jabar" -> "Jawa Barat", "jateng" -> "Jawa Tengah", "jogja/diy" -> "Yogyakarta", "dki" -> "Jakarta").
-- Jika user menyebutkan nama kota besar (misal: Surabaya, Bandung, Malang, Medan), petakan ke nama Provinsinya (misal: Jawa Timur, Jawa Barat, Jawa Timur, Sumatera Utara).
-- Jika user menyebutkan "Ibu Kota Indonesia", petakan ke "Jakarta".
-- Jika user bertanya tentang "Indonesia" secara umum, kosongkan filter place (null).
+- Jika user menggunakan bahasa tidak baku/slang (misal: "jkt", "bdg", "sby", "jabar"), konversi ke Provinsi baku.
+- Jika user menyebutkan "Indonesia", "indo", "diindo", atau bertanya secara keseluruhan, kosongkan filter place (null).
+- Jika user bertanya tentang hari (misal: "seringnya hari apa"), set intent "trend", group_by "day_of_week", order_by "count", order_dir "DESC".
 
 Kembalikan HANYA JSON."""
 
@@ -141,6 +146,10 @@ def build_sql(intent: dict) -> tuple[str, list]:
         select = "SELECT month, month_name, COUNT(*) AS count, ROUND(AVG(magnitude)::numeric, 2) AS avg_magnitude"
         group = "GROUP BY month, month_name ORDER BY month ASC"
         limit_clause = ""
+    elif group_by == "day_of_week":
+        select = "SELECT trim(to_char(date::date, 'Day')) AS day_of_week, COUNT(*) AS count, ROUND(AVG(magnitude)::numeric, 2) AS avg_magnitude"
+        group = "GROUP BY day_of_week ORDER BY count DESC"
+        limit_clause = ""
     elif group_by == "place":
         select = "SELECT place, COUNT(*) AS count, ROUND(AVG(magnitude)::numeric, 2) AS avg_magnitude"
         group = f"GROUP BY place ORDER BY count {order_dir}"
@@ -184,6 +193,8 @@ def format_data(data: list, intent: dict) -> str:
     if filters.get("year"): filter_strs.append(f"Tahun: {filters['year']}")
     if filters.get("month"): filter_strs.append(f"Bulan: {filters['month']}")
     if filters.get("depth_category"): filter_strs.append(f"Kedalaman: {filters['depth_category']}")
+    if filters.get("min_magnitude"): filter_strs.append(f"Magnitudo Min: {filters['min_magnitude']}")
+    if filters.get("max_magnitude"): filter_strs.append(f"Magnitudo Max: {filters['max_magnitude']}")
     
     lines = []
     if filter_strs:
@@ -194,6 +205,10 @@ def format_data(data: list, intent: dict) -> str:
         lines.append("📊 Tren gempa per tahun:")
         for row in data:
             lines.append(f"  • {row.get('year')}: {row.get('count')} kejadian | Rata-rata: {row.get('avg_magnitude')} | Max: {row.get('max_magnitude')}")
+    elif group_by == "day_of_week":
+        lines.append("📅 Tren gempa per hari:")
+        for row in data:
+            lines.append(f"  • {row.get('day_of_week')}: {row.get('count')} kejadian | Rata-rata M{row.get('avg_magnitude')}")
     elif group_by == "place":
         lines.append("🗺️ Distribusi gempa per provinsi:")
         for i, row in enumerate(data, 1):
@@ -214,25 +229,29 @@ def format_data(data: list, intent: dict) -> str:
 
 ANSWER_SYSTEM = """Kamu adalah asisten ahli seismologi Indonesia yang ramah.
 TUGAS UTAMA: Jawablah pertanyaan user dengan panduan berikut:
-1. Jika pertanyaan berkaitan dengan DATA (angka, statistik, lokasi, tanggal), gunakan HANYA "Data Database" yang diberikan. Jangan berhalusinasi angka.
+1. Jika pertanyaan berkaitan dengan data (angka, statistik, lokasi, tanggal), gunakan HANYA data yang diberikan sebagai sumber informasimu. Jawablah secara natural layaknya manusia berbincang, JANGAN sebutkan kata "database", "data database" sama sekali di jawabanmu. Jangan berhalusinasi angka.
 2. Jika pertanyaan bersifat UMUM/EDUKASI (misal: "Apa itu gempa?", "Tips keselamatan"), gunakan pengetahuanmu sebagai ahli seismologi untuk menjawab secara jelas dan ramah.
-3. JIKA data database mencakup tanggal dan lokasi, sebutkan informasi tersebut. Jika tidak ada, cukup jelaskan angka yang tersedia.
-4. Jika database kosong padahal user meminta data statistik, katakan dengan sopan bahwa data tersebut belum tersedia.
-5. JIKA user bertanya tentang kota spesifik (misal: Surabaya) tetapi data yang tersedia adalah tingkat Provinsi (misal: Jawa Timur), JELASKAN secara jujur bahwa Anda tidak memiliki data tingkat kota namun akan memberikan data untuk provinsi terkait. (Contoh: "Saya tidak memiliki data spesifik untuk kota Surabaya, namun berikut adalah data gempa untuk provinsi Jawa Timur...")
+3. JIKA data mencakup tanggal dan lokasi, sebutkan informasi tersebut KECUALI nama hari (Senin, Selasa, dst). JANGAN sebutkan nama hari dari tanggal kecuali user secara eksplisit bertanya tentang hari/waktu kejadian.
+4. Jika data kosong padahal user meminta data statistik, katakan dengan sopan bahwa informasi tersebut belum tersedia.
+5. JIKA user bertanya tentang kota spesifik (misal: Surabaya) tetapi data yang tersedia adalah tingkat Provinsi, JANGAN meminta maaf atau berkata "tidak tahu". Langsung saja berikan data provinsi tersebut dengan pengantar yang percaya diri (Contoh: "Berikut adalah data gempa untuk provinsi Jawa Timur...").
+6. PENTING: Terjemahkan nama hari atau istilah bahasa Inggris yang ada di data ke bahasa yang digunakan oleh user (misal: "Sunday" -> "Minggu" jika user bertanya dalam bahasa Indonesia).
+7. EDUKASI SEISMOLOGI: Jika membahas besaran gempa, edukasi user secara singkat bahwa Magnitudo Momen (Mw) adalah standar modern yang lebih akurat untuk mengukur energi total gempa dibandingkan Skala Richter (yang sering tidak akurat untuk gempa besar).
+8. FORMATTING: SAJIKAN DATA MENGGUNAKAN MARKDOWN TABLES ATAU BULLET POINTS. Jika Anda memberikan data multi-baris (statistik tahunan, daftar provinsi, daftar gempa), Anda WAJIB menggunakan format tabel Markdown agar rapi dan mudah dibaca cepat.
 """
 
 CORRECTION_SYSTEM = """Kamu adalah asisten ahli seismologi yang sangat teliti.
 PERINGATAN: Jawaban sebelumnya mungkin salah atau kurang tepat.
-TUGAS: Gunakan "Data Database" yang benar di bawah ini untuk memberikan jawaban yang akurat kepada user.
+TUGAS: Gunakan Data yang benar di bawah ini untuk memberikan jawaban yang akurat kepada user.
 - Jangan mengulangi kesalahan sebelumnya.
-- Berikan informasi yang BENAR dari database secara naratif (chat biasa).
-- Gunakan HANYA informasi yang secara eksplisit ada di Data Database untuk bagian angka/statistik."""
+- Berikan informasi yang BENAR secara naratif dan natural. JANGAN sebutkan kata "database" atau "data database".
+- Gunakan HANYA informasi yang secara eksplisit ada di Data yang diberikan untuk bagian angka/statistik.
+- Terjemahkan istilah bahasa Inggris (misal "Sunday") ke bahasa user (misal "Minggu")."""
 
 
 def generate_response(question: str, context: str, history: list, system_prompt: str = ANSWER_SYSTEM) -> str:
     history_str = "\n".join([f"{m['role'].title()}: {m['content'][:200]}" for m in history[-6:]])
     # Prompt grounding diperkuat untuk Groq agar tidak halusinasi
-    user_msg = f"PENTING: Gunakan HANYA 'Data Database' di bawah ini sebagai sumber jawaban. Abaikan jika riwayat percakapan sebelumnya gagal menemukan data.\n\nRiwayat percakapan:\n{history_str or '(percakapan baru)'}\n\nData Database:\n{context}\n\nPertanyaan User: {question}\n\nJawaban:"
+    user_msg = f"PENTING: Gunakan HANYA 'Data' di bawah ini sebagai sumber jawaban. Jawablah senatural mungkin tanpa merujuk ke database.\n\nRiwayat percakapan:\n{history_str or '(percakapan baru)'}\n\nData:\n{context}\n\nPertanyaan User: {question}\n\nJawaban:"
     try:
         return call_groq(system_prompt, user_msg, max_tokens=600)
     except Exception as e:
@@ -303,8 +322,16 @@ def extract_numbers_from_text(text: str) -> list[float]:
 def extract_key_numbers_from_db(data: list, intent: dict) -> list[float]:
     if not data: return []
     metric = intent.get("metric") or "magnitude"
+    intent_type = intent.get("intent", "general")
+    
     # Hanya validasi metric utama yang dicari user
-    critical_keywords = {metric.lower(), "count", "total", "avg", "max"}
+    if intent_type == "average":
+        critical_keywords = {f"avg_{metric.lower()}", "avg"}
+    elif intent_type == "count":
+        critical_keywords = {"total", "count"}
+    else:
+        critical_keywords = {metric.lower(), "count", "total", "avg", "max"}
+        
     numbers = []
     for row in data:
         for key, val in row.items():

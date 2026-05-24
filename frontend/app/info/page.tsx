@@ -28,14 +28,15 @@ export default function InfoPage() {
               dirancang untuk membantu pengguna mengeksplorasi data gempa bumi
               Indonesia secara interaktif. Sistem ini menggunakan database
               terstruktur dengan lebih dari 150.000 catatan kejadian gempa dari
-              seluruh wilayah Indonesia.
+              seluruh wilayah Indonesia dalam kurun waktu 2018-2024.
             </p>
           </div>
 
           <div className="info-card">
             <h2>📊 Data yang Digunakan</h2>
             <ul>
-              <li>Lebih dari 150.000 catatan kejadian gempa di Indonesia</li>
+              <li>Lebih dari 150.000 catatan kejadian gempa di Indonesia 2018-2024</li>
+              <li>Data yang digunakan merupakan data sekunder yang bersumber dari USGS dan BMKG</li>
               <li>Mencakup data magnitudo, kedalaman, lokasi, dan waktu</li>
               <li>Dikelompokkan berdasarkan provinsi dan kategori kedalaman</li>
               <li>Data mencakup periode beberapa dekade kebelakang</li>
@@ -47,7 +48,7 @@ export default function InfoPage() {
             <ul>
               <li>
                 <strong>Pemahaman Intent:</strong> Pertanyaan dianalisis oleh
-                Gemini AI untuk memahami maksud pengguna
+                Groq AI menggunakan llama-3.1-8b-instant untuk memahami maksud pengguna
               </li>
               <li>
                 <strong>SQL Generation:</strong> Sistem membangun query SQL
@@ -58,7 +59,7 @@ export default function InfoPage() {
                 PostgreSQL untuk mendapatkan data relevan
               </li>
               <li>
-                <strong>Response Generation:</strong> Gemini AI menghasilkan
+                <strong>Response Generation:</strong> Groq AI menghasilkan
                 jawaban natural berdasarkan data yang ditemukan
               </li>
             </ul>

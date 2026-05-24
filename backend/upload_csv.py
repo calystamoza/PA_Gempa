@@ -18,7 +18,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 DATABASE_URL = os.getenv("DATABASE_URL")
-CSV_PATH = os.path.join(os.path.dirname(__file__), "../Data/data_gempa_preprocessed.csv")
+CSV_PATH = os.path.join(os.path.dirname(__file__), "../Data/data_gempa_processed.csv")
 BATCH_SIZE = 1000
 
 
