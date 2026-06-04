@@ -3,8 +3,8 @@ import os
 import pandas as pd
 from datasets import Dataset
 from ragas import evaluate
-from ragas.metrics import faithfulness, answer_relevancy
-from langchain_google_genai import ChatGoogleGenerativeAI, GoogleGenerativeAIEmbeddings
+from ragas.metrics import faithfulness
+from langchain_groq import ChatGroq
 from ragas.run_config import RunConfig
 from dotenv import load_dotenv
 
@@ -27,31 +27,24 @@ def run_evaluation():
     # Konversi ke HuggingFace Dataset
     hf_dataset = Dataset.from_dict(data)
     
-    # Inisialisasi Evaluator LLM (menggunakan Gemini)
-    print("Inisialisasi Gemini Evaluator...")
-    evaluator_llm = ChatGoogleGenerativeAI(
-        model="gemini-1.5-flash",
+    # Inisialisasi Evaluator LLM (menggunakan Groq Llama 3.3 70B yang pintar & gratis)
+    print("Inisialisasi Groq Evaluator...")
+    evaluator_llm = ChatGroq(
+        model="llama-3.3-70b-versatile",
         temperature=0,
-        google_api_key=os.getenv("GEMINI_API_KEY")
+        api_key=os.getenv("GROQ_API_KEY")
     )
 
-    print("Inisialisasi Gemini Embeddings...")
-    evaluator_embeddings = GoogleGenerativeAIEmbeddings(
-        model="text-embedding-004",
-        google_api_key=os.getenv("GEMINI_API_KEY")
-    )
-
-    # Batasi concurrency ke 1 (serial) agar tidak memicu rate limit 429 Gemini API (15 RPM)
-    run_config = RunConfig(max_workers=1, timeout=240)
+    # Batasi concurrency agar tidak memicu rate limit Groq API
+    run_config = RunConfig(max_workers=2, timeout=120)
 
     print("\nMemulai evaluasi Ragas (proses ini mungkin memakan waktu beberapa menit)...")
     try:
-        # Jalankan evaluasi
+        # Jalankan evaluasi hanya untuk metrik faithfulness (kebenaran informasi / anti-halusinasi)
         result = evaluate(
             dataset=hf_dataset,
-            metrics=[faithfulness, answer_relevancy],
+            metrics=[faithfulness],
             llm=evaluator_llm,
-            embeddings=evaluator_embeddings,
             run_config=run_config,
             raise_exceptions=True 
         )
@@ -70,7 +63,7 @@ def run_evaluation():
         # Tampilkan ringkasan
         print("\nPreview Skor Detail:")
         # Tangani kemungkinan kolom belum ada jika API gagal
-        cols = [c for c in ['question', 'faithfulness', 'answer_relevancy'] if c in df.columns]
+        cols = [c for c in ['question', 'faithfulness'] if c in df.columns]
         if cols:
             print(df[cols].head(5))
         else:
