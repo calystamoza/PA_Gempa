@@ -24,53 +24,89 @@ def run_evaluation():
         print("Error: 'eval_dataset.json' tidak ditemukan. Jalankan 'python create_eval_dataset.py' terlebih dahulu.")
         return
 
-    # Konversi ke HuggingFace Dataset
-    hf_dataset = Dataset.from_dict(data)
+    output_csv = "evaluation_results.csv"
     
-    # Inisialisasi Evaluator LLM (menggunakan Groq Llama 3.3 70B yang pintar & gratis)
-    print("Inisialisasi Groq Evaluator...")
+    # Load existing results to support resuming
+    evaluated_questions = set()
+    results_list = []
+    if os.path.exists(output_csv):
+        try:
+            existing_df = pd.read_csv(output_csv)
+            evaluated_questions = set(existing_df['question'])
+            results_list = existing_df.to_dict('records')
+            print(f"Melanjutkan dari checkpoint... ({len(evaluated_questions)} evaluasi sudah selesai)\n", flush=True)
+        except Exception:
+            pass
+
+    from langchain_community.embeddings import HuggingFaceEmbeddings
+    from ragas.metrics import answer_relevancy
+    
+    # Inisialisasi Evaluator LLM
+    print("Inisialisasi Groq Evaluator...", flush=True)
     evaluator_llm = ChatGroq(
         model="llama-3.3-70b-versatile",
         temperature=0,
         api_key=os.getenv("GROQ_API_KEY")
     )
+    
+    print("Inisialisasi Embedding Model...", flush=True)
+    evaluator_embeddings = HuggingFaceEmbeddings(
+        model_name="sentence-transformers/all-MiniLM-L6-v2"
+    )
 
-    # Batasi concurrency agar tidak memicu rate limit Groq API
     run_config = RunConfig(max_workers=2, timeout=120)
 
-    print("\nMemulai evaluasi Ragas (proses ini mungkin memakan waktu beberapa menit)...")
-    try:
-        # Jalankan evaluasi hanya untuk metrik faithfulness (kebenaran informasi / anti-halusinasi)
-        result = evaluate(
-            dataset=hf_dataset,
-            metrics=[faithfulness],
-            llm=evaluator_llm,
-            run_config=run_config,
-            raise_exceptions=True 
-        )
+    total = len(data["question"])
+    print(f"\nMemulai evaluasi Ragas item per item ({total} total)...", flush=True)
+
+    for i in range(total):
+        q = data["question"][i]
         
-        print("\n=== HASIL EVALUASI RAGAS ===")
-        print(result)
+        if q in evaluated_questions:
+            print(f"[{i+1:02d}/{total}] Melewati: '{q}' (Sudah dievaluasi)", flush=True)
+            continue
+            
+        print(f"[{i+1:02d}/{total}] Mengevaluasi: '{q}'", flush=True)
         
-        # Konversi ke Pandas DataFrame untuk melihat skor per pertanyaan
-        df = result.to_pandas()
+        # Buat dataset per 1 item agar bisa dipotong-potong
+        item_dict = {k: [v[i]] for k, v in data.items()}
+        single_hf = Dataset.from_dict(item_dict)
         
-        # Simpan ke CSV
-        output_csv = "evaluation_results.csv"
-        df.to_csv(output_csv, index=False)
-        print(f"\nHasil detail per pertanyaan disimpan ke '{output_csv}'")
+        try:
+            result = evaluate(
+                dataset=single_hf,
+                metrics=[faithfulness, answer_relevancy],
+                llm=evaluator_llm,
+                embeddings=evaluator_embeddings,
+                run_config=run_config,
+                raise_exceptions=True,
+                show_progress=False  # Matikan progress bar bawaan agar log terminal bersih
+            )
+            res_df = result.to_pandas()
+            row_dict = res_df.iloc[0].to_dict()
+            results_list.append(row_dict)
+            
+            f_score = row_dict.get('faithfulness', 'N/A')
+            ar_score = row_dict.get('answer_relevancy', 'N/A')
+            print(f"  -> Skor Faithfulness: {f_score} | Answer Relevancy: {ar_score}\n", flush=True)
+            
+        except Exception as e:
+            print(f"  -> Error: {e}\n", flush=True)
+            # Tetap simpan agar indeks tak geser, score dikosongkan
+            item_dict_flat = {k: v[i] for k, v in data.items()}
+            item_dict_flat['faithfulness'] = None
+            results_list.append(item_dict_flat)
         
-        # Tampilkan ringkasan
-        print("\nPreview Skor Detail:")
-        # Tangani kemungkinan kolom belum ada jika API gagal
-        cols = [c for c in ['question', 'faithfulness'] if c in df.columns]
-        if cols:
-            print(df[cols].head(5))
-        else:
-            print(df.head(5))
-        
-    except Exception as e:
-        print(f"\nTerjadi error saat evaluasi: {e}")
+        # Simpan ke CSV SETIAP KALI 1 pertanyaan selesai (Auto-Save)
+        pd.DataFrame(results_list).to_csv(output_csv, index=False)
+
+    print("=" * 50, flush=True)
+    print(f"Selesai! Seluruh hasil evaluasi disimpan ke '{output_csv}'", flush=True)
+    
+    df_final = pd.DataFrame(results_list)
+    if 'faithfulness' in df_final.columns:
+        avg_score = df_final['faithfulness'].mean()
+        print(f"RATA-RATA FAITHFULNESS KESELURUHAN: {avg_score:.2f}", flush=True)
 
 if __name__ == "__main__":
     run_evaluation()

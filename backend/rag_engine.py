@@ -15,6 +15,11 @@ GROQ_MODEL = "llama-3.1-8b-instant"  # model aktif Groq (cepat & gratis)
 SAFE_COLUMNS = {"magnitude", "depth", "year", "month", "count", "avg_magnitude"}
 SAFE_DIRECTIONS = {"ASC", "DESC"}
 
+# ─── Data Context (diperbarui sesuai rentang data aktual) ────────────────────
+DATA_TAHUN_TERBARU = 2024
+DATA_TAHUN_TERTUA  = 1900
+TAHUN_SEKARANG     = 2026
+
 NUMERIC_TOLERANCE = 0.15  # Sedikit lebih longgar untuk mengakomodasi pembulatan LLM
 
 
@@ -43,8 +48,22 @@ def call_groq(system_prompt: str, user_message: str, max_tokens: int = 512) -> s
 
 # ─── 1. Parse Intent via Groq ────────────────────────────────────────────────
 
-INTENT_SYSTEM = """Kamu adalah parser intent untuk chatbot data gempa bumi Indonesia.
+INTENT_SYSTEM = f"""Kamu adalah parser intent untuk chatbot data gempa bumi Indonesia.
 Tugasmu: konversi pertanyaan user ke JSON yang mendeskripsikan query database.
+
+KONTEKS DATA (SANGAT PENTING — gunakan ini untuk menerjemahkan referensi waktu):
+- Data tersedia dari tahun {DATA_TAHUN_TERTUA} hingga {DATA_TAHUN_TERBARU}.
+- "Data terbaru" / "tahun terbaru" / "paling baru" = tahun {DATA_TAHUN_TERBARU}
+- "Data terlama" / "tahun tertua" / "paling lama" = tahun {DATA_TAHUN_TERTUA}
+- "Tahun ini" = {TAHUN_SEKARANG} (gunakan sebagai filter year, namun data mungkin tidak ada)
+- "Tahun lalu" = {TAHUN_SEKARANG - 1}
+- "5 tahun terakhir" = min_year {DATA_TAHUN_TERBARU - 4} (inklusif)
+- "10 tahun terakhir" / "dekade terakhir" = min_year {DATA_TAHUN_TERBARU - 9}
+- "Dekade ini" / "2020-an" = min_year 2020
+- "2010-an" = min_year 2010, max_year 2019
+- "Abad ini" / "era 2000-an" = min_year 2000
+- "Era 1990-an" = min_year 1990, max_year 1999
+- Jika user menyebut rentang seperti "antara X dan Y" atau "dari X sampai Y" → min_year=X, max_year=Y
 
 Schema database:
 - Tabel: earthquakes
@@ -57,34 +76,71 @@ Schema database:
   * depth_category: TEXT ('dangkal', 'menengah', 'dalam')
 
 Format JSON yang HARUS dikembalikan:
-{
+{{
   "intent": "count|average|max|min|list|trend|general|knowledge",
   "metric": "magnitude|depth|count|null",
-  "filters": {
+  "filters": {{
     "place": null,
     "year": null,
+    "min_year": null,
+    "max_year": null,
     "month": null,
     "depth_category": null,
     "min_magnitude": null,
     "max_magnitude": null
-  },
+  }},
   "group_by": "year|month|place|day_of_week|null",
   "order_by": "magnitude|depth|year|count|null",
   "order_dir": "DESC|ASC",
   "limit": 10
-}
+}}
 
 Panduan Intent:
 - JIKA pertanyaan user sangat singkat (misal: "kalo di indo?", "hari apa?"), kamu WAJIB melihat 'Riwayat percakapan' untuk mewarisi intent, metric, dan filter sebelumnya, lalu ubah hanya bagian yang diminta.
 - PENTING UNTUK KONTEKS: Analisis apakah pertanyaan user merujuk pada topik sebelumnya atau menanyakan informasi global/keseluruhan. Jika user bertanya kelanjutan data (misal: "yang paling parah?"), pertahankan filter (seperti lokasi) dari riwayat. NAMUN, jika user jelas menanyakan keseluruhan data (misal: "tahun berapa data terakhir?", "berapa total semua data?"), HAPUS filter lokasi/waktu sebelumnya (set null) agar pencarian dilakukan secara global.
-- "gempa terbesar/terkuat" -> intent "max", metric "magnitude", order_by "magnitude", order_dir "DESC"
-- "gempa terdalam" -> intent "max", metric "depth", order_by "depth", order_dir "DESC"
-- "daftar gempa" -> intent "list"
-- "apa itu gempa", "edukasi", "penjelasan umum" -> intent "knowledge"
-- Singkatan wilayah WAJIB dieja penuh untuk kolom place (misal: "jatim" -> "Jawa Timur", "jabar" -> "Jawa Barat", "jateng" -> "Jawa Tengah", "jogja/diy" -> "Yogyakarta", "dki" -> "Jakarta").
-- Jika user menggunakan bahasa tidak baku/slang (misal: "jkt", "bdg", "sby", "jabar"), konversi ke Provinsi baku.
-- Jika user menyebutkan "Indonesia", "indo", "diindo", atau bertanya secara keseluruhan, kosongkan filter place (null).
-- Jika user bertanya tentang hari (misal: "seringnya hari apa"), set intent "trend", group_by "day_of_week", order_by "count", order_dir "DESC".
+
+--- ATURAN INTENT (urutan prioritas dari atas ke bawah) ---
+
+[KNOWLEDGE] JIKA pertanyaan bersifat edukasi/konsep/prosedur (misal: "apa itu...", "mengapa...", "bagaimana cara...", "apa perbedaan...", "tips saat gempa", "cara kerja seismograf"), WAJIB set intent "knowledge". ABAIKAN kata keterangan waktu/tempat.
+
+[TREND] JIKA pertanyaan tentang POLA PERUBAHAN DARI WAKTU KE WAKTU (misal: "tren", "apakah makin sering/jarang", "bagaimana perubahan", "perkembangan dari tahun ke tahun", "per tahun", "per bulan", "dari waktu ke waktu", "frekuensi gempa per bulan", "selama dekade", "10 tahun terakhir ... bagaimana perubahannya"):
+  - Set intent "trend"
+  - Jika menyebut "per tahun" atau "tahunan" → group_by "year"
+  - Jika menyebut "per bulan" atau "bulanan" → group_by "month"
+  - Untuk rentang tahun: gunakan min_year/max_year
+  - Contoh: "tren gempa per tahun" → trend/year, "perkembangan frekuensi per bulan" → trend/month, "apakah gempa makin sering?" → trend/year, "tren 10 tahun terakhir" → trend/year, min_year={DATA_TAHUN_TERBARU-9}
+
+[LIST] JIKA pertanyaan menggunakan kata "sebutkan N", "tampilkan daftar N", "berikan daftar", "daftarkan", "list N gempa", "tolong berikan", atau menyebut angka spesifik dalam konteks MENAMPILKAN DATA (misal: "sebutkan 3 gempa terbesar", "tampilkan 5 gempa terkuat", "berikan daftar gempa di Jawa Barat"):
+  - Set intent "list", bukan "max" atau "min"
+  - Set limit sesuai angka yang disebutkan (default 10 jika tidak ada angka)
+  - Set order_by dan order_dir sesuai kriteria (terbesar → magnitude DESC, terkuat → magnitude DESC, terdalam → depth DESC, terdangkal → depth ASC, terbaru → year DESC)
+  - Untuk "terbaru": gunakan order_by "year", order_dir "DESC"
+  - Untuk "terlama": gunakan order_by "year", order_dir "ASC"
+
+[MAX/MIN] JIKA pertanyaan mencari SATU nilai ekstrem tanpa kata "daftar/sebutkan" (misal: "apa gempa terbesar?", "di mana gempa paling dalam?", "kekuatan maksimal berapa?", "gempa terkuat yang pernah tercatat"):
+  - Terbesar/terkuat/tertinggi/maksimal → intent "max", order_by sesuai metric, order_dir "DESC"
+  - Terkecil/terdangkal/terendah/minimal → intent "min", order_by sesuai metric, order_dir "ASC"
+  - PENTING: "paling dangkal" = depth KECIL → intent "min", metric "depth", order_by "depth", order_dir "ASC"
+  - PENTING: "paling dalam/terdalam" = depth BESAR → intent "max", metric "depth", order_by "depth", order_dir "DESC"
+  - PENTING: "gempa pertama/terlama yang tercatat" → intent "min", order_by "year", order_dir "ASC"
+  - PENTING: "gempa terbaru/terakhir/paling akhir yang tercatat" → intent "max", order_by "year", order_dir "DESC"
+  - PENTING: "gempa terakhir" / "gempa terkini" / "gempa paling baru" → intent "max", order_by "year", order_dir "DESC"
+
+[AVERAGE] JIKA pertanyaan mengandung "rata-rata", "rerata", "average", atau "mean" → intent "average"
+  - Untuk rentang tahun: gunakan min_year/max_year (misal "rata-rata 10 tahun terakhir" → min_year={DATA_TAHUN_TERBARU-9})
+
+[COUNT] JIKA pertanyaan mengandung "berapa jumlah", "berapa banyak", "berapa total", "berapa kali", "seberapa sering" (tanpa meminta detail data):
+  - Set intent "count"
+  - Jika menyebut "Indonesia" atau tidak ada lokasi spesifik → filters.place = null
+  - Contoh: "Berapa total gempa di Indonesia 2023?" → count, place=null, year=2023
+  - Contoh: "Berapa jumlah gempa di Aceh 2022?" → count, place="Aceh", year=2022
+  - Untuk rentang: "Berapa gempa dalam 5 tahun terakhir?" → count, min_year={DATA_TAHUN_TERBARU-4}
+
+[HARI] Jika user bertanya tentang HARI (misal: "hari apa paling sering gempa") → intent "count", group_by "day_of_week", order_by "count", order_dir "DESC".
+[WILAYAH] Jika user bertanya wilayah/provinsi paling sering/aktif → intent "count", group_by "place", order_by "count", order_dir "DESC".
+
+- Singkatan wilayah WAJIB dieja penuh: "jatim"→"Jawa Timur", "jabar"→"Jawa Barat", "jateng"→"Jawa Tengah", "jogja/diy"→"Yogyakarta", "dki"→"Jakarta", "jkt"→"Jakarta", "sby"→"Jawa Timur", "bdg"→"Jawa Barat".
+- Jika user menyebut "Indonesia", "indo", atau bertanya secara keseluruhan → filters.place = null.
 
 Kembalikan HANYA JSON."""
 
@@ -93,7 +149,7 @@ def parse_intent(question: str, history: list = []) -> dict:
     history_str = "\n".join([f"{m['role']}: {m['content'][:100]}" for m in history[-6:]])
     user_msg = f"Riwayat percakapan:\n{history_str or '(tidak ada)'}\n\nPertanyaan: {question}"
     try:
-        text = call_groq(INTENT_SYSTEM, user_msg, max_tokens=300)
+        text = call_groq(INTENT_SYSTEM, user_msg, max_tokens=400)
         text = re.sub(r"```(?:json)?", "", text).strip().rstrip("```").strip()
         return json.loads(text)
     except Exception:
@@ -122,6 +178,13 @@ def build_sql(intent: dict) -> tuple[str, list]:
     if filters.get("year"):
         where_parts.append("year = %s")
         params.append(int(filters["year"]))
+    # ── Rentang tahun (min_year / max_year) ──────────────────────────────────
+    if filters.get("min_year"):
+        where_parts.append("year >= %s")
+        params.append(int(filters["min_year"]))
+    if filters.get("max_year"):
+        where_parts.append("year <= %s")
+        params.append(int(filters["max_year"]))
     if filters.get("month"):
         where_parts.append("month = %s")
         params.append(int(filters["month"]))
@@ -171,6 +234,11 @@ def build_sql(intent: dict) -> tuple[str, list]:
         select = "SELECT date, place, magnitude, depth, depth_category, time"
         group = f"ORDER BY magnitude {order_dir}"
         limit_clause = f"LIMIT {int(limit or 10)}"
+    elif intent_type == "trend":
+        # Trend tanpa group_by eksplisit: default ke per-tahun
+        select = "SELECT year, COUNT(*) AS count, ROUND(AVG(magnitude)::numeric, 2) AS avg_magnitude, MAX(magnitude) AS max_magnitude"
+        group = "GROUP BY year ORDER BY year ASC"
+        limit_clause = ""
     else:  # general
         select = "SELECT COUNT(*) AS total, ROUND(AVG(magnitude)::numeric, 2) AS avg_magnitude, MAX(magnitude) AS max_magnitude, MIN(magnitude) AS min_magnitude"
         group, limit_clause = "", ""
@@ -229,14 +297,31 @@ def format_data(data: list, intent: dict) -> str:
 
 ANSWER_SYSTEM = """Kamu adalah asisten ahli seismologi Indonesia yang ramah.
 TUGAS UTAMA: Jawablah pertanyaan user dengan panduan berikut:
-1. Jika pertanyaan berkaitan dengan data (angka, statistik, lokasi, tanggal), gunakan HANYA data yang diberikan sebagai sumber informasimu. Jawablah secara natural layaknya manusia berbincang, JANGAN sebutkan kata "database", "data database" sama sekali di jawabanmu. Jangan berhalusinasi angka.
+1. Jika pertanyaan berkaitan dengan data (angka, statistik, lokasi, tanggal), gunakan HANYA data yang diberikan sebagai sumber informasimu. JANGAN sebutkan kata "database" sama sekali di jawabanmu. Jangan berhalusinasi angka.
 2. Jika pertanyaan bersifat UMUM/EDUKASI (misal: "Apa itu gempa?", "Tips keselamatan"), gunakan pengetahuanmu sebagai ahli seismologi untuk menjawab secara jelas dan ramah.
 3. JIKA data mencakup tanggal dan lokasi, sebutkan informasi tersebut KECUALI nama hari (Senin, Selasa, dst). JANGAN sebutkan nama hari dari tanggal kecuali user secara eksplisit bertanya tentang hari/waktu kejadian.
 4. Jika data kosong padahal user meminta data statistik, katakan dengan sopan bahwa informasi tersebut belum tersedia.
-5. JIKA user bertanya tentang kota spesifik (misal: Surabaya) tetapi data yang tersedia adalah tingkat Provinsi, JANGAN meminta maaf atau berkata "tidak tahu". Langsung saja berikan data provinsi tersebut dengan pengantar yang percaya diri (Contoh: "Berikut adalah data gempa untuk provinsi Jawa Timur...").
-6. PENTING: Terjemahkan nama hari atau istilah bahasa Inggris yang ada di data ke bahasa yang digunakan oleh user (misal: "Sunday" -> "Minggu" jika user bertanya dalam bahasa Indonesia).
-7. EDUKASI SEISMOLOGI: Jika membahas besaran gempa, edukasi user secara singkat bahwa Magnitudo Momen (Mw) adalah standar modern yang lebih akurat untuk mengukur energi total gempa dibandingkan Skala Richter (yang sering tidak akurat untuk gempa besar).
-8. FORMATTING: SAJIKAN DATA MENGGUNAKAN MARKDOWN TABLES ATAU BULLET POINTS. Jika Anda memberikan data multi-baris (statistik tahunan, daftar provinsi, daftar gempa), Anda WAJIB menggunakan format tabel Markdown agar rapi dan mudah dibaca cepat.
+5. JIKA user bertanya tentang kota spesifik (misal: Surabaya) tetapi data yang tersedia adalah tingkat Provinsi, LANGSUNG berikan data provinsi tersebut dengan pengantar yang percaya diri.
+6. PENTING: Terjemahkan nama hari atau istilah bahasa Inggris yang ada di data ke bahasa Indonesia (misal: "Sunday" -> "Minggu").
+7. EDUKASI SEISMOLOGI: Jika membahas besaran gempa, edukasi user secara singkat bahwa Magnitudo Momen (Mw) adalah standar modern yang lebih akurat dibandingkan Skala Richter.
+8. STRUKTUR RESPONS WAJIB (untuk pertanyaan berbasis data):
+   a. PEMBUKA (KONDISIONAL):
+      - Jika Riwayat percakapan KOSONG / bertanda '(percakapan baru)': awali dengan "Halo! Berdasarkan data seismisitas yang tercatat [sebutkan konteks filter jika ada]:"
+      - Jika Riwayat percakapan SUDAH ADA: LANGSUNG ke kalimat framing TANPA "Halo!". Contoh: "Berdasarkan catatan seismik untuk wilayah Aceh:" atau "Oke, berikut datanya:"
+   b. DATA UTAMA: Sajikan data dengan label jelas.
+      - Untuk statistik tunggal (avg/count): gunakan format "**Label:** Nilai" per baris.
+      - Untuk data multi-baris (list/max/tren/distribusi): WAJIB gunakan tabel Markdown. JIKA data lebih dari 10 baris, tampilkan MAKSIMAL 10 baris yang paling relevan/tertinggi saja agar respons cepat.
+   c. INSIGHT: Setelah data, SELALU tambahkan satu seksi insight:
+      - "💡 Insight Singkat:" untuk intent avg/count — berisi 1-2 kalimat interpretasi.
+      - "🔍 Insight Menarik:" untuk intent list/max/min/trend — berisi 2-3 poin bullet.
+      Gunakan kategori berikut untuk interpretasi:
+      Magnitudo: <3.0=Mikro(tak terasa), 3.0-3.9=Kecil, 4.0-4.9=Ringan(mulai terasa), 5.0-5.9=Sedang(signifikan), 6.0-6.9=Kuat(berpotensi merusak), 7.0-7.9=Besar, >=8.0=Sangat Besar
+      Kedalaman: Dangkal(<60km)=potensi daya rusak tinggi di permukaan, Menengah(60-300km)=berkurang, Dalam(>300km)=jarang merusak
+   d. PENUTUP: Akhiri dengan "Ada lagi yang bisa saya bantu?" atau variasi natural lainnya.
+9. JANGAN mengulang data mentah di seksi Insight. Insight harus berisi INTERPRETASI dan makna, bukan restatement angka.
+10. OUT OF DOMAIN: JIKA pertanyaan SAMA SEKALI TIDAK ADA HUBUNGANNYA dengan gempa bumi, seismologi, atau mitigasi bencana (misal: resep masakan, percintaan, coding, kekerasan, dll), ABAIKAN data yang ada dan tolak dengan sopan. Katakan bahwa kamu adalah asisten ahli seismologi dan hanya bisa menjawab seputar gempa.
+11. DATA TIDAK RELEVAN: JIKA pertanyaan masih seputar gempa, TETAPI data yang diberikan sama sekali tidak relevan dengan pertanyaan (misal data berisi hari sedangkan user bertanya wilayah), JANGAN menjawab dengan data itu. Katakan: "Maaf, tampaknya ada kendala dalam mencari informasi tersebut. Coba ulangi pertanyaannya?"
+12. FORMAT ANGKA: Gunakan TITIK (.) sebagai pemisah desimal, BUKAN koma. Contoh: tulis "41.561 km" bukan "41,561 km".
 """
 
 CORRECTION_SYSTEM = """Kamu adalah asisten ahli seismologi yang sangat teliti.
@@ -356,9 +441,11 @@ def validate_response(
     llm_numbers = extract_numbers_from_text(llm_answer)
     db_numbers = extract_key_numbers_from_db(db_data, intent)
 
-    # Hanya validasi baris pertama untuk query daftar/max agar tidak terlalu ketat
-    if intent_type in ("max", "min", "list") and len(db_data) > 1:
-        db_numbers = extract_key_numbers_from_db(db_data[:1], intent)
+    # Untuk query yang mengembalikan banyak baris (trend, distribusi, list), 
+    # LLM mungkin merangkum/memotong tabel (max 10 baris). 
+    # Validasi hanya 3 baris pertama agar tidak memicu correction loop yang lambat.
+    if len(db_data) > 3:
+        db_numbers = extract_key_numbers_from_db(db_data[:3], intent)
 
     if not db_numbers:
         return True, llm_answer

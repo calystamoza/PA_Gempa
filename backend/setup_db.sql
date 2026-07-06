@@ -23,7 +23,6 @@ CREATE TABLE IF NOT EXISTS messages (
 -- 3. Tabel earthquakes (data gempa dari CSV)
 CREATE TABLE IF NOT EXISTS earthquakes (
     id TEXT PRIMARY KEY,
-    province_id TEXT,
     place TEXT,
     date TEXT,
     month INTEGER,
@@ -33,8 +32,7 @@ CREATE TABLE IF NOT EXISTS earthquakes (
     longitude FLOAT,
     magnitude FLOAT,
     depth FLOAT,
-    depth_category TEXT,
-    fault_megathrust_id TEXT,
+    depth_category TEXT,  -- nilai: 'dangkal', 'menengah', 'dalam' (lowercase)
     time TEXT
 );
 

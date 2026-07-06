@@ -2,6 +2,7 @@
 
 import { Message } from "@/lib/api";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 import { useState } from "react";
 
@@ -22,7 +23,7 @@ export default function MessageBubble({ message }: MessageBubbleProps) {
       </div>
       <div className="bubble-column">
         <div className={`bubble ${isUser ? "user" : "assistant"}`}>
-          <ReactMarkdown>{message.content}</ReactMarkdown>
+          <ReactMarkdown remarkPlugins={[remarkGfm]}>{message.content}</ReactMarkdown>
         </div>
 
         {/* Badge Validasi — hanya untuk pesan assistant */}

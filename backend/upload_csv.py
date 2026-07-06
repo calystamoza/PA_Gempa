@@ -50,12 +50,15 @@ def upload():
     print(f"Reading CSV: {CSV_PATH}")
     df = pd.read_csv(CSV_PATH)
     df.rename(columns={"province": "place"}, inplace=True)
+    # Normalisasi depth_category ke lowercase agar konsisten dengan RAG engine
+    if "depth_category" in df.columns:
+        df["depth_category"] = df["depth_category"].str.lower().str.strip()
     print(f"Total rows: {len(df):,}")
 
     columns = [
-        "id", "province_id", "place", "date", "month", "month_name",
+        "id", "place", "date", "month", "month_name",
         "year", "latitude", "longitude", "magnitude", "depth",
-        "depth_category", "fault_megathrust_id", "time",
+        "depth_category", "time",
     ]
 
     # Pastikan kolom ada di df

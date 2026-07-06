@@ -9,6 +9,7 @@ interface SidebarProps {
   onNewChat: () => void;
   onSelectSession: (id: string) => void;
   refreshTrigger?: number;
+  userId?: string;
 }
 
 export default function Sidebar({
@@ -16,18 +17,19 @@ export default function Sidebar({
   onNewChat,
   onSelectSession,
   refreshTrigger,
+  userId,
 }: SidebarProps) {
   const [sessions, setSessions] = useState<Session[]>([]);
   const [search, setSearch] = useState("");
 
   const load = async () => {
-    const data = await getSessions();
+    const data = await getSessions(userId);
     setSessions(data);
   };
 
   useEffect(() => {
     load();
-  }, [refreshTrigger]);
+  }, [refreshTrigger, userId]);
 
   const handleDelete = async (e: React.MouseEvent, id: string) => {
     e.stopPropagation();

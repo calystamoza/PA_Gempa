@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import Sidebar from "@/components/Sidebar";
 import ChatWindow from "@/components/ChatWindow";
 import InputBar from "@/components/InputBar";
@@ -13,17 +14,51 @@ const SUGGESTIONS = [
   "Gempa terdalam yang pernah terjadi?",
 ];
 
+interface UserInfo {
+  user_id: string;
+  username: string;
+  role: "admin" | "user";
+}
+
 export default function HomePage() {
+  const router = useRouter();
+  const [user, setUser] = useState<UserInfo | null>(null);
   const [sessionId, setSessionId] = useState<string | undefined>(undefined);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(false);
   const [refreshTrigger, setRefreshTrigger] = useState(0);
   const bottomRef = useRef<HTMLDivElement>(null);
 
+  // ─── Auth Guard ──────────────────────────────────────────────────────────────
+  useEffect(() => {
+    const stored = localStorage.getItem("gempabot_user");
+    if (!stored) {
+      router.replace("/login");
+      return;
+    }
+    try {
+      const u = JSON.parse(stored) as UserInfo;
+      // Admin yang langsung buka '/' diarahkan ke /admin
+      if (u.role === "admin") {
+        router.replace("/admin");
+        return;
+      }
+      setUser(u);
+    } catch {
+      localStorage.removeItem("gempabot_user");
+      router.replace("/login");
+    }
+  }, [router]);
+
   // Scroll ke bawah setiap ada pesan baru
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
+
+  const handleLogout = () => {
+    localStorage.removeItem("gempabot_user");
+    router.push("/login");
+  };
 
   const handleNewChat = () => {
     setSessionId(undefined);
@@ -49,7 +84,7 @@ export default function HomePage() {
     setLoading(true);
 
     try {
-      const res: ChatResponse = await sendMessage(query, sessionId);
+      const res: ChatResponse = await sendMessage(query, sessionId, user?.user_id);
       if (!sessionId) {
         setSessionId(res.session_id);
         setRefreshTrigger((n) => n + 1);
@@ -85,6 +120,8 @@ export default function HomePage() {
       ? messages[0].content.slice(0, 50)
       : "GempaBot — Asisten Data Gempa Indonesia";
 
+  if (!user) return null;
+
   return (
     <div className="app-shell">
       <Sidebar
@@ -92,17 +129,33 @@ export default function HomePage() {
         onNewChat={handleNewChat}
         onSelectSession={handleSelectSession}
         refreshTrigger={refreshTrigger}
+        userId={user.user_id}
       />
 
       <div className="main">
         {/* Header */}
         <div className="chat-header">
           <span className="chat-header-icon">🌋</span>
-          <div>
+          <div style={{ flex: 1 }}>
             <div className="chat-header-title">{currentTitle}</div>
             <div className="chat-header-subtitle">
               Powered by Groq · Data Gempa Indonesia
             </div>
+          </div>
+          {/* User chip + logout */}
+          <div className="header-user-area">
+            <div className="header-user-chip">
+              <span>👤</span>
+              <span>{user.username}</span>
+            </div>
+            <button
+              id="chat-logout-btn"
+              className="header-logout-btn"
+              onClick={handleLogout}
+              title="Keluar"
+            >
+              Keluar
+            </button>
           </div>
         </div>
 

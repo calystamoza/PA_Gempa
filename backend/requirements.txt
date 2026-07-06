@@ -9,3 +9,5 @@ ragas
 datasets
 langchain-groq
 langchain-core
+bcrypt==4.2.1
+python-multipart==0.0.20
