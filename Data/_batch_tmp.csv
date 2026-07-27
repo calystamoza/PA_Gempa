@@ -1,0 +1,78 @@
+id,province,date,month,month_name,year,latitude,longitude,magnitude,depth,depth_category,time
+2401,Papua Barat,25/1/2025,1,January,2025,-3.5758,131.2836,4.8,10.0,dangkal,04:57:56
+2402,Maluku Utara,24/1/2025,1,January,2025,2.8299,128.6169,4.1,228.363,menengah,17:47:13
+2403,Sulawesi Tenggara,24/1/2025,1,January,2025,-4.0588,121.8164,4.8,10.0,dangkal,13:37:10
+2404,Maluku,24/1/2025,1,January,2025,-2.8997,128.0249,4.1,10.0,dangkal,06:45:41
+2405,Gorontalo,24/1/2025,1,January,2025,-0.012,123.5848,4.1,127.345,menengah,05:34:20
+2406,Papua,24/1/2025,1,January,2025,-2.0187,138.9177,4.6,35.0,dangkal,02:54:01
+2407,Nusa Tenggara Timur,23/1/2025,1,January,2025,-7.1872,120.8203,4.4,497.357,dalam,09:53:15
+2408,Maluku Utara,23/1/2025,1,January,2025,3.2296,126.9458,4.0,47.595,dangkal,05:12:51
+2409,Maluku Utara,22/1/2025,1,January,2025,3.2129,127.9618,4.4,133.517,menengah,15:32:55
+2410,Nusa Tenggara Timur,22/1/2025,1,January,2025,-9.5561,119.4308,4.3,86.388,menengah,06:17:21
+2411,Sumatera Utara,22/1/2025,1,January,2025,0.855,97.0611,4.2,10.0,dangkal,03:21:38
+2412,Jawa Timur,22/1/2025,1,January,2025,-9.8679,112.852,4.5,10.0,dangkal,00:14:22
+2413,Maluku Utara,21/1/2025,1,January,2025,0.8653,126.5477,4.9,42.455,dangkal,11:16:01
+2414,Maluku,21/1/2025,1,January,2025,-3.0143,127.887,4.2,35.0,dangkal,09:44:12
+2415,Maluku Utara,19/1/2025,1,January,2025,0.0558,126.7046,4.5,56.167,dangkal,11:20:29
+2416,Maluku,18/1/2025,1,January,2025,-2.7625,128.1023,4.6,22.723,dangkal,19:37:59
+2417,Nusa Tenggara Timur,18/1/2025,1,January,2025,-8.2409,119.9898,4.5,171.329,menengah,13:19:21
+2418,Maluku Utara,18/1/2025,1,January,2025,0.077,126.7355,5.1,57.508,dangkal,08:37:46
+2419,Aceh,18/1/2025,1,January,2025,3.8315,93.6857,4.9,10.0,dangkal,05:04:22
+2420,Maluku,18/1/2025,1,January,2025,-5.6189,130.8313,4.2,111.944,menengah,04:46:57
+2421,Maluku Utara,17/1/2025,1,January,2025,-7.0872,106.7098,4.3,75.701,menengah,17:44:09
+2422,Sumatera Utara,17/1/2025,1,January,2025,2.6034,97.9639,4.3,90.781,menengah,05:07:27
+2423,Nusa Tenggara Barat,16/1/2025,1,January,2025,-7.6952,117.5448,4.3,10.0,dangkal,13:17:33
+2424,Sumatera Selatan,16/1/2025,1,January,2025,-3.0604,102.7701,4.6,198.437,menengah,01:07:26
+2425,Nusa Tenggara Timur,15/1/2025,1,January,2025,-10.3873,119.2303,4.2,10.0,dangkal,22:51:27
+2426,Sumatera Utara,15/1/2025,1,January,2025,3.3236,96.7807,4.4,71.647,menengah,14:10:22
+2427,Nusa Tenggara Barat,14/1/2025,1,January,2025,-8.8583,118.6246,4.7,10.548,dangkal,16:16:58
+2428,Jawa Tengah,14/1/2025,1,January,2025,-9.8991,109.1791,4.3,10.0,dangkal,04:28:05
+2429,Papua,13/1/2025,1,January,2025,-2.8165,139.6574,5.0,51.782,dangkal,12:54:37
+2430,Papua,13/1/2025,1,January,2025,-2.5522,138.9598,4.8,73.472,menengah,03:10:23
+2431,Maluku Utara,13/1/2025,1,January,2025,1.5065,126.381,4.2,53.375,dangkal,00:33:53
+2432,Bali,12/1/2025,1,January,2025,-10.8642,114.3781,4.5,10.0,dangkal,20:21:13
+2433,Gorontalo,12/1/2025,1,January,2025,0.1233,122.037,4.2,180.597,menengah,10:22:39
+2434,Papua Tengah,12/1/2025,1,January,2025,-3.9019,134.7848,4.5,10.0,dangkal,05:53:19
+2435,Bali,12/1/2025,1,January,2025,-8.4393,110.2022,4.2,10.0,dangkal,02:52:07
+2436,Nusa Tenggara Timur,11/1/2025,1,January,2025,-9.0651,122.3851,4.5,103.239,menengah,13:46:30
+2437,Sulawesi Tenggara,11/1/2025,1,January,2025,-4.0249,123.3807,4.6,10.0,dangkal,12:02:32
+2438,Jawa Timur,11/1/2025,1,January,2025,-8.7422,110.9995,4.5,65.2,menengah,07:25:11
+2439,Papua Barat,10/1/2025,1,January,2025,-2.0473,133.5024,4.0,51.95,dangkal,17:09:02
+2440,Sulawesi Utara,10/1/2025,1,January,2025,0.9409,126.1383,4.5,47.401,dangkal,11:11:31
+2441,Sulawesi Utara,10/1/2025,1,January,2025,1.0618,126.1654,4.3,40.149,dangkal,11:00:21
+2442,Maluku Utara,10/1/2025,1,January,2025,2.7916,128.33,4.4,76.695,menengah,09:32:53
+2443,Sulawesi Utara,10/1/2025,1,January,2025,2.4871,126.0765,4.4,90.598,menengah,03:43:27
+2444,Lampung,9/1/2025,1,January,2025,-5.8868,103.5146,4.2,35.0,dangkal,18:44:19
+2445,Maluku Utara,9/1/2025,1,January,2025,1.6732,127.3498,4.7,10.0,dangkal,16:42:14
+2446,Maluku Utara,9/1/2025,1,January,2025,0.0386,123.7753,4.2,155.0,menengah,06:48:34
+2447,Gorontalo,9/1/2025,1,January,2025,2.0848,121.4784,4.3,10.0,dangkal,04:08:46
+2448,Bali,8/1/2025,1,January,2025,-9.4486,115.5021,4.0,76.416,menengah,15:59:35
+2449,Maluku Utara,8/1/2025,1,January,2025,0.0074,127.2711,4.4,129.155,menengah,14:20:59
+2450,Maluku,8/1/2025,1,January,2025,-5.1,130.0229,4.3,187.073,menengah,13:07:43
+2451,Lampung,8/1/2025,1,January,2025,-6.5311,104.2995,4.3,35.0,dangkal,12:34:40
+2452,Nusa Tenggara Barat,8/1/2025,1,January,2025,-8.6195,118.3201,4.4,136.191,menengah,08:28:37
+2453,Jawa Barat,8/1/2025,1,January,2025,-7.9024,107.7966,4.1,72.443,menengah,04:41:08
+2454,Bali,8/1/2025,1,January,2025,-8.7927,115.4075,4.3,116.888,menengah,02:14:18
+2455,Nusa Tenggara Timur,7/1/2025,1,January,2025,-8.2744,119.3325,5.0,10.0,dangkal,17:52:21
+2456,Nusa Tenggara Timur,7/1/2025,1,January,2025,-10.6862,120.4806,4.3,19.16,dangkal,17:16:26
+2457,Nusa Tenggara Timur,7/1/2025,1,January,2025,-11.459,125.0679,4.6,10.0,dangkal,03:22:31
+2458,Aceh,6/1/2025,1,January,2025,3.2916,95.2597,4.3,35.0,dangkal,14:59:46
+2459,Papua,6/1/2025,1,January,2025,-2.4983,140.6813,4.2,20.37,dangkal,11:47:24
+2460,Sulawesi Tengah,4/1/2025,1,January,2025,0.9111,119.9938,4.4,40.875,dangkal,15:10:11
+2461,Maluku,4/1/2025,1,January,2025,-5.132,129.5773,4.5,228.17,menengah,10:27:18
+2462,Gorontalo,4/1/2025,1,January,2025,0.2791,121.9603,4.3,180.198,menengah,06:55:39
+2463,Papua Tengah,4/1/2025,1,January,2025,-4.2831,134.1734,4.5,10.0,dangkal,05:14:36
+2464,Sulawesi Utara,3/1/2025,1,January,2025,1.095,125.6069,4.2,66.638,menengah,22:45:23
+2465,Maluku Utara,3/1/2025,1,January,2025,2.3865,128.1744,4.5,140.869,menengah,17:59:54
+2466,Nusa Tenggara Timur,3/1/2025,1,January,2025,-9.8201,120.6467,4.1,30.613,dangkal,17:58:10
+2467,Lampung,3/1/2025,1,January,2025,-4.8117,102.8052,4.8,63.724,menengah,14:44:43
+2468,Nusa Tenggara Barat,3/1/2025,1,January,2025,-7.8313,118.4478,4.4,10.0,dangkal,10:17:32
+2469,Sumatera Utara,3/1/2025,1,January,2025,1.7366,97.2165,4.1,48.606,dangkal,05:16:31
+2470,Maluku Utara,2/1/2025,1,January,2025,-1.1012,127.4627,4.7,10.0,dangkal,21:13:30
+2471,Maluku Utara,2/1/2025,1,January,2025,1.7617,127.3626,4.4,117.276,menengah,13:25:28
+2472,Maluku Utara,2/1/2025,1,January,2025,-0.2006,125.1945,5.1,56.271,dangkal,05:32:23
+2473,Sumatera Barat,1/1/2025,1,January,2025,-2.1566,100.1033,4.4,44.253,dangkal,23:07:21
+2474,Maluku Utara,1/1/2025,1,January,2025,-1.1015,127.2786,4.2,10.0,dangkal,20:21:41
+2475,Maluku Utara,1/1/2025,1,January,2025,-1.1688,127.2235,4.4,10.0,dangkal,19:12:09
+2476,Maluku Utara,1/1/2025,1,January,2025,-1.0739,127.3492,4.5,10.0,dangkal,18:34:29
+2477,Maluku,1/1/2025,1,January,2025,-5.9077,128.8869,4.4,277.355,menengah,01:07:10

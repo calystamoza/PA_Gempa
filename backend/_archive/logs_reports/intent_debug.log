@@ -1,0 +1,3314 @@
+SUCCESS
+Q: Tampilkan 10 gempa terbaru yang tercatat dalam data kita
+RAW: {
+  "intent": "list",
+  "metric": "magnitude",
+  "filters": {
+    "place": null,
+    "year": null,
+    "min_year": null,
+    "max_year": null,
+    "month": null,
+    "depth_category": null,
+    "min_magnitude": null,
+    "max_magnitude": null
+  },
+  "group_by": null,
+  "order_by": "year",
+  "order_dir": "DESC",
+  "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+ERROR: Extra data: line 19 column 1 (char 391)
+Q: Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023
+RAW: {
+  "intent": "list",
+  "metric": "magnitude",
+  "filters": {
+    "place": null,
+    "year": null,
+    "min_year": null,
+    "max_year": null,
+    "month": null,
+    "depth_category": null,
+    "min_magnitude": null,
+    "max_magnitude": null
+  },
+  "group_by": "year|month|place|day_of_week|null",
+  "order_by": "magnitude|depth|year|count|null",
+  "order_dir": "DESC|ASC",
+  "limit": 10
+}
+```
+
+Namun, karena user telah bertanya tentang gempa terbaru sebelumnya, kita dapat mewarisi filter sebelumnya dan hanya perlu menambahkan filter tahun. Berikut adalah JSON yang dapat dikembalikan:
+
+```json
+{
+  "intent": "list",
+  "metric": "magnitude",
+  "filters": {
+    "place": null,
+    "year": 2024,
+    "min_year": null,
+    "max_year": null,
+    "month": null,
+    "depth_category": null,
+    "min_magnitude": null,
+    "max_magnitude": null
+  },
+  "group_by": "year|month|place|day_of_week|null",
+  "order_by": "magnitude|depth|year|count|null",
+  "order_dir": "DESC|ASC",
+  "limit": 10
+}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Tengah",
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Tengah', 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Tengah",
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Tengah', 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Sebutkan 3 gempa terbesar di Papua
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Papua",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 3
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Papua', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 3}
+
+SUCCESS
+Q: Tampilkan 10 gempa terbaru yang tercatat dalam data kita
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: bukan maluku, tapi semua
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: kalau di jawa barat?
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: 10 data terakhir di jawa barat
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: kalau sumatera selatan?
+RAW: {
+  "intent": "general",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'general', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: 10 data sumatera selatan
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": "Sumatera Selatan",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': 'Sumatera Selatan', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: kalau jatim?
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: siapa gubernur maluku saat gempa aceh 2024
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: 10 data terbaru jawa barat
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": 2024,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': 2024, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: kalau jawa tim
+RAW: {
+  "intent": "general",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'general', 'metric': 'null', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: rata-rata magnitude jawa timur 2013
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": 2013
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Jawa Timur', 'year': 2013}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Rata-rata magnitudo di Jawa Barat 2023
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: ada berapa banyak gempa dijawa barat taun ini
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": 2026,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Jawa Barat', 'year': 2026, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: kalau jumlah gempa tahun 2024 gimana
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": 2024,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': 2024, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': 10}
+
+SUCCESS
+Q: Wilayah mana yang paling sering gempa?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "place",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'place', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Berapa total gempa yang terjadi di Indonesia sepanjang tahun 2023?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa total gempa yang terjadi di Indonesia sepanjang tahun 2023?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa yang terjadi di Aceh pada tahun 2022?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Aceh",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Aceh', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa yang terjadi di Aceh pada tahun 2022?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Aceh",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Aceh', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa dangkal yang pernah terjadi di Maluku?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Maluku",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Maluku', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa dangkal yang pernah terjadi di Maluku?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Maluku",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Maluku', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa total gempa yang tercatat selama dekade 2010-an?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2010,
+      "max_year": 2019,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2010, 'max_year': 2019, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa total gempa yang tercatat selama dekade 2010-an?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2010,
+      "max_year": 2019,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2010, 'max_year': 2019, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa rata-rata kekuatan gempa di Jawa Barat?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kekuatan gempa di Jawa Barat?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa di Maluku Utara?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": "Maluku Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': 'Maluku Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa di Maluku Utara?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": "Maluku Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': 'Maluku Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Tengah",
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Tengah', 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Tengah",
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Tengah', 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa dalam 5 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2020,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': 2020, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa dalam 5 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2020,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': 2020, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa selama dekade terakhir di Sumatera?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa selama dekade terakhir di Sumatera?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Kekuatan gempa maksimal di Indonesia berapa?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Kekuatan gempa maksimal di Indonesia berapa?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Berapa kekuatan gempa terbesar yang pernah terjadi di Sulawesi Utara?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Berapa kekuatan gempa terbesar yang pernah terjadi di Sulawesi Utara?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terbesar apa yang pernah tercatat dalam data terbaru kita?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "year": 2024,
+      "place": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'year': 2024, 'place': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terbesar apa yang pernah tercatat dalam data terbaru kita?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": null,
+      "year": 2024,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': None, 'year': 2024, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terdalam apa yang pernah terjadi di Indonesia?
+RAW: {
+  "intent": "max",
+   "metric": "depth",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'depth', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terdalam apa yang pernah terjadi di Indonesia?
+RAW: {
+  "intent": "max",
+   "metric": "depth",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'depth', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terakhir apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "max",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terakhir apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "max",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Di mana lokasi gempa bumi paling dangkal yang tercatat?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Di mana lokasi gempa bumi paling dangkal yang tercatat?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Gempa bumi pertama apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "min",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 1900,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': 1900, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Gempa bumi pertama apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "min",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 1900,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': 1900, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Berapa magnitudo terkecil gempa yang pernah tercatat di Jawa Timur?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Berapa magnitudo terkecil gempa yang pernah tercatat di Jawa Timur?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Apa gempa dengan kekuatan paling kecil yang terjadi di Indonesia?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Apa gempa dengan kekuatan paling kecil yang terjadi di Indonesia?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Gempa dengan kedalaman paling kecil yang tercatat di Sulawesi apa?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": "Sulawesi",
+      "depth_category": "dangkal"
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': 'Sulawesi', 'depth_category': 'dangkal'}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Gempa dengan kedalaman paling kecil yang tercatat di Sulawesi apa?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": "Sulawesi",
+      "depth_category": "dangkal"
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': 'Sulawesi', 'depth_category': 'dangkal'}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Sebutkan 3 gempa terbesar di Papua
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Papua",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 3
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Papua', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 3}
+
+SUCCESS
+Q: Sebutkan 3 gempa terbesar di Papua
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Papua",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 3
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Papua', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 3}
+
+SUCCESS
+Q: Tampilkan daftar 5 gempa terkuat di Nusa Tenggara Timur
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Nusa Tenggara Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Nusa Tenggara Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 5}
+
+SUCCESS
+Q: Tampilkan daftar 5 gempa terkuat di Nusa Tenggara Timur
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Nusa Tenggara Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Nusa Tenggara Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 5}
+
+SUCCESS
+Q: Berikan daftar gempa yang terjadi di Jawa Barat pada tahun 2022
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': 'Jawa Barat', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Berikan daftar gempa yang terjadi di Jawa Barat pada tahun 2022
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': 'Jawa Barat', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Tampilkan 10 gempa terbaru yang tercatat dalam data kita
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Tampilkan 10 gempa terbaru yang tercatat dalam data kita
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Sebutkan 5 gempa paling dangkal yang pernah terjadi di Kalimantan
+RAW: {
+  "intent": "list",
+   "metric": "depth",
+   "filters": {
+      "place": "Kalimantan",
+      "min_year": 1900,
+      "max_year": 2024,
+      "depth_category": "dangkal"
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'depth', 'filters': {'place': 'Kalimantan', 'min_year': 1900, 'max_year': 2024, 'depth_category': 'dangkal'}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 5}
+
+SUCCESS
+Q: Sebutkan 5 gempa paling dangkal yang pernah terjadi di Kalimantan
+RAW: {
+  "intent": "list",
+   "metric": "depth",
+   "filters": {
+      "place": "Kalimantan",
+      "min_year": 1900,
+      "max_year": 2024,
+      "depth_category": "dangkal"
+   },
+   "group_by": "null",
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'depth', 'filters': {'place': 'Kalimantan', 'min_year': 1900, 'max_year': 2024, 'depth_category': 'dangkal'}, 'group_by': 'null', 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 5}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa per tahun di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa per tahun di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Apakah jumlah gempa di Indonesia cenderung meningkat atau menurun dari tahun ke tahun?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Apakah jumlah gempa di Indonesia cenderung meningkat atau menurun dari tahun ke tahun?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Bagaimana perkembangan frekuensi gempa per bulan di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "month",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 12
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'month', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 12}
+
+SUCCESS
+Q: Bagaimana perkembangan frekuensi gempa per bulan di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "month",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 12
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'month', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 12}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa selama 10 tahun terakhir di Sumatera?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa selama 10 tahun terakhir di Sumatera?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Apakah gempa makin sering terjadi di Jawa selama dekade terakhir?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Jawa",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Jawa', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Apakah gempa makin sering terjadi di Jawa selama dekade terakhir?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Jawa",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Jawa', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Apa itu magnitudo momen?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Mengapa Indonesia sering mengalami gempa bumi?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Apa perbedaan antara gempa dangkal, menengah, dan dalam?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Apa yang harus dilakukan untuk menyelamatkan diri saat gempa bumi?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Bagaimana cara kerja seismograf?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa total gempa yang terjadi di Indonesia sepanjang tahun 2023?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa total gempa yang terjadi di Indonesia sepanjang tahun 2023?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa yang terjadi di Aceh pada tahun 2022?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Aceh",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Aceh', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa yang terjadi di Aceh pada tahun 2022?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Aceh",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Aceh', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa dangkal yang pernah terjadi di Maluku?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Maluku",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Maluku', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa jumlah gempa dangkal yang pernah terjadi di Maluku?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": "Maluku",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': 'Maluku', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2015,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2015, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa total gempa yang tercatat selama dekade 2010-an?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2010,
+      "max_year": 2019,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2010, 'max_year': 2019, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa total gempa yang tercatat selama dekade 2010-an?
+RAW: {
+  "intent": "count",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2010,
+      "max_year": 2019,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'count', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': 2010, 'max_year': 2019, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: Berapa rata-rata kekuatan gempa di Jawa Barat?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kekuatan gempa di Jawa Barat?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Jawa Barat', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa di Maluku Utara?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": "Maluku Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': 'Maluku Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa di Maluku Utara?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": "Maluku Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': 'Maluku Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Tengah",
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Tengah', 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Tengah",
+      "year": 2023,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Tengah', 'year': 2023, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa dalam 5 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2020,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': 2020, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata kedalaman gempa dalam 5 tahun terakhir di Indonesia?
+RAW: {
+  "intent": "average",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 2020,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': 2020, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa selama dekade terakhir di Sumatera?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Berapa rata-rata magnitudo gempa selama dekade terakhir di Sumatera?
+RAW: {
+  "intent": "average",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'average', 'metric': 'magnitude', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Kekuatan gempa maksimal di Indonesia berapa?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Kekuatan gempa maksimal di Indonesia berapa?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Berapa kekuatan gempa terbesar yang pernah terjadi di Sulawesi Utara?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Berapa kekuatan gempa terbesar yang pernah terjadi di Sulawesi Utara?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Sulawesi Utara",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': 'Sulawesi Utara', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terbesar apa yang pernah tercatat dalam data terbaru kita?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "year": 2024,
+      "place": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'year': 2024, 'place': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terbesar apa yang pernah tercatat dalam data terbaru kita?
+RAW: {
+  "intent": "max",
+   "metric": "magnitude",
+   "filters": {
+      "place": null,
+      "year": 2024,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'magnitude', 'filters': {'place': None, 'year': 2024, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terdalam apa yang pernah terjadi di Indonesia?
+RAW: {
+  "intent": "max",
+   "metric": "depth",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'max', 'metric': 'depth', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Gempa terdalam apa yang pernah terjadi di Indonesia?
+RAW: {
+  "intent": "max",
+   "metric": "depth",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'depth', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terakhir apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "max",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Gempa terakhir apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "max",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'max', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: Di mana lokasi gempa bumi paling dangkal yang tercatat?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Di mana lokasi gempa bumi paling dangkal yang tercatat?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": "dangkal",
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': 'dangkal', 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Gempa bumi pertama apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "min",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 1900,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': 1900, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Gempa bumi pertama apa yang tercatat dalam data kita?
+RAW: {
+  "intent": "min",
+   "metric": "year",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": 1900,
+      "max_year": 2024,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'year', 'filters': {'place': None, 'year': None, 'min_year': 1900, 'max_year': 2024, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Berapa magnitudo terkecil gempa yang pernah tercatat di Jawa Timur?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Berapa magnitudo terkecil gempa yang pernah tercatat di Jawa Timur?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Apa gempa dengan kekuatan paling kecil yang terjadi di Indonesia?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Apa gempa dengan kekuatan paling kecil yang terjadi di Indonesia?
+RAW: {
+  "intent": "min",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'magnitude', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Gempa dengan kedalaman paling kecil yang tercatat di Sulawesi apa?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": "Sulawesi",
+      "depth_category": "dangkal"
+   },
+   "group_by": "null",
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': 'Sulawesi', 'depth_category': 'dangkal'}, 'group_by': 'null', 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Gempa dengan kedalaman paling kecil yang tercatat di Sulawesi apa?
+RAW: {
+  "intent": "min",
+   "metric": "depth",
+   "filters": {
+      "place": "Sulawesi",
+      "depth_category": "dangkal"
+   },
+   "group_by": "null",
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 1
+}
+PARSED: {'intent': 'min', 'metric': 'depth', 'filters': {'place': 'Sulawesi', 'depth_category': 'dangkal'}, 'group_by': 'null', 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 1}
+
+SUCCESS
+Q: Sebutkan 3 gempa terbesar di Papua
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Papua",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 3
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Papua', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 3}
+
+SUCCESS
+Q: Sebutkan 3 gempa terbesar di Papua
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Papua",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 3
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Papua', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 3}
+
+SUCCESS
+Q: Tampilkan daftar 5 gempa terkuat di Nusa Tenggara Timur
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Nusa Tenggara Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Nusa Tenggara Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 5}
+
+SUCCESS
+Q: Tampilkan daftar 5 gempa terkuat di Nusa Tenggara Timur
+RAW: {
+  "intent": "list",
+   "metric": "magnitude",
+   "filters": {
+      "place": "Nusa Tenggara Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'magnitude', 'filters': {'place': 'Nusa Tenggara Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 5}
+
+SUCCESS
+Q: Berikan daftar gempa yang terjadi di Jawa Barat pada tahun 2022
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': 'Jawa Barat', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Berikan daftar gempa yang terjadi di Jawa Barat pada tahun 2022
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Barat",
+      "year": 2022,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "magnitude",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': 'Jawa Barat', 'year': 2022, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'magnitude', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Tampilkan 10 gempa terbaru yang tercatat dalam data kita
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Tampilkan 10 gempa terbaru yang tercatat dalam data kita
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "year",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'year', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Sebutkan 5 gempa paling dangkal yang pernah terjadi di Kalimantan
+RAW: {
+  "intent": "list",
+   "metric": "depth",
+   "filters": {
+      "place": "Kalimantan",
+      "min_year": 1900,
+      "max_year": 2024,
+      "depth_category": "dangkal"
+   },
+   "group_by": "null",
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'depth', 'filters': {'place': 'Kalimantan', 'min_year': 1900, 'max_year': 2024, 'depth_category': 'dangkal'}, 'group_by': 'null', 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 5}
+
+SUCCESS
+Q: Sebutkan 5 gempa paling dangkal yang pernah terjadi di Kalimantan
+RAW: {
+  "intent": "list",
+   "metric": "depth",
+   "filters": {
+      "place": "Kalimantan",
+      "min_year": 1900,
+      "max_year": 2024,
+      "depth_category": "dangkal"
+   },
+   "group_by": null,
+   "order_by": "depth",
+   "order_dir": "ASC",
+   "limit": 5
+}
+PARSED: {'intent': 'list', 'metric': 'depth', 'filters': {'place': 'Kalimantan', 'min_year': 1900, 'max_year': 2024, 'depth_category': 'dangkal'}, 'group_by': None, 'order_by': 'depth', 'order_dir': 'ASC', 'limit': 5}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa per tahun di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa per tahun di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Apakah jumlah gempa di Indonesia cenderung meningkat atau menurun dari tahun ke tahun?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Apakah jumlah gempa di Indonesia cenderung meningkat atau menurun dari tahun ke tahun?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Bagaimana perkembangan frekuensi gempa per bulan di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "month",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 12
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'month', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 12}
+
+SUCCESS
+Q: Bagaimana perkembangan frekuensi gempa per bulan di Indonesia?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Indonesia",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "month",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 12
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Indonesia', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'month', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 12}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa selama 10 tahun terakhir di Sumatera?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Bagaimana tren jumlah gempa selama 10 tahun terakhir di Sumatera?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Sumatera",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Sumatera', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: Apakah gempa makin sering terjadi di Jawa selama dekade terakhir?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Jawa",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Jawa', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Apakah gempa makin sering terjadi di Jawa selama dekade terakhir?
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": "Jawa",
+      "min_year": 2015,
+      "max_year": 2024
+   },
+   "group_by": "year",
+   "order_by": "count",
+   "order_dir": "DESC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': 'Jawa', 'min_year': 2015, 'max_year': 2024}, 'group_by': 'year', 'order_by': 'count', 'order_dir': 'DESC', 'limit': 10}
+
+SUCCESS
+Q: Apa itu magnitudo momen?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Mengapa Indonesia sering mengalami gempa bumi?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Apa perbedaan antara gempa dangkal, menengah, dan dalam?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Apa yang harus dilakukan untuk menyelamatkan diri saat gempa bumi?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+
+SUCCESS
+Q: Bagaimana cara kerja seismograf?
+RAW: {
+  "intent": "knowledge",
+   "metric": null,
+   "filters": {
+      "place": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": null,
+   "order_dir": null,
+   "limit": null
+}
+PARSED: {'intent': 'knowledge', 'metric': None, 'filters': {'place': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': None, 'order_dir': None, 'limit': None}
+

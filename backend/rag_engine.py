@@ -12,33 +12,48 @@ groq_client = Groq(api_key=os.getenv("GROQ_API_KEY"))
 GROQ_MODEL = "llama-3.1-8b-instant"  # model aktif Groq (cepat & gratis)
 
 # ─── Kolom aman untuk ORDER BY (whitelist anti SQL injection) ─────────────────
-SAFE_COLUMNS = {"magnitude", "depth", "year", "month", "count", "avg_magnitude"}
+SAFE_COLUMNS = {"magnitude", "depth", "year", "month", "count", "avg_magnitude", "date"}
 SAFE_DIRECTIONS = {"ASC", "DESC"}
 
-# ─── Data Context (diperbarui sesuai rentang data aktual) ────────────────────
-DATA_TAHUN_TERBARU = 2024
-DATA_TAHUN_TERTUA  = 1900
-TAHUN_SEKARANG     = 2026
+# ─── Data Context (di-query dari DB saat startup, bukan hardcode) ────────────
+TAHUN_SEKARANG = 2026
+
+def _query_year_bounds() -> tuple[int, int]:
+    """Query MAX dan MIN year dari DB. Fallback ke nilai default jika DB belum siap."""
+    try:
+        result = execute_query("SELECT MAX(year) AS max_year, MIN(year) AS min_year FROM earthquakes", [])
+        if result and result[0].get("max_year") and result[0].get("min_year"):
+            return int(result[0]["max_year"]), int(result[0]["min_year"])
+    except Exception as e:
+        print(f"[WARN] Gagal query year bounds dari DB: {e}. Menggunakan nilai default.")
+    return 2024, 1900  # fallback default
+
+DATA_TAHUN_TERBARU, DATA_TAHUN_TERTUA = _query_year_bounds()
+print(f"[CONFIG] Rentang data: {DATA_TAHUN_TERTUA} - {DATA_TAHUN_TERBARU}")
 
 NUMERIC_TOLERANCE = 0.15  # Sedikit lebih longgar untuk mengakomodasi pembulatan LLM
 
 
 # ─── Helper: call Groq ────────────────────────────────────────────────────────
 
-def call_groq(system_prompt: str, user_message: str, max_tokens: int = 512) -> str:
+def call_groq(system_prompt: str, user_message: str, max_tokens: int = 512, response_format: dict = None) -> str:
     """Wrapper sederhana untuk Groq Chat Completions."""
     api_key_preview = f"{groq_client.api_key[:8]}...{groq_client.api_key[-4:]}" if groq_client.api_key else "None"
     print(f"\n[GROQ API TRACE] Memanggil model: '{GROQ_MODEL}' menggunakan key: {api_key_preview}")
     try:
-        response = groq_client.chat.completions.create(
-            model=GROQ_MODEL,
-            messages=[
+        kwargs = {
+            "model": GROQ_MODEL,
+            "messages": [
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message},
             ],
-            max_tokens=max_tokens,
-            temperature=0.1, #ubah
-        )
+            "max_tokens": max_tokens,
+            "temperature": 0.1,
+        }
+        if response_format:
+            kwargs["response_format"] = response_format
+            
+        response = groq_client.chat.completions.create(**kwargs)
         print(f"[GROQ API TRACE] SUCCESS! API hit berhasil.")
         return response.choices[0].message.content.strip()
     except Exception as e:
@@ -81,6 +96,7 @@ Format JSON yang HARUS dikembalikan:
   "metric": "magnitude|depth|count|null",
   "filters": {{
     "place": null,
+    "places": null,
     "year": null,
     "min_year": null,
     "max_year": null,
@@ -95,8 +111,19 @@ Format JSON yang HARUS dikembalikan:
   "limit": 10
 }}
 
+ATURAN PERBANDINGAN LOKASI:
+- Jika pertanyaan mengandung kata "dibanding", "dibandingkan", "daripada", "lebih banyak dari", "lebih besar dari", "vs", "versus", "antara X dan Y", atau menyebut DUA ATAU LEBIH lokasi yang dibandingkan:
+  * Set filters.place = null
+  * Set filters.places = ["Lokasi A", "Lokasi B", ...] (array semua lokasi yang dibandingkan)
+  * PERTAHANKAN intent asli (count/average/max/min/list/trend) — JANGAN ubah intent menjadi apapun yang lain
+- Singkatan wilayah tetap dieja penuh dalam array places.
+- Jika hanya satu lokasi disebutkan: gunakan filters.place seperti biasa, filters.places = null.
+
 Panduan Intent:
-- JIKA pertanyaan user sangat singkat (misal: "kalo di indo?", "hari apa?"), kamu WAJIB melihat 'Riwayat percakapan' untuk mewarisi intent, metric, dan filter sebelumnya, lalu ubah hanya bagian yang diminta.
+- Jika user menyertakan tempat prvinsi wajib digunakan sebagai filter parameter, jika pertanyaan selanjutnya tidak dalam konteks tempat yang sama set ke filter dari pertanyaan baru atau set ke general
+- JIKA pertanyaan user sangat singkat DAN tidak menyebut tahun/waktu spesifik (misal: "kalo di indo?", "hari apa?", "yang paling parah?"), kamu BOLEH mewarisi filter tahun dari riwayat percakapan.
+- PENTING — ATURAN OVERRIDE WAKTU: Jika user SECARA EKSPLISIT menyebut tahun atau rentang waktu tertentu (misal: "2024", "tahun lalu", "5 tahun terakhir", "2020-2023"), WAJIB gunakan tahun/waktu yang disebutkan user dan ABAIKAN filter tahun dari riwayat sebelumnya. Tahun eksplisit dari user selalu menang.
+- PENTING — RESET KONTEKS: Jika pertanyaan user jelas menanyakan hal BARU yang tidak berkaitan dengan topik sebelumnya (misal topik sebelumnya adalah jumlah gempa, lalu user tanya provinsi paling aman), HAPUS filter yang tidak relevan dari riwayat. Analisis topik pertanyaan, bukan hanya warisi filter secara membabi buta.
 - PENTING UNTUK KONTEKS: Analisis apakah pertanyaan user merujuk pada topik sebelumnya atau menanyakan informasi global/keseluruhan. Jika user bertanya kelanjutan data (misal: "yang paling parah?"), pertahankan filter (seperti lokasi) dari riwayat. NAMUN, jika user jelas menanyakan keseluruhan data (misal: "tahun berapa data terakhir?", "berapa total semua data?"), HAPUS filter lokasi/waktu sebelumnya (set null) agar pencarian dilakukan secara global.
 
 --- ATURAN INTENT (urutan prioritas dari atas ke bawah) ---
@@ -113,9 +140,12 @@ Panduan Intent:
 [LIST] JIKA pertanyaan menggunakan kata "sebutkan N", "tampilkan daftar N", "berikan daftar", "daftarkan", "list N gempa", "tolong berikan", atau menyebut angka spesifik dalam konteks MENAMPILKAN DATA (misal: "sebutkan 3 gempa terbesar", "tampilkan 5 gempa terkuat", "berikan daftar gempa di Jawa Barat"):
   - Set intent "list", bukan "max" atau "min"
   - Set limit sesuai angka yang disebutkan (default 10 jika tidak ada angka)
-  - Set order_by dan order_dir sesuai kriteria (terbesar → magnitude DESC, terkuat → magnitude DESC, terdalam → depth DESC, terdangkal → depth ASC, terbaru → year DESC)
-  - Untuk "terbaru": gunakan order_by "year", order_dir "DESC"
-  - Untuk "terlama": gunakan order_by "year", order_dir "ASC"
+  - Set order_by dan order_dir sesuai kriteria:
+    * terbesar/terkuat → order_by "magnitude", order_dir "DESC"
+    * terdalam → order_by "depth", order_dir "DESC"
+    * terdangkal/paling dangkal → order_by "depth", order_dir "ASC"
+    * terbaru → order_by "year", order_dir "DESC"
+    * terlama/pertama → order_by "year", order_dir "ASC"
 
 [MAX/MIN] JIKA pertanyaan mencari SATU nilai ekstrem tanpa kata "daftar/sebutkan" (misal: "apa gempa terbesar?", "di mana gempa paling dalam?", "kekuatan maksimal berapa?", "gempa terkuat yang pernah tercatat"):
   - Terbesar/terkuat/tertinggi/maksimal → intent "max", order_by sesuai metric, order_dir "DESC"
@@ -125,8 +155,11 @@ Panduan Intent:
   - PENTING: "gempa pertama/terlama yang tercatat" → intent "min", order_by "year", order_dir "ASC"
   - PENTING: "gempa terbaru/terakhir/paling akhir yang tercatat" → intent "max", order_by "year", order_dir "DESC"
   - PENTING: "gempa terakhir" / "gempa terkini" / "gempa paling baru" → intent "max", order_by "year", order_dir "DESC"
+  - PENTING: "data terbaru" dalam konteks daftar/gempa terbaru → filters.year = {DATA_TAHUN_TERBARU} (data paling baru yang tersedia), order_by "magnitude", order_dir "DESC"
+
 
 [AVERAGE] JIKA pertanyaan mengandung "rata-rata", "rerata", "average", atau "mean" → intent "average"
+  - WAJIB ekstrak lokasi (place) dan waktu (year/month) jika disebutkan. Contoh: "Rata-rata magnitudo gempa di Sulawesi Tengah 2023" → intent "average", metric "magnitude", place "Sulawesi Tengah", year 2023.
   - Untuk rentang tahun: gunakan min_year/max_year (misal "rata-rata 10 tahun terakhir" → min_year={DATA_TAHUN_TERBARU-9})
 
 [COUNT] JIKA pertanyaan mengandung "berapa jumlah", "berapa banyak", "berapa total", "berapa kali", "seberapa sering" (tanpa meminta detail data):
@@ -145,14 +178,50 @@ Panduan Intent:
 Kembalikan HANYA JSON."""
 
 
+# ─── Session Intent Cache (in-memory, per-session) ────────────────────────────
+# Menyimpan intent terakhir per sesi untuk inheritance pada pertanyaan pendek.
+_last_intent_cache: dict = {}
+
+def _session_key(session_id: str = None, history: list = None) -> str:
+    """Buat key unik per sesi. Prioritaskan session_id jika tersedia."""
+    if session_id:
+        return session_id
+    # Fallback: gunakan pesan user pertama dalam history sebagai anchor stabil
+    if history:
+        for m in history:
+            if m.get("role") == "user":
+                return str(hash(m.get("content", "")[:80]))
+    return "no_session"
+
+
 def parse_intent(question: str, history: list = []) -> dict:
-    history_str = "\n".join([f"{m['role']}: {m['content'][:100]}" for m in history[-6:]])
-    user_msg = f"Riwayat percakapan:\n{history_str or '(tidak ada)'}\n\nPertanyaan: {question}"
+    # Format history: user messages penuh, assistant sangat ringkas
+    history_lines = []
+    for m in history[-6:]:
+        role = m['role']
+        if role == 'user':
+            history_lines.append(f"user: {m['content'][:200]}")
+        else:
+            preview = m['content'][:60].replace('\n', ' ')
+            history_lines.append(f"assistant (ringkasan): {preview}...")
+    history_str = "\n".join(history_lines)
+    user_msg = (
+        f"Riwayat percakapan:\n{history_str or '(tidak ada)'}\n\n"
+        f"Pertanyaan baru dari user: {question}\n\n"
+        f"PERINGATAN: Jika pertanyaan baru menyebut tahun/waktu secara eksplisit "
+        f"(seperti '2024', 'tahun lalu', dll), WAJIB gunakan tahun tersebut dan ABAIKAN tahun dari riwayat."
+    )
     try:
-        text = call_groq(INTENT_SYSTEM, user_msg, max_tokens=400)
-        text = re.sub(r"```(?:json)?", "", text).strip().rstrip("```").strip()
-        return json.loads(text)
-    except Exception:
+        text = call_groq(INTENT_SYSTEM, user_msg, max_tokens=400, response_format={"type": "json_object"})
+        
+        parsed = json.loads(text)
+        with open("intent_debug.log", "a", encoding="utf-8") as f:
+            f.write(f"SUCCESS\nQ: {question}\nRAW: {text}\nPARSED: {parsed}\n\n")
+        return parsed
+    except Exception as e:
+        with open("intent_debug.log", "a", encoding="utf-8") as f:
+            f.write(f"ERROR: {e}\nQ: {question}\nRAW: {text if 'text' in locals() else 'None'}\n\n")
+        print(f"[PARSE INTENT ERROR] {e}")
         return {"intent": "general", "filters": {}, "limit": 10}
 
 
@@ -173,8 +242,10 @@ def build_sql(intent: dict) -> tuple[str, list]:
     where_parts, params = [], []
     place_filter = filters.get("place")
     if place_filter and place_filter.lower() != "indonesia":
-        where_parts.append("LOWER(place) LIKE %s")
-        params.append(f"%{place_filter.lower()}%")
+        # Gunakan ILIKE (PostgreSQL) agar case-insensitive tanpa perlu transform nilai;
+        # data di DB disimpan Title Case, tapi LLM bisa kirim lowercase/mixed
+        where_parts.append("place ILIKE %s")
+        params.append(f"%{place_filter}%")
     if filters.get("year"):
         where_parts.append("year = %s")
         params.append(int(filters["year"]))
@@ -232,7 +303,10 @@ def build_sql(intent: dict) -> tuple[str, list]:
         group, limit_clause = "", ""
     elif intent_type == "list":
         select = "SELECT date, place, magnitude, depth, depth_category, time"
-        group = f"ORDER BY magnitude {order_dir}"
+        # Gunakan order_by dari LLM intent; fallback ke magnitude jika tidak ada
+        list_order_col = order_by if order_by in SAFE_COLUMNS else "magnitude"
+        list_order_dir = order_dir if order_dir in SAFE_DIRECTIONS else "DESC"
+        group = f"ORDER BY {list_order_col} {list_order_dir}"
         limit_clause = f"LIMIT {int(limit or 10)}"
     elif intent_type == "trend":
         # Trend tanpa group_by eksplisit: default ke per-tahun
@@ -293,6 +367,62 @@ def format_data(data: list, intent: dict) -> str:
     return "\n".join(lines)
 
 
+# ─── 3b. Format Data Perbandingan ────────────────────────────────────────────
+
+def format_comparison_data(results_per_place: list, intent: dict) -> str:
+    """
+    results_per_place: list of (place_name, db_data) tuples
+    Format data dari beberapa lokasi menjadi konteks perbandingan.
+    """
+    intent_type = intent.get("intent", "general")
+    metric = intent.get("metric") or "count"
+    filters = intent.get("filters") or {}
+
+    filter_strs = []
+    if filters.get("year"): filter_strs.append(f"Tahun: {filters['year']}")
+    if filters.get("min_year"): filter_strs.append(f"Dari: {filters['min_year']}")
+    if filters.get("max_year"): filter_strs.append(f"Sampai: {filters['max_year']}")
+    if filters.get("depth_category"): filter_strs.append(f"Kedalaman: {filters['depth_category']}")
+
+    lines = ["🔀 DATA PERBANDINGAN ANTAR LOKASI"]
+    if filter_strs:
+        lines.append(f"📌 Filter: {', '.join(filter_strs)}")
+    lines.append("-" * 40)
+
+    for place_name, data in results_per_place:
+        lines.append(f"\n📍 {place_name}:")
+        if not data:
+            lines.append("  (tidak ada data)")
+            continue
+        if intent_type == "count":
+            row = data[0]
+            lines.append(f"  • Total gempa: {row.get('total_earthquakes', '?')}")
+        elif intent_type == "average":
+            row = data[0]
+            col = metric if metric in ("magnitude", "depth") else "magnitude"
+            lines.append(f"  • Rata-rata {col}: {row.get(f'avg_{col}', '?')}")
+            lines.append(f"  • Total sample: {row.get('total_earthquakes', '?')}")
+        elif intent_type in ("max", "min"):
+            row = data[0]
+            lines.append(f"  • Magnitudo: M{row.get('magnitude', '?')}")
+            lines.append(f"  • Kedalaman: {row.get('depth', '?')} km ({row.get('depth_category', '?')})")
+            lines.append(f"  • Tanggal: {row.get('date', '?')}")
+        elif intent_type == "list":
+            for i, row in enumerate(data[:5], 1):
+                lines.append(f"  {i}. M{row.get('magnitude')} | {row.get('date')} | {row.get('depth')} km")
+        elif intent_type == "trend":
+            for row in data[:5]:
+                lines.append(f"  • {row.get('year', row.get('month'))}: {row.get('count')} kejadian")
+            if len(data) > 5:
+                lines.append(f"  ... (+{len(data)-5} baris lagi)")
+        else:
+            row = data[0]
+            row_str = " | ".join([f"{k}: {v}" for k, v in row.items()])
+            lines.append(f"  {row_str}")
+
+    return "\n".join(lines)
+
+
 # ─── 4. Generate Response via Groq ───────────────────────────────────────────
 
 ANSWER_SYSTEM = """Kamu adalah asisten ahli seismologi Indonesia yang ramah.
@@ -320,8 +450,10 @@ TUGAS UTAMA: Jawablah pertanyaan user dengan panduan berikut:
    d. PENUTUP: Akhiri dengan "Ada lagi yang bisa saya bantu?" atau variasi natural lainnya.
 9. JANGAN mengulang data mentah di seksi Insight. Insight harus berisi INTERPRETASI dan makna, bukan restatement angka.
 10. OUT OF DOMAIN: JIKA pertanyaan SAMA SEKALI TIDAK ADA HUBUNGANNYA dengan gempa bumi, seismologi, atau mitigasi bencana (misal: resep masakan, percintaan, coding, kekerasan, dll), ABAIKAN data yang ada dan tolak dengan sopan. Katakan bahwa kamu adalah asisten ahli seismologi dan hanya bisa menjawab seputar gempa.
-11. DATA TIDAK RELEVAN: JIKA pertanyaan masih seputar gempa, TETAPI data yang diberikan sama sekali tidak relevan dengan pertanyaan (misal data berisi hari sedangkan user bertanya wilayah), JANGAN menjawab dengan data itu. Katakan: "Maaf, tampaknya ada kendala dalam mencari informasi tersebut. Coba ulangi pertanyaannya?"
+11. DATA TIDAK RELEVAN: JIKA pertanyaan jelas dan spesifik tentang gempa, TETAPI data yang diberikan memiliki struktur yang BENAR-BENAR BERBEDA (misal user bertanya tentang wilayah tapi data berisi hari-hari dalam seminggu, atau user bertanya total tapi data berisi list detail), JANGAN menjawab dengan data itu. Katakan: "Maaf, tampaknya ada kendala dalam mencari informasi tersebut. Coba ulangi pertanyaannya?" PENTING: JANGAN terapkan aturan ini jika pertanyaan pendek/ambigu — pertanyaan pendek seperti 'jika 2021?' adalah kelanjutan sesi, jawab saja berdasarkan data yang ada.
 12. FORMAT ANGKA: Gunakan TITIK (.) sebagai pemisah desimal, BUKAN koma. Contoh: tulis "41.561 km" bukan "41,561 km".
+13. LARANGAN KRITIS — JANGAN TOLAK DATA YANG SUDAH ADA: Jika bagian 'Data' sudah berisi angka/baris nyata (bukan kosong), DILARANG KERAS mengatakan 'saya tidak memiliki data', 'data tidak tersedia', 'saya hanya punya data tahun X', atau kalimat serupa. Konteks Query di bagian atas prompt menunjukkan tahun/filter yang SUDAH dieksekusi ke database. Percayai data tersebut dan sajikan apa adanya.
+14. KONTEKS QUERY ADALAH FINAL: Bagian 'Konteks Query' di prompt menunjukkan parameter pencarian yang sudah digunakan. Gunakan informasi itu sebagai pembuka jawaban (misal 'Berdasarkan data tahun 2026:'). JANGAN menggantinya dengan tahun atau filter lain dari riwayat percakapan.
 """
 
 CORRECTION_SYSTEM = """Kamu adalah asisten ahli seismologi yang sangat teliti.
@@ -333,10 +465,42 @@ TUGAS: Gunakan Data yang benar di bawah ini untuk memberikan jawaban yang akurat
 - Terjemahkan istilah bahasa Inggris (misal "Sunday") ke bahasa user (misal "Minggu")."""
 
 
-def generate_response(question: str, context: str, history: list, system_prompt: str = ANSWER_SYSTEM) -> str:
-    history_str = "\n".join([f"{m['role'].title()}: {m['content'][:200]}" for m in history[-6:]])
-    # Prompt grounding diperkuat untuk Groq agar tidak halusinasi
-    user_msg = f"PENTING: Gunakan HANYA 'Data' di bawah ini sebagai sumber jawaban. Jawablah senatural mungkin tanpa merujuk ke database.\n\nRiwayat percakapan:\n{history_str or '(percakapan baru)'}\n\nData:\n{context}\n\nPertanyaan User: {question}\n\nJawaban:"
+def generate_response(question: str, context: str, history: list, intent: dict = None, system_prompt: str = ANSWER_SYSTEM) -> str:
+    # Bangun query context eksplisit dari intent agar LLM tidak terkecoh riwayat
+    query_ctx_parts = []
+    if intent:
+        filters = intent.get("filters") or {}
+        if filters.get("year"):       query_ctx_parts.append(f"Tahun: {filters['year']}")
+        if filters.get("min_year"):   query_ctx_parts.append(f"Dari tahun: {filters['min_year']}")
+        if filters.get("max_year"):   query_ctx_parts.append(f"Sampai tahun: {filters['max_year']}")
+        if filters.get("place"):      query_ctx_parts.append(f"Wilayah: {filters['place']}")
+        if filters.get("places"):     query_ctx_parts.append(f"Perbandingan: {' vs '.join(filters['places'])}")
+        if filters.get("month"):      query_ctx_parts.append(f"Bulan: {filters['month']}")
+        if intent.get("intent"):      query_ctx_parts.append(f"Tipe query: {intent['intent']}")
+    query_ctx = ", ".join(query_ctx_parts) if query_ctx_parts else "(tidak ada filter spesifik — data keseluruhan)"
+
+    # Format history untuk answer generator — ringkas agar tidak kontaminasi jawaban
+    history_lines = []
+    for m in history[-4:]:  # Batas 4 pesan terakhir
+        role = m['role'].title()
+        # Potong pendek untuk mencegah konteks lama mendominasi
+        preview = m['content'][:120].replace('\n', ' ')
+        history_lines.append(f"{role}: {preview}..." if len(m['content']) > 120 else f"{role}: {m['content']}")
+    history_str = "\n".join(history_lines)
+
+    # Prompt grounding: query context ditempatkan PERTAMA agar menjadi anchor utama LLM
+    user_msg = (
+        f"=== KONTEKS QUERY (PARAMETER YANG SUDAH DIEKSEKUSI KE DATABASE) ===\n"
+        f"{query_ctx}\n"
+        f"=== AKHIR KONTEKS QUERY ===\n\n"
+        f"PENTING: Gunakan HANYA bagian 'Data' di bawah sebagai sumber angka/fakta. "
+        f"JANGAN mengambil angka dari riwayat percakapan. "
+        f"JANGAN mengatakan data tidak ada jika bagian Data sudah berisi baris nyata.\n\n"
+        f"Riwayat percakapan (hanya untuk konteks gaya bicara, BUKAN sumber data):\n"
+        f"{history_str or '(percakapan baru)'}\n\n"
+        f"Data (SATU-SATUNYA sumber kebenaran):\n{context}\n\n"
+        f"Pertanyaan User: {question}\n\nJawaban:"
+    )
     try:
         return call_groq(system_prompt, user_msg, max_tokens=600)
     except Exception as e:
@@ -457,7 +621,7 @@ def validate_response(
         print(f"[VALIDATION] Mismatch detected (DB expected {db_numbers}, but LLM said {llm_numbers}). Correcting...")
         db_context = format_data(db_data, intent)
         # Panggil Groq lagi dengan prompt koreksi
-        corrected_answer = generate_response(question, db_context, history, system_prompt=CORRECTION_SYSTEM)
+        corrected_answer = generate_response(question, db_context, history, intent=intent, system_prompt=CORRECTION_SYSTEM)
         return False, corrected_answer
 
     return True, llm_answer
@@ -465,15 +629,108 @@ def validate_response(
 
 # ─── 7. Main Entry Point ─────────────────────────────────────────────────────
 
-def process_query(question: str, history: list = []) -> dict:
+# Kata-kata yang menandakan pertanyaan pendek adalah kelanjutan / variasi tahun saja
+_SHORT_Q_MARKERS = re.compile(
+    r'^(jika|kalau|kalo|bagaimana|gimana|untuk|di|pada|tahun|year|dan|what about|how about)[\s\?]*'
+    r'(19\d{2}|20\d{2})[\s\?]*$',
+    re.IGNORECASE
+)
+
+def process_query(question: str, history: list = [], session_id: str = None) -> dict:
+    sess_key = _session_key(session_id=session_id, history=history)
+    last_intent = _last_intent_cache.get(sess_key)
+
     intent = parse_intent(question, history)
     intent_type = intent.get("intent", "general")
     print(f"[INTENT] {json.dumps(intent)}")
 
+    # ── Normalisasi: ubah string "null" dari LLM → None Python ───────────────
+    for field in ("group_by", "order_by", "order_dir", "metric"):
+        if intent.get(field) in ("null", "none", "", "Null"):
+            intent[field] = None
+
+    # ── Pastikan filters selalu dict ──────────────────────────────────────────
+    if "filters" not in intent or intent["filters"] is None:
+        intent["filters"] = {}
+    filters = intent["filters"]
+
+    # ── Post-processing 1: ekstrak tahun eksplisit dari teks pertanyaan (REGEX) ─
+    q_lower = question.lower()
+    years_in_question = [int(y) for y in re.findall(r'\b(19\d{2}|20\d{2})\b', question)]
+    if years_in_question:
+        if len(years_in_question) >= 2:
+            min_y, max_y = min(years_in_question), max(years_in_question)
+            filters["min_year"] = min_y
+            filters["max_year"] = max_y
+            filters.pop("year", None)
+            print(f"[POST-PROC REGEX] Rentang tahun: {min_y}–{max_y}")
+        else:
+            explicit_year = years_in_question[0]
+            filters["year"] = explicit_year
+            filters.pop("min_year", None)
+            filters.pop("max_year", None)
+            print(f"[POST-PROC REGEX] Tahun eksplisit: {explicit_year}")
+
+    # ── Post-processing 2: inheritance struktural dari last_intent ────────────
+    # Jika pertanyaan PENDEK (hanya ganti tahun), inherit group_by/order_by/limit
+    # dari intent sesi sebelumnya agar konteks terjaga tanpa bergantung LLM.
+    is_short_year_swap = bool(_SHORT_Q_MARKERS.match(question.strip()))
+    if not is_short_year_swap and len(question.strip()) <= 30 and years_in_question:
+        # Heuristik tambahan: pendek + ada tahun → kemungkinan besar year-swap
+        is_short_year_swap = True
+
+    if is_short_year_swap and last_intent:
+        print(f"[POST-PROC INHERIT] Pertanyaan pendek terdeteksi. Mewarisi struktur dari last_intent.")
+        # Warisi field struktural jika LLM tidak mengisinya dengan benar
+        for field in ("group_by", "order_by", "order_dir", "limit"):
+            if not intent.get(field) and last_intent.get(field):
+                intent[field] = last_intent[field]
+                print(f"  ↳ Inherited {field} = {last_intent[field]}")
+        # Warisi filter non-temporal (place, depth_category, dll) dari last_intent
+        last_filters = last_intent.get("filters") or {}
+        for fk in ("place", "depth_category", "min_magnitude", "max_magnitude"):
+            if not filters.get(fk) and last_filters.get(fk):
+                filters[fk] = last_filters[fk]
+                print(f"  ↳ Inherited filter.{fk} = {last_filters[fk]}")
+        # Jangan warisi filter temporal (year/min_year/max_year) — regex sudah handle
+
+    # ── Post-processing 3: deteksi "data terbaru" → paksa filter year ─────────
+    FRASA_TERBARU = ["data terbaru", "data paling baru", "paling terkini"]
+    has_temporal = any(filters.get(k) for k in ["year", "min_year", "max_year"])
+    if any(frasa in q_lower for frasa in FRASA_TERBARU) and not has_temporal:
+        filters["year"] = DATA_TAHUN_TERBARU
+        print(f"[POST-PROC] Frasa 'data terbaru' → year={DATA_TAHUN_TERBARU}")
+
+    # ── Greeting / chit-chat detection (bypass DB) ───────────────────────────
+    # Pertanyaan berupa sapaan tidak boleh memicu DB query atau kontaminasi history.
+    _GREETING_PATTERN = re.compile(
+        r'^\s*(halo|hai|hi|hello|hey|selamat\s+(pagi|siang|sore|malam)|'
+        r'permisi|terima\s*kasih|makasih|thanks?|oke|ok|siap|ya|mantap|'
+        r'bagus|good|great|keren|boleh|lanjut)\s*[\!\.\?]*\s*$',
+        re.IGNORECASE
+    )
+    if _GREETING_PATTERN.match(question):
+        print("[MODE] Greeting/chit-chat — bypass DB")
+        greeting_ctx = (
+            "User mengirim sapaan atau respon singkat. "
+            "Balas dengan ramah dan tanyakan apa yang bisa dibantu seputar gempa bumi Indonesia. "
+            "JANGAN mengungkit topik percakapan sebelumnya."
+        )
+        answer = generate_response(question, greeting_ctx, [], intent=None)
+        return {
+            "answer": answer,
+            "validated": True,
+            "source": "llm-knowledge",
+            "method": "greeting",
+            "sql_query": None,
+            "data_count": 0,
+            "fetched_data": [],
+        }
+
     # Knowledge mode: bypass database
     if intent_type == "knowledge":
         print("[MODE] Knowledge/Educational")
-        answer = generate_response(question, "(Pertanyaan edukasi umum, gunakan pengetahuan internal)", history)
+        answer = generate_response(question, "(Pertanyaan edukasi umum, gunakan pengetahuan internal)", history, intent=None)
         return {
             "answer": answer,
             "validated": True,
@@ -484,6 +741,59 @@ def process_query(question: str, history: list = []) -> dict:
             "fetched_data": [],
         }
 
+    # ── COMPARISON MODE: multi-place query ────────────────────────────────────
+    places_list = filters.get("places")
+    if isinstance(places_list, list) and len(places_list) >= 2:
+        print(f"[MODE] Comparison — {len(places_list)} lokasi: {places_list}")
+        results_per_place = []
+        sql_queries = []
+
+        for place_name in places_list:
+            # Buat salinan intent dengan filter place tunggal untuk tiap lokasi
+            intent_copy = json.loads(json.dumps(intent))  # deep copy
+            intent_copy["filters"]["place"] = place_name
+            intent_copy["filters"]["places"] = None
+            try:
+                sql_single, params_single = build_sql(intent_copy)
+                sql_queries.append(f"{place_name}: {sql_single} | PARAMS: {params_single}")
+                print(f"  [SQL-{place_name}] {sql_single} | {params_single}")
+            except Exception as e:
+                sql_single, params_single = "SELECT COUNT(*) FROM earthquakes WHERE place ILIKE %s", [f"%{place_name}%"]
+                print(f"  [SQL BUILD ERROR-{place_name}] {e}")
+
+            data_single = execute_query(sql_single, params_single)
+            print(f"  [DATA-{place_name}] {len(data_single)} rows")
+            results_per_place.append((place_name, data_single))
+
+        total_rows = sum(len(d) for _, d in results_per_place)
+        context = format_comparison_data(results_per_place, intent)
+        all_db_data = [row for _, data in results_per_place for row in data]
+
+        comparison_question = (
+            f"{question}\n\n"
+            f"[INSTRUKSI UNTUK LLM: Ini adalah pertanyaan PERBANDINGAN antara {len(places_list)} lokasi. "
+            f"Bandingkan data dari masing-masing lokasi secara eksplisit. "
+            f"Sebutkan angka untuk tiap lokasi, lalu simpulkan mana yang lebih tinggi/rendah/besar/kecil sesuai pertanyaan. "
+            f"Gunakan tabel Markdown untuk menyajikan perbandingan.]"
+        )
+
+        raw_answer = generate_response(comparison_question, context, history, intent=intent)
+        validated, final_answer = validate_response(comparison_question, raw_answer, all_db_data, intent, history)
+        print(f"[VALIDATION] validated={validated}")
+
+        _last_intent_cache[sess_key] = intent
+        all_sql = "; ".join(sql_queries)
+        return {
+            "answer": final_answer,
+            "validated": validated,
+            "source": "supabase",
+            "method": "comparison",
+            "sql_query": all_sql,
+            "data_count": total_rows,
+            "fetched_data": all_db_data,
+        }
+
+    # ── Single-place / general mode ────────────────────────────────────────────
     try:
         sql, params = build_sql(intent)
         print(f"[SQL] {sql} | PARAMS: {params}")
@@ -495,11 +805,39 @@ def process_query(question: str, history: list = []) -> dict:
     print(f"[DATA] Returned {len(db_data)} rows")
 
     context = format_data(db_data, intent)
-    raw_answer = generate_response(question, context, history)
+
+    # ── Rekonstruksi pertanyaan deskriptif untuk short year-swap ─────────────
+    # "jika 2021?" → LLM tidak tahu itu kelanjutan. Beri konteks lebih jelas.
+    effective_question = question
+    if is_short_year_swap and last_intent:
+        # Bangun kembali pertanyaan dari intent: "[topik] [lokasi] [tahun]"
+        topic_map = {
+            ("count", "place"): "provinsi dengan gempa terbanyak",
+            ("count", "year"): "jumlah gempa per tahun",
+            ("count", "month"): "jumlah gempa per bulan",
+            ("average", None): "rata-rata gempa",
+            ("max", None): "gempa terbesar",
+            ("min", None): "gempa terkecil",
+            ("trend", "year"): "tren gempa per tahun",
+            ("list", None): "daftar gempa",
+        }
+        itype = intent.get("intent", "general")
+        grpby = intent.get("group_by")
+        topic = topic_map.get((itype, grpby)) or topic_map.get((itype, None)) or "data gempa"
+        year_part = f"tahun {filters['year']}" if filters.get("year") else ""
+        place_part = f"di {filters['place']}" if filters.get("place") else ""
+        effective_question = f"{topic} {place_part} {year_part}".strip()
+        print(f"[RECONSTRUCT] '{question}' → '{effective_question}'")
+
+    raw_answer = generate_response(effective_question, context, history, intent=intent)
 
     # Validation & Potential Correction
-    validated, final_answer = validate_response(question, raw_answer, db_data, intent, history)
+    validated, final_answer = validate_response(effective_question, raw_answer, db_data, intent, history)
     print(f"[VALIDATION] validated={validated}")
+
+    # ── Simpan intent ke cache untuk inheritance sesi berikutnya ─────────────
+    _last_intent_cache[sess_key] = intent
+    print(f"[CACHE] Saved intent for sess_key={sess_key[:8]}... → group_by={intent.get('group_by')}, year={intent.get('filters', {}).get('year')}")
 
     return {
         "answer": final_answer,

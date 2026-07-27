@@ -117,7 +117,7 @@ def chat(request: ChatRequest):
     save_message(session_id, "user", request.query)
 
     # Proses RAG pipeline
-    result = process_query(request.query, history)
+    result = process_query(request.query, history, session_id=session_id)
 
     # Simpan jawaban assistant
     save_message(session_id, "assistant", result["answer"])

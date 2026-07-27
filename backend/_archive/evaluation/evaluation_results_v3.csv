@@ -1,0 +1,414 @@
+intent_label,question,answer,contexts,faithfulness,answer_relevancy,ground_truth,user_input,retrieved_contexts,response,reference
+count,Berapa total gempa yang terjadi di Indonesia sepanjang tahun 2023?,"Halo! Berdasarkan data seismisitas yang tercatat untuk tahun 2023:
+
+**Total Gempa:** 800
+
+💡 Insight Singkat: Tahun 2023 mencatatkan jumlah gempa yang cukup tinggi di Indonesia, menunjukkan aktivitas tektonik yang signifikan di wilayah tersebut.",['📌 Filter Data: Tahun: 2023\n------------------------------\n1. total_earthquakes: 800'],0.333333333,0.914304683,,,,,
+count,Berapa jumlah gempa yang terjadi di Aceh pada tahun 2022?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Aceh pada tahun 2022:
+
+**Jumlah Gempa:** 23
+
+💡 Insight Singkat: Jumlah gempa yang terjadi di Aceh pada tahun 2022 relatif sedikit dibandingkan dengan tahun-tahun lainnya. Ini menunjukkan bahwa wilayah Aceh relatif stabil secara seismis.
+
+Ada lagi yang bisa saya bantu?","['📌 Filter Data: Lokasi: Aceh, Tahun: 2022\n------------------------------\n1. total_earthquakes: 23']",0.333333333,0.847911192,,,,,
+count,Berapa jumlah gempa dangkal yang pernah terjadi di Maluku?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Maluku dengan kedalaman dangkal:
+
+**Jumlah Gempa Dangkal:** 35006
+
+💡 Insight Singkat: Jumlah gempa dangkal di Maluku sangat tinggi, menunjukkan bahwa wilayah ini rentan terhadap gempa bumi yang dapat menyebabkan kerusakan pada struktur bangunan dan infrastruktur.
+
+Ada lagi yang bisa saya bantu?","['📌 Filter Data: Lokasi: Maluku, Kedalaman: dangkal\n------------------------------\n1. total_earthquakes: 35006']",0.333333333,0.672863805,,,,,
+count,Berapa banyak gempa yang terjadi dalam 10 tahun terakhir di Indonesia?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Indonesia:
+
+**Total Gempa:** 41976
+
+💡 Insight Singkat: Angka ini menunjukkan bahwa Indonesia merupakan salah satu wilayah dengan frekuensi gempa yang tinggi di dunia.",['1. total_earthquakes: 41976'],0,0.826090394,,,,,
+count,Berapa total gempa yang tercatat selama dekade 2010-an?,"Halo! Berdasarkan data seismisitas yang tercatat untuk dekade 2010-an:
+
+**Total Gempa:** 70721
+
+💡 Insight Singkat: Dekade 2010-an mencatat jumlah gempa yang signifikan, menunjukkan aktivitas tektonik yang terus berlangsung di permukaan bumi.
+
+Ada lagi yang bisa saya bantu?",['1. total_earthquakes: 70721'],0.333333333,0.695998369,,,,,
+average,Berapa rata-rata kekuatan gempa di Jawa Barat?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Jawa Barat:
+
+**Rata-rata Magnitudo:** 3.682
+
+💡 Insight Singkat: Magnitudo rata-rata 3.682 menunjukkan bahwa gempa di Jawa Barat umumnya berkekuatan ringan hingga sedang, namun tidak terlalu besar untuk menyebabkan kerusakan signifikan.",['📌 Filter Data: Lokasi: Jawa Barat\n------------------------------\n1. avg_magnitude: 3.682 | total_earthquakes: 2061'],0.333333333,0.686522876,,,,,
+average,Berapa rata-rata kedalaman gempa di Maluku Utara?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Maluku Utara:
+
+**Rata-rata Kedalaman Gempa:** 41.561 km
+
+💡 Insight Singkat: Rata-rata kedalaman gempa di Maluku Utara relatif dangkal, menunjukkan potensi daya rusak tinggi di permukaan.",['📌 Filter Data: Lokasi: Maluku Utara\n------------------------------\n1. avg_depth: 41.561 | total_earthquakes: 21803'],0.333333333,0.619905676,,,,,
+average,Berapa rata-rata magnitudo gempa di Sulawesi Tengah tahun 2023?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Sulawesi Tengah pada tahun 2023:
+
+**Rata-rata Magnitudo:** 4.796
+
+💡 Insight Singkat: Magnitudo rata-rata sebesar 4.796 menunjukkan bahwa gempa-gempa di Sulawesi Tengah pada tahun 2023 memiliki intensitas ringan hingga sedang.","['📌 Filter Data: Lokasi: Sulawesi Tengah, Tahun: 2023\n------------------------------\n1. avg_magnitude: 4.796 | total_earthquakes: 28']",0.666666667,0.928036454,,,,,
+average,Berapa rata-rata kedalaman gempa dalam 5 tahun terakhir di Indonesia?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Indonesia:
+
+**Rata-rata Kedalaman Gempa:** 82.061 km
+
+💡 Insight Singkat: Rata-rata kedalaman gempa di Indonesia relatif dangkal, yang berarti potensi daya rusak tinggi di permukaan.",['1. avg_depth: 82.061 | total_earthquakes: 4442'],0,0.870403069,,,,,
+average,Berapa rata-rata magnitudo gempa selama dekade terakhir di Sumatera?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Sumatera:
+
+**Rata-rata Magnitudo:** 3.841
+
+💡 Insight Singkat: Magnitudo rata-rata sebesar 3.841 menunjukkan bahwa gempa-gempa di Sumatera pada umumnya masih dalam kategori kecil dan tidak terasa secara signifikan.",['📌 Filter Data: Lokasi: Sumatera\n------------------------------\n1. avg_magnitude: 3.841 | total_earthquakes: 2019'],0.5,0.765005086,,,,,
+max,Kekuatan gempa maksimal di Indonesia berapa?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Indonesia:
+
+**Kekuatan Gempa Maksimal:** M9.0
+
+💡 Insight Singkat: Gempa bumi dengan kekuatan M9.0 di Indonesia merupakan salah satu gempa terkuat yang pernah tercatat, dengan potensi daya rusak sangat besar.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Indonesia\n------------------------------\n📋 Data Gempa MAX:\n  1. 12/26/2004 | Aceh | M9.0 | 30.0 km'],0.333333333,0.869113268,,,,,
+max,Berapa kekuatan gempa terbesar yang pernah terjadi di Sulawesi Utara?,"Berdasarkan catatan seismik untuk wilayah Sulawesi Utara:
+
+**Kekuatan Gempa MAX:** 7.8
+💡 Insight Singkat: Gempa dengan kekuatan 7.8 di Sulawesi Utara merupakan gempa besar yang dapat menyebabkan kerusakan signifikan pada infrastruktur dan lingkungan sekitar.
+🔍 Insight Menarik:
+ * Gempa ini memiliki kedalaman 35.0 km, yang berarti potensi daya rusaknya masih cukup tinggi di permukaan.
+ * Magnitudo 7.8 ini termasuk dalam kategori gempa besar yang dapat menyebabkan kerusakan signifikan pada bangunan dan infrastruktur.
+ * Gempa ini menunjukkan bahwa Sulawesi Utara rentan terhadap gempa bumi yang kuat dan perlu dilakukan mitigasi untuk mengurangi dampaknya.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Sulawesi Utara\n------------------------------\n📋 Data Gempa MAX:\n  1. 4/1/1936 | Sulawesi Utara | M7.8 | 35.0 km'],0.142857143,0.941551126,,,,,
+max,Gempa terbesar apa yang pernah tercatat dalam data terbaru kita?,"Halo! Berdasarkan data seismisitas yang tercatat untuk tahun 2024:
+
+**Gempa Terbesar:**
+| Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- |
+| 1/8/2024 | Sulawesi Utara | M6.7 | 62.574 km |
+
+💡 Insight Singkat: Gempa dengan magnitudo M6.7 pada tanggal 1 Agustus 2024 di Sulawesi Utara merupakan gempa terbesar yang tercatat dalam data terbaru kita. Gempa ini memiliki potensi daya rusak yang signifikan.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Tahun: 2024\n------------------------------\n📋 Data Gempa MAX:\n  1. 1/8/2024 | Sulawesi Utara | M6.7 | 62.574 km'],0.8,0.725022013,,,,,
+max,Gempa terdalam apa yang pernah terjadi di Indonesia?,"Halo! Berdasarkan data seismik untuk wilayah Indonesia:
+
+**Data:**
+| Tanggal | Lokasi | Magnitudo | Kedalaman (km) |
+| --- | --- | --- | --- |
+| 3/3/2018 | Maluku | M4.6 | 750.0 |
+
+💡 Insight Singkat: Gempa terdalam yang pernah terjadi di Indonesia memiliki kedalaman sekitar 750 km, yang berpotensi jarang merusak permukaan.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Indonesia\n------------------------------\n📋 Data Gempa MAX:\n  1. 3/3/2018 | Maluku | M4.6 | 750.0 km\n  2. 7/30/2018 | Sulawesi Tengah | M3.9 | 750.0 km\n  3. 5/26/2010 | Maluku | M3.3 | 750.0 km\n  4. 3/10/2012 | Nusa Tenggara Timur | M3.5 | 750.0 km\n  5. 7/13/2017 | Sulawesi Tenggara | M4.0 | 750.0 km\n  6. 4/13/2016 | Maluku | M3.5 | 750.0 km\n  7. 4/20/2018 | Maluku | M4.7 | 750.0 km\n  8. 6/5/2016 | Maluku | M3.9 | 750.0 km\n  9. 3/23/2018 | Maluku Utara | M5.1 | 750.0 km\n  10. 2/25/2018 | Jawa Timur | M3.7 | 750.0 km'],0.666666667,0.924481947,,,,,
+max,Gempa terakhir apa yang tercatat dalam data kita?,"Berdasarkan data seismisitas yang tercatat untuk wilayah Indonesia:
+
+**Gempa Terakhir:**
+| Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- |
+| 1/2/2024 | Nusa Tenggara Timur | M4.9 | 35.0 km |
+
+💡 Insight Singkat: Gempa terakhir yang tercatat memiliki magnitudo M4.9 dan kedalaman 35 km, yang dapat menyebabkan perubahan kecil pada struktur tanah.
+
+Ada lagi yang bisa saya bantu?",['📋 Data Gempa MAX:\n  1. 1/2/2024 | Nusa Tenggara Timur | M4.9 | 35.0 km'],0.8,0.743359822,,,,,
+min,Di mana lokasi gempa bumi paling dangkal yang tercatat?,"Menurut catatan gempa bumi yang tercatat, gempa bumi paling dangkal yang tercatat terjadi pada tanggal 1/5/1900 di Bengkulu dengan kedalaman 0,0 km.",['📌 Filter Data: Kedalaman: dangkal\n------------------------------\n📋 Data Gempa MIN:\n  1. 1/5/1900 | Bengkulu | M7.0 | 0.0 km'],1,0.906473972,,,,,
+min,Gempa bumi pertama apa yang tercatat dalam data kita?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Indonesia:
+
+**Gempa Bumi Pertama:** 
+| Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- |
+| 1/5/1900 | Bengkulu | M7.0 | 0.0 km |
+
+💡 Insight Singkat: Gempa bumi pertama yang tercatat dalam data ini memiliki magnitudo 7.0 dan kedalaman 0 km, menunjukkan potensi daya rusak tinggi di permukaan.",['📋 Data Gempa MIN:\n  1. 1/5/1900 | Bengkulu | M7.0 | 0.0 km\n  2. 10/7/1900 | Papua Pegunungan | M6.9 | 0.0 km\n  3. 11/25/1901 | Sulawesi Utara | M7.0 | 0.0 km\n  4. 3/28/1902 | Papua Barat Daya | M6.9 | 0.0 km\n  5. 1/22/1905 | Gorontalo | M7.8 | 90.0 km\n  6. 6/25/1907 | Maluku Utara | M7.5 | 200.0 km\n  7. 11/21/1907 | Aceh | M6.8 | 0.0 km\n  8. 3/17/1909 | Sulawesi Tengah | M6.9 | 0.0 km\n  9. 4/25/1909 | Sulawesi Utara | M7.0 | 100.0 km\n  10. 5/30/1909 | Maluku | M7.2 | 100.0 km'],0.8,0.814670019,,,,,
+min,Berapa magnitudo terkecil gempa yang pernah tercatat di Jawa Timur?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Jawa Timur:
+
+**Magnitudo Terkecil:** 1.6
+
+💡 Insight Singkat: Magnitudo 1.6 adalah kategori mikro, yang biasanya tidak terasa oleh manusia.",['📌 Filter Data: Lokasi: Jawa Timur\n------------------------------\n📋 Data Gempa MIN:\n  1. 11/28/2012 | Jawa Timur | M1.6 | 46.0 km'],0,0.945147717,,,,,
+min,Apa gempa dengan kekuatan paling kecil yang terjadi di Indonesia?,"Berdasarkan data seismik untuk wilayah Indonesia:
+
+**Data:**
+**Gempa dengan Kekuatan Paling Kecil:**
+| Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- |
+| 11/4/2017 | Gorontalo | M1.1 | 10.0 km |
+
+💡 Insight Singkat: Gempa dengan kekuatan paling kecil yang terjadi di Indonesia memiliki magnitudo M1.1 dan terjadi di Gorontalo pada tanggal 11 April 2017.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Indonesia\n------------------------------\n📋 Data Gempa MIN:\n  1. 11/4/2017 | Gorontalo | M1.1 | 10.0 km\n  2. 3/31/2018 | Gorontalo | M1.1 | 33.0 km\n  3. 1/10/2018 | Gorontalo | M1.2 | 80.0 km\n  4. 1/10/2018 | Papua Barat Daya | M1.3 | 10.0 km\n  5. 3/31/2018 | Gorontalo | M1.3 | 80.0 km\n  6. 4/6/2018 | Gorontalo | M1.3 | 25.0 km\n  7. 10/30/2011 | Sulawesi Selatan | M1.4 | 12.0 km\n  8. 12/24/2015 | Gorontalo | M1.4 | 145.0 km\n  9. 5/22/2017 | Gorontalo | M1.4 | 66.0 km\n  10. 7/15/2017 | Gorontalo | M1.4 | 39.0 km'],1,0.990409263,,,,,
+min,Gempa dengan kedalaman paling kecil yang tercatat di Sulawesi apa?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Sulawesi dengan kedalaman dangkal:
+
+**Kedalaman Paling Kecil:** 0.0 km
+
+💡 Insight Singkat: Kedalaman 0.0 km menunjukkan bahwa gempa-gempa tersebut terjadi di permukaan bumi, sehingga potensi daya rusaknya tinggi di permukaan.
+
+Ada lagi yang bisa saya bantu?","['📌 Filter Data: Lokasi: Sulawesi, Kedalaman: dangkal\n------------------------------\n📋 Data Gempa MIN:\n  1. 3/8/1995 | Sulawesi Utara | M4.1 | 0.0 km\n  2. 4/19/1995 | Sulawesi Tengah | M3.4 | 0.0 km\n  3. 6/15/1981 | Sulawesi Utara | M4.0 | 0.0 km\n  4. 1/31/1995 | Sulawesi Utara | M4.1 | 0.0 km\n  5. 4/29/1960 | Sulawesi Tengah | M6.0 | 0.0 km\n  6. 6/15/1981 | Sulawesi Utara | M4.0 | 0.0 km\n  7. 1/4/1981 | Sulawesi Selatan | M5.1 | 0.0 km\n  8. 4/29/1960 | Sulawesi Tengah | M5.5 | 0.0 km\n  9. 4/29/1960 | Sulawesi Tengah | M5.6 | 0.0 km\n  10. 4/20/1995 | Sulawesi Utara | M4.2 | 0.0 km']",0.666666667,0.77182212,,,,,
+list,Sebutkan 3 gempa terbesar di Papua,"Berdasarkan catatan seismik untuk wilayah Papua:
+
+**Gempa Terbesar di Papua:**
+| No. | Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- | --- |
+| 1. | 1/10/1971 | Papua | M8.1 | 33.0 km |
+| 2. | 5/26/1914 | Papua | M8.1 | 15.0 km |
+| 3. | 1/13/1916 | Papua Pegunungan | M7.7 | 35.0 km |
+
+💡 Insight Singkat: Tiga gempa terbesar di Papua memiliki magnitudo yang sangat besar, dengan dua gempa memiliki magnitudo M8.1 dan satu gempa memiliki magnitudo M7.7. Kedalaman gempa juga relatif dangkal, sehingga potensi daya rusak di permukaan sangat tinggi.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Papua\n------------------------------\n📋 Data Gempa LIST:\n  1. 1/10/1971 | Papua | M8.1 | 33.0 km\n  2. 5/26/1914 | Papua | M8.1 | 15.0 km\n  3. 1/13/1916 | Papua Pegunungan | M7.7 | 35.0 km'],0.375,0.809689869,,,,,
+list,Tampilkan daftar 5 gempa terkuat di Nusa Tenggara Timur,"Berdasarkan catatan seismik untuk wilayah Nusa Tenggara Timur:
+
+**Daftar 5 Gempa Terkuat:**
+| No. | Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- | --- |
+| 1. | 10/20/1938 | Nusa Tenggara Timur | M7.3 | 90.0 km |
+| 2. | 11/11/2004 | Nusa Tenggara Timur | M7.2 | 33.0 km |
+| 3. | 3/22/1944 | Nusa Tenggara Timur | M7.2 | 156.6 km |
+| 4. | 2/20/1954 | Nusa Tenggara Timur | M7.0 | 540.5 km |
+| 5. | 6/25/1953 | Nusa Tenggara Timur | M7.0 | 15.0 km |
+
+💡 Insight Singkat: Gempa-gempa terkuat di Nusa Tenggara Timur memiliki magnitudo di atas 7,0, yang berpotensi menyebabkan kerusakan signifikan pada infrastruktur dan lingkungan sekitar.
+
+🔍 Insight Menarik:
+* Gempa M7.3 pada 10/20/1938 memiliki kedalaman 90,0 km, yang berpotensi menyebabkan kerusakan pada permukaan.
+* Gempa M7.2 pada 11/11/2004 memiliki kedalaman 33,0 km, yang berpotensi menyebabkan kerusakan pada permukaan.
+* Gempa M7.2 pada 3/22/1944 memiliki kedalaman 156,6 km, yang berpotensi menyebabkan kerusakan pada permukaan.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Nusa Tenggara Timur\n------------------------------\n📋 Data Gempa LIST:\n  1. 10/20/1938 | Nusa Tenggara Timur | M7.3 | 90.0 km\n  2. 11/11/2004 | Nusa Tenggara Timur | M7.2 | 33.0 km\n  3. 3/22/1944 | Nusa Tenggara Timur | M7.2 | 156.6 km\n  4. 2/20/1954 | Nusa Tenggara Timur | M7.0 | 540.5 km\n  5. 6/25/1953 | Nusa Tenggara Timur | M7.0 | 15.0 km'],0.8,0.799294404,,,,,
+list,Berikan daftar gempa yang terjadi di Jawa Barat pada tahun 2022,"Berdasarkan catatan seismik untuk wilayah Jawa Barat pada tahun 2022:
+
+**Data Gempa:**
+
+| Tanggal | Lokasi | Magnitudo | Kedalaman |
+| --- | --- | --- | --- |
+| 12/8/2022 | Jawa Barat | M5.8 | 107.0 km |
+| 11/21/2022 | Jawa Barat | M5.6 | 10.0 km |
+| 12/3/2022 | Jawa Barat | M5.6 | 120.0 km |
+| 3/16/2022 | Jawa Barat | M5.3 | 50.19 km |
+| 11/19/2022 | Jawa Barat | M5.0 | 69.988 km |
+| 10/31/2022 | Jawa Barat | M4.9 | 69.253 km |
+| 8/2/2022 | Jawa Barat | M4.5 | 133.358 km |
+| 4/25/2022 | Jawa Barat | M4.5 | 59.24 km |
+| 11/27/2022 | Jawa Barat | M4.5 | 76.311 km |
+
+💡 Insight Singkat: Pada tahun 2022, Jawa Barat mengalami beberapa gempa bumi dengan magnitudo yang cukup besar, terutama pada bulan Desember dan November. Gempa-gempa ini memiliki kedalaman yang bervariasi, dari dangkal hingga dalam.
+
+🔍 Insight Menarik:
+
+* Gempa M5.8 pada 12/8/2022 memiliki kedalaman 107.0 km, yang merupakan salah satu gempa terdalam pada tahun 2022.
+* Gempa M5.6 pada 11/21/2022 dan 12/3/2022 memiliki kedalaman yang relatif dangkal, yaitu 10.0 km dan 120.0 km.
+* Gempa M4.5 pada 8/2/2022 memiliki kedalaman 133.358 km, yang merupakan salah satu gempa terdalam pada tahun 2022.
+
+Ada lagi yang bisa saya bantu?","['📌 Filter Data: Lokasi: Jawa Barat, Tahun: 2022\n------------------------------\n📋 Data Gempa LIST:\n  1. 12/8/2022 | Jawa Barat | M5.8 | 107.0 km\n  2. 11/21/2022 | Jawa Barat | M5.6 | 10.0 km\n  3. 12/3/2022 | Jawa Barat | M5.6 | 120.0 km\n  4. 3/16/2022 | Jawa Barat | M5.3 | 50.19 km\n  5. 11/19/2022 | Jawa Barat | M5.0 | 69.988 km\n  6. 10/31/2022 | Jawa Barat | M4.9 | 69.253 km\n  7. 8/2/2022 | Jawa Barat | M4.5 | 133.358 km\n  8. 4/25/2022 | Jawa Barat | M4.5 | 59.24 km\n  9. 11/27/2022 | Jawa Barat | M4.5 | 76.311 km']",1,0.822925298,,,,,
+list,Tampilkan 10 gempa terbaru yang tercatat dalam data kita,"Halo! Berdasarkan data seismisitas yang tercatat untuk bulan Januari 2024:
+
+**Data Gempa Terbaru:**
+| Tanggal | Wilayah | Magnitudo | Kedalaman |
+| --- | --- | --- | --- |
+| 1/4/2024 | Maluku Utara | M4.4 | 50.786 km |
+| 1/4/2024 | Maluku | M5.0 | 137.491 km |
+| 1/4/2024 | Maluku Utara | M4.6 | 10.0 km |
+| 1/3/2024 | Bengkulu | M4.5 | 50.003 km |
+| 1/3/2024 | Sulawesi Utara | M4.4 | 45.929 km |
+| 1/3/2024 | Sulawesi Tengah | M4.4 | 97.778 km |
+| 1/3/2024 | Riau | M4.3 | 222.317 km |
+| 1/3/2024 | Sulawesi Selatan | M4.3 | 422.64 km |
+| 1/3/2024 | Jawa Barat | M4.8 | 98.951 km |
+| 1/2/2024 | Nusa Tenggara Timur | M4.9 | 35.0 km |
+
+💡 Insight Singkat: Gempa-gempa terbaru terjadi di wilayah Maluku dan sekitarnya, dengan magnitudo yang relatif tinggi.
+
+Ada lagi yang bisa saya bantu?",['📋 Data Gempa LIST:\n  1. 1/2/2024 | Nusa Tenggara Timur | M4.9 | 35.0 km\n  2. 1/3/2024 | Jawa Barat | M4.8 | 98.951 km\n  3. 1/3/2024 | Sulawesi Selatan | M4.3 | 422.64 km\n  4. 1/3/2024 | Sulawesi Tengah | M4.4 | 97.778 km\n  5. 1/3/2024 | Riau | M4.3 | 222.317 km\n  6. 1/3/2024 | Bengkulu | M4.5 | 50.003 km\n  7. 1/3/2024 | Sulawesi Utara | M4.4 | 45.929 km\n  8. 1/4/2024 | Maluku Utara | M4.4 | 50.786 km\n  9. 1/4/2024 | Maluku | M5.0 | 137.491 km\n  10. 1/4/2024 | Maluku Utara | M4.6 | 10.0 km'],0.818181818,0.653714363,,,,,
+list,Sebutkan 5 gempa paling dangkal yang pernah terjadi di Kalimantan,"Berdasarkan catatan seismik untuk wilayah Kalimantan:
+
+**Data:**
+
+| Tanggal | Lokasi | Magnitudo | Kedalaman (km) |
+| --- | --- | --- | --- |
+| 2/5/1996 | Kalimantan Selatan | M3.8 | 0.0 |
+| 1/25/1996 | Kalimantan Tengah | M4.1 | 0.0 |
+| 1/14/1996 | Kalimantan Selatan | M3.4 | 0.0 |
+| 9/15/1995 | Kalimantan Barat | M3.8 | 0.0 |
+| 4/21/1996 | Kalimantan Timur | M4.0 | 0.0 |
+
+💡 Insight Singkat: Semua gempa yang tercatat memiliki kedalaman 0 km, menunjukkan bahwa gempa-gempa ini sangat dangkal dan berpotensi menyebabkan kerusakan di permukaan.
+
+Ada lagi yang bisa saya bantu?","['📌 Filter Data: Lokasi: Kalimantan, Kedalaman: dangkal\n------------------------------\n📋 Data Gempa LIST:\n  1. 2/5/1996 | Kalimantan Selatan | M3.8 | 0.0 km\n  2. 1/25/1996 | Kalimantan Tengah | M4.1 | 0.0 km\n  3. 1/14/1996 | Kalimantan Selatan | M3.4 | 0.0 km\n  4. 9/15/1995 | Kalimantan Barat | M3.8 | 0.0 km\n  5. 4/21/1996 | Kalimantan Timur | M4.0 | 0.0 km']",0.857142857,0.683761866,,,,,
+trend,Bagaimana tren jumlah gempa per tahun di Indonesia?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Indonesia:
+
+**Tren Jumlah Gempa per Tahun:**
+
+| Tahun | Jumlah Gempa |
+| --- | --- |
+| 1900 | 2 |
+| 1901 | 1 |
+| 1902 | 1 |
+| 1905 | 1 |
+| 1907 | 2 |
+| 1909 | 5 |
+| 1910 | 1 |
+| 1911 | 1 |
+| 1912 | 4 |
+| 1913 | 2 |
+| 1914 | 4 |
+| 1915 | 1 |
+| 1916 | 3 |
+| 1917 | 1 |
+| 1918 | 4 |
+| 1919 | 4 |
+| 1920 | 3 |
+| 1921 | 8 |
+| 1922 | 1 |
+| 1923 | 6 |
+| 1924 | 8 |
+| 1925 | 8 |
+| 1926 | 11 |
+| 1927 | 11 |
+| 1928 | 7 |
+| 1929 | 4 |
+| 1930 | 7 |
+| 1931 | 20 |
+| 1932 | 24 |
+| 1933 | 16 |
+| 1934 | 23 |
+| 1935 | 12 |
+| 1936 | 23 |
+| 1937 | 8 |
+| 1938 | 18 |
+| 1939 | 13 |
+| 1940 | 7 |
+| 1941 | 22 |
+| 1942 | 5 |
+| 1943 | 7 |
+| 1944 | 7 |
+| 1945 | 4 |
+| 1946 | 5 |
+| 1947 | 3 |
+| 1948 | 4 |
+| 1949 | 5 |
+| 1950 | 13 |
+| 1951 | 16 |
+| 1952 | 12 |
+| 1953 | 15 |
+| 1954 | 12 |
+| 1955 | 10 |
+| 1956 | 15 |
+| 1957 | 22 |
+| 1958 | 14 |
+| 1959 | 33 |
+| 1960 | 33 |
+| 1961 | 24 |
+| 1962 | 28 |
+| 1963 | 208 |
+| 1964 | 176 |
+| 1965 | 259 |
+| 1966 | 207 |
+| 1967 | 249 |
+| 1968 | 305 |
+| 1969 | 272 |
+| 1970 | 187 |
+| 1971 | 349 |
+| 1972 | 264 |",['📌 Filter Data: Lokasi: Indonesia\n------------------------------\n📊 Tren gempa per tahun:\n  • 1900: 2 kejadian | Rata-rata: 6.95 | Max: 7.0\n  • 1901: 1 kejadian | Rata-rata: 7.00 | Max: 7.0\n  • 1902: 1 kejadian | Rata-rata: 6.90 | Max: 6.9\n  • 1905: 1 kejadian | Rata-rata: 7.80 | Max: 7.8\n  • 1907: 2 kejadian | Rata-rata: 7.15 | Max: 7.5\n  • 1909: 5 kejadian | Rata-rata: 7.12 | Max: 7.6\n  • 1910: 1 kejadian | Rata-rata: 7.60 | Max: 7.6\n  • 1911: 1 kejadian | Rata-rata: 7.00 | Max: 7.0\n  • 1912: 4 kejadian | Rata-rata: 6.88 | Max: 7.5\n  • 1913: 2 kejadian | Rata-rata: 7.50 | Max: 7.8\n  • 1914: 4 kejadian | Rata-rata: 7.43 | Max: 8.1\n  • 1915: 1 kejadian | Rata-rata: 6.80 | Max: 6.8\n  • 1916: 3 kejadian | Rata-rata: 7.23 | Max: 7.7\n  • 1917: 1 kejadian | Rata-rata: 7.80 | Max: 7.8\n  • 1918: 4 kejadian | Rata-rata: 6.83 | Max: 7.5\n  • 1919: 4 kejadian | Rata-rata: 6.55 | Max: 6.9\n  • 1920: 3 kejadian | Rata-rata: 6.60 | Max: 6.8\n  • 1921: 8 kejadian | Rata-rata: 6.44 | Max: 6.9\n  • 1922: 1 kejadian | Rata-rata: 6.80 | Max: 6.8\n  • 1923: 6 kejadian | Rata-rata: 6.62 | Max: 7.4\n  • 1924: 8 kejadian | Rata-rata: 6.35 | Max: 6.6\n  • 1925: 8 kejadian | Rata-rata: 6.70 | Max: 7.4\n  • 1926: 11 kejadian | Rata-rata: 6.62 | Max: 7.6\n  • 1927: 11 kejadian | Rata-rata: 6.59 | Max: 7.5\n  • 1928: 7 kejadian | Rata-rata: 6.36 | Max: 6.9\n  • 1929: 4 kejadian | Rata-rata: 6.48 | Max: 6.7\n  • 1930: 7 kejadian | Rata-rata: 6.59 | Max: 7.1\n  • 1931: 20 kejadian | Rata-rata: 6.24 | Max: 7.5\n  • 1932: 24 kejadian | Rata-rata: 6.25 | Max: 7.8\n  • 1933: 16 kejadian | Rata-rata: 6.11 | Max: 7.7\n  • 1934: 23 kejadian | Rata-rata: 6.26 | Max: 7.0\n  • 1935: 12 kejadian | Rata-rata: 6.34 | Max: 7.7\n  • 1936: 23 kejadian | Rata-rata: 6.50 | Max: 7.8\n  • 1937: 8 kejadian | Rata-rata: 6.44 | Max: 7.2\n  • 1938: 18 kejadian | Rata-rata: 6.51 | Max: 8.2\n  • 1939: 13 kejadian | Rata-rata: 6.38 | Max: 7.9\n  • 1940: 7 kejadian | Rata-rata: 6.36 | Max: 6.8\n  • 1941: 22 kejadian | Rata-rata: 6.30 | Max: 7.5\n  • 1942: 5 kejadian | Rata-rata: 7.00 | Max: 7.5\n  • 1943: 7 kejadian | Rata-rata: 7.23 | Max: 7.8\n  • 1944: 7 kejadian | Rata-rata: 6.84 | Max: 7.4\n  • 1945: 4 kejadian | Rata-rata: 6.70 | Max: 6.8\n  • 1946: 5 kejadian | Rata-rata: 6.70 | Max: 7.3\n  • 1947: 3 kejadian | Rata-rata: 7.07 | Max: 7.5\n  • 1948: 4 kejadian | Rata-rata: 6.88 | Max: 7.2\n  • 1949: 5 kejadian | Rata-rata: 6.60 | Max: 7.1\n  • 1950: 13 kejadian | Rata-rata: 6.38 | Max: 7.5\n  • 1951: 16 kejadian | Rata-rata: 6.03 | Max: 6.7\n  • 1952: 12 kejadian | Rata-rata: 6.20 | Max: 7.1\n  • 1953: 15 kejadian | Rata-rata: 6.23 | Max: 7.0\n  • 1954: 12 kejadian | Rata-rata: 6.30 | Max: 7.0\n  • 1955: 10 kejadian | Rata-rata: 6.28 | Max: 6.8\n  • 1956: 15 kejadian | Rata-rata: 6.08 | Max: 7.2\n  • 1957: 22 kejadian | Rata-rata: 6.02 | Max: 7.3\n  • 1958: 14 kejadian | Rata-rata: 6.13 | Max: 6.9\n  • 1959: 33 kejadian | Rata-rata: 5.81 | Max: 6.7\n  • 1960: 33 kejadian | Rata-rata: 5.91 | Max: 6.9\n  • 1961: 24 kejadian | Rata-rata: 5.69 | Max: 6.9\n  • 1962: 28 kejadian | Rata-rata: 5.68 | Max: 6.9\n  • 1963: 208 kejadian | Rata-rata: 5.08 | Max: 7.6\n  • 1964: 176 kejadian | Rata-rata: 5.21 | Max: 7.0\n  • 1965: 259 kejadian | Rata-rata: 5.15 | Max: 6.6\n  • 1966: 207 kejadian | Rata-rata: 5.07 | Max: 6.9\n  • 1967: 249 kejadian | Rata-rata: 5.12 | Max: 6.3\n  • 1968: 305 kejadian | Rata-rata: 5.15 | Max: 7.4\n  • 1969: 272 kejadian | Rata-rata: 5.15 | Max: 7.0\n  • 1970: 187 kejadian | Rata-rata: 5.20 | Max: 6.8\n  • 1971: 349 kejadian | Rata-rata: 5.20 | Max: 8.1\n  • 1972: 264 kejadian | Rata-rata: 5.23 | Max: 6.3\n  • 1973: 239 kejadian | Rata-rata: 5.15 | Max: 6.5\n  • 1974: 297 kejadian | Rata-rata: 5.09 | Max: 6.9\n  • 1975: 343 kejadian | Rata-rata: 5.11 | Max: 7.0\n  • 1976: 386 kejadian | Rata-rata: 5.04 | Max: 7.1\n  • 1977: 339 kejadian | Rata-rata: 5.03 | Max: 6.4\n  • 1978: 321 kejadian | Rata-rata: 5.08 | Max: 6.4\n  • 1979: 449 kejadian | Rata-rata: 4.88 | Max: 6.6\n  • 1980: 497 kejadian | Rata-rata: 4.72 | Max: 6.3\n  • 1981: 498 kejadian | Rata-rata: 4.64 | Max: 6.1\n  • 1982: 576 kejadian | Rata-rata: 4.64 | Max: 6.6\n  • 1983: 828 kejadian | Rata-rata: 4.76 | Max: 6.4\n  • 1984: 763 kejadian | Rata-rata: 4.65 | Max: 7.2\n  • 1985: 710 kejadian | Rata-rata: 4.71 | Max: 7.1\n  • 1986: 788 kejadian | Rata-rata: 4.69 | Max: 6.5\n  • 1987: 771 kejadian | Rata-rata: 4.60 | Max: 6.8\n  • 1988: 789 kejadian | Rata-rata: 4.66 | Max: 6.7\n  • 1989: 866 kejadian | Rata-rata: 4.69 | Max: 6.8\n  • 1990: 752 kejadian | Rata-rata: 4.72 | Max: 6.4\n  • 1991: 784 kejadian | Rata-rata: 4.77 | Max: 6.4\n  • 1992: 3620 kejadian | Rata-rata: 3.65 | Max: 6.7\n  • 1993: 795 kejadian | Rata-rata: 4.75 | Max: 6.5\n  • 1994: 714 kejadian | Rata-rata: 4.82 | Max: 7.0\n  • 1995: 1727 kejadian | Rata-rata: 4.35 | Max: 7.1\n  • 1996: 3507 kejadian | Rata-rata: 4.05 | Max: 7.0\n  • 1997: 2728 kejadian | Rata-rata: 4.18 | Max: 7.0\n  • 1998: 3082 kejadian | Rata-rata: 4.25 | Max: 7.0\n  • 1999: 2704 kejadian | Rata-rata: 4.35 | Max: 6.5\n  • 2000: 2886 kejadian | Rata-rata: 4.31 | Max: 7.9\n  • 2001: 3059 kejadian | Rata-rata: 4.13 | Max: 7.4\n  • 2002: 4125 kejadian | Rata-rata: 4.00 | Max: 7.4\n  • 2003: 4370 kejadian | Rata-rata: 3.92 | Max: 7.0\n  • 2004: 4580 kejadian | Rata-rata: 4.06 | Max: 9.0\n  • 2005: 5389 kejadian | Rata-rata: 4.15 | Max: 8.6\n  • 2006: 3784 kejadian | Rata-rata: 3.96 | Max: 7.6\n  • 2007: 5760 kejadian | Rata-rata: 3.94 | Max: 8.4\n  • 2008: 5853 kejadian | Rata-rata: 3.74 | Max: 7.3\n  • 2009: 9431 kejadian | Rata-rata: 3.79 | Max: 7.6\n  • 2010: 7383 kejadian | Rata-rata: 3.67 | Max: 7.7\n  • 2011: 5886 kejadian | Rata-rata: 3.67 | Max: 6.7\n  • 2012: 7797 kejadian | Rata-rata: 3.54 | Max: 7.1\n  • 2013: 5842 kejadian | Rata-rata: 3.64 | Max: 7.0\n  • 2014: 6279 kejadian | Rata-rata: 3.68 | Max: 7.1\n  • 2015: 7362 kejadian | Rata-rata: 3.58 | Max: 6.9\n  • 2016: 7231 kejadian | Rata-rata: 3.55 | Max: 6.6\n  • 2017: 8579 kejadian | Rata-rata: 3.60 | Max: 6.7\n  • 2018: 13398 kejadian | Rata-rata: 3.48 | Max: 7.5\n  • 2019: 964 kejadian | Rata-rata: 4.82 | Max: 7.3\n  • 2020: 617 kejadian | Rata-rata: 4.80 | Max: 6.9\n  • 2021: 741 kejadian | Rata-rata: 4.78 | Max: 7.3\n  • 2022: 774 kejadian | Rata-rata: 4.76 | Max: 6.7\n  • 2023: 800 kejadian | Rata-rata: 4.80 | Max: 7.6\n  • 2024: 1510 kejadian | Rata-rata: 4.46 | Max: 6.7'],1,0.75668585,,,,,
+trend,Apakah jumlah gempa di Indonesia cenderung meningkat atau menurun dari tahun ke tahun?,"Dari tahun ke tahun, jumlah gempa di Indonesia cenderung meningkat. Pada tahun 1992, tercatat 3620 kejadian gempa, yang merupakan tahun dengan jumlah gempa tertinggi dalam rentang waktu yang diberikan. Pada tahun-tahun berikutnya, jumlah gempa juga terus meningkat, seperti pada tahun 1995 (1727 kejadian), 1996 (3507 kejadian), dan 1998 (3082 kejadian). Bahkan, pada tahun 2009, tercatat 9431 kejadian gempa, yang merupakan tahun dengan jumlah gempa tertinggi kedua dalam rentang waktu yang diberikan.
+
+Namun, perlu diingat bahwa pada tahun 2019, jumlah gempa di Indonesia menurun drastis menjadi 964 kejadian. Meskipun demikian, pada tahun-tahun berikutnya, jumlah gempa kembali meningkat, seperti pada tahun 2023 (800 kejadian) dan 2024 (1510 kejadian).
+
+Dalam keseluruhan, dapat disimpulkan bahwa jumlah gempa di Indonesia cenderung meningkat dari tahun ke tahun, meskipun terdapat beberapa tahun dengan jumlah gempa yang menurun.",['📊 Tren gempa per tahun:\n  • 1900: 2 kejadian | Rata-rata: 6.95 | Max: 7.0\n  • 1901: 1 kejadian | Rata-rata: 7.00 | Max: 7.0\n  • 1902: 1 kejadian | Rata-rata: 6.90 | Max: 6.9\n  • 1905: 1 kejadian | Rata-rata: 7.80 | Max: 7.8\n  • 1907: 2 kejadian | Rata-rata: 7.15 | Max: 7.5\n  • 1909: 5 kejadian | Rata-rata: 7.12 | Max: 7.6\n  • 1910: 1 kejadian | Rata-rata: 7.60 | Max: 7.6\n  • 1911: 1 kejadian | Rata-rata: 7.00 | Max: 7.0\n  • 1912: 4 kejadian | Rata-rata: 6.88 | Max: 7.5\n  • 1913: 2 kejadian | Rata-rata: 7.50 | Max: 7.8\n  • 1914: 4 kejadian | Rata-rata: 7.43 | Max: 8.1\n  • 1915: 1 kejadian | Rata-rata: 6.80 | Max: 6.8\n  • 1916: 3 kejadian | Rata-rata: 7.23 | Max: 7.7\n  • 1917: 1 kejadian | Rata-rata: 7.80 | Max: 7.8\n  • 1918: 4 kejadian | Rata-rata: 6.83 | Max: 7.5\n  • 1919: 4 kejadian | Rata-rata: 6.55 | Max: 6.9\n  • 1920: 3 kejadian | Rata-rata: 6.60 | Max: 6.8\n  • 1921: 8 kejadian | Rata-rata: 6.44 | Max: 6.9\n  • 1922: 1 kejadian | Rata-rata: 6.80 | Max: 6.8\n  • 1923: 6 kejadian | Rata-rata: 6.62 | Max: 7.4\n  • 1924: 8 kejadian | Rata-rata: 6.35 | Max: 6.6\n  • 1925: 8 kejadian | Rata-rata: 6.70 | Max: 7.4\n  • 1926: 11 kejadian | Rata-rata: 6.62 | Max: 7.6\n  • 1927: 11 kejadian | Rata-rata: 6.59 | Max: 7.5\n  • 1928: 7 kejadian | Rata-rata: 6.36 | Max: 6.9\n  • 1929: 4 kejadian | Rata-rata: 6.48 | Max: 6.7\n  • 1930: 7 kejadian | Rata-rata: 6.59 | Max: 7.1\n  • 1931: 20 kejadian | Rata-rata: 6.24 | Max: 7.5\n  • 1932: 24 kejadian | Rata-rata: 6.25 | Max: 7.8\n  • 1933: 16 kejadian | Rata-rata: 6.11 | Max: 7.7\n  • 1934: 23 kejadian | Rata-rata: 6.26 | Max: 7.0\n  • 1935: 12 kejadian | Rata-rata: 6.34 | Max: 7.7\n  • 1936: 23 kejadian | Rata-rata: 6.50 | Max: 7.8\n  • 1937: 8 kejadian | Rata-rata: 6.44 | Max: 7.2\n  • 1938: 18 kejadian | Rata-rata: 6.51 | Max: 8.2\n  • 1939: 13 kejadian | Rata-rata: 6.38 | Max: 7.9\n  • 1940: 7 kejadian | Rata-rata: 6.36 | Max: 6.8\n  • 1941: 22 kejadian | Rata-rata: 6.30 | Max: 7.5\n  • 1942: 5 kejadian | Rata-rata: 7.00 | Max: 7.5\n  • 1943: 7 kejadian | Rata-rata: 7.23 | Max: 7.8\n  • 1944: 7 kejadian | Rata-rata: 6.84 | Max: 7.4\n  • 1945: 4 kejadian | Rata-rata: 6.70 | Max: 6.8\n  • 1946: 5 kejadian | Rata-rata: 6.70 | Max: 7.3\n  • 1947: 3 kejadian | Rata-rata: 7.07 | Max: 7.5\n  • 1948: 4 kejadian | Rata-rata: 6.88 | Max: 7.2\n  • 1949: 5 kejadian | Rata-rata: 6.60 | Max: 7.1\n  • 1950: 13 kejadian | Rata-rata: 6.38 | Max: 7.5\n  • 1951: 16 kejadian | Rata-rata: 6.03 | Max: 6.7\n  • 1952: 12 kejadian | Rata-rata: 6.20 | Max: 7.1\n  • 1953: 15 kejadian | Rata-rata: 6.23 | Max: 7.0\n  • 1954: 12 kejadian | Rata-rata: 6.30 | Max: 7.0\n  • 1955: 10 kejadian | Rata-rata: 6.28 | Max: 6.8\n  • 1956: 15 kejadian | Rata-rata: 6.08 | Max: 7.2\n  • 1957: 22 kejadian | Rata-rata: 6.02 | Max: 7.3\n  • 1958: 14 kejadian | Rata-rata: 6.13 | Max: 6.9\n  • 1959: 33 kejadian | Rata-rata: 5.81 | Max: 6.7\n  • 1960: 33 kejadian | Rata-rata: 5.91 | Max: 6.9\n  • 1961: 24 kejadian | Rata-rata: 5.69 | Max: 6.9\n  • 1962: 28 kejadian | Rata-rata: 5.68 | Max: 6.9\n  • 1963: 208 kejadian | Rata-rata: 5.08 | Max: 7.6\n  • 1964: 176 kejadian | Rata-rata: 5.21 | Max: 7.0\n  • 1965: 259 kejadian | Rata-rata: 5.15 | Max: 6.6\n  • 1966: 207 kejadian | Rata-rata: 5.07 | Max: 6.9\n  • 1967: 249 kejadian | Rata-rata: 5.12 | Max: 6.3\n  • 1968: 305 kejadian | Rata-rata: 5.15 | Max: 7.4\n  • 1969: 272 kejadian | Rata-rata: 5.15 | Max: 7.0\n  • 1970: 187 kejadian | Rata-rata: 5.20 | Max: 6.8\n  • 1971: 349 kejadian | Rata-rata: 5.20 | Max: 8.1\n  • 1972: 264 kejadian | Rata-rata: 5.23 | Max: 6.3\n  • 1973: 239 kejadian | Rata-rata: 5.15 | Max: 6.5\n  • 1974: 297 kejadian | Rata-rata: 5.09 | Max: 6.9\n  • 1975: 343 kejadian | Rata-rata: 5.11 | Max: 7.0\n  • 1976: 386 kejadian | Rata-rata: 5.04 | Max: 7.1\n  • 1977: 339 kejadian | Rata-rata: 5.03 | Max: 6.4\n  • 1978: 321 kejadian | Rata-rata: 5.08 | Max: 6.4\n  • 1979: 449 kejadian | Rata-rata: 4.88 | Max: 6.6\n  • 1980: 497 kejadian | Rata-rata: 4.72 | Max: 6.3\n  • 1981: 498 kejadian | Rata-rata: 4.64 | Max: 6.1\n  • 1982: 576 kejadian | Rata-rata: 4.64 | Max: 6.6\n  • 1983: 828 kejadian | Rata-rata: 4.76 | Max: 6.4\n  • 1984: 763 kejadian | Rata-rata: 4.65 | Max: 7.2\n  • 1985: 710 kejadian | Rata-rata: 4.71 | Max: 7.1\n  • 1986: 788 kejadian | Rata-rata: 4.69 | Max: 6.5\n  • 1987: 771 kejadian | Rata-rata: 4.60 | Max: 6.8\n  • 1988: 789 kejadian | Rata-rata: 4.66 | Max: 6.7\n  • 1989: 866 kejadian | Rata-rata: 4.69 | Max: 6.8\n  • 1990: 752 kejadian | Rata-rata: 4.72 | Max: 6.4\n  • 1991: 784 kejadian | Rata-rata: 4.77 | Max: 6.4\n  • 1992: 3620 kejadian | Rata-rata: 3.65 | Max: 6.7\n  • 1993: 795 kejadian | Rata-rata: 4.75 | Max: 6.5\n  • 1994: 714 kejadian | Rata-rata: 4.82 | Max: 7.0\n  • 1995: 1727 kejadian | Rata-rata: 4.35 | Max: 7.1\n  • 1996: 3507 kejadian | Rata-rata: 4.05 | Max: 7.0\n  • 1997: 2728 kejadian | Rata-rata: 4.18 | Max: 7.0\n  • 1998: 3082 kejadian | Rata-rata: 4.25 | Max: 7.0\n  • 1999: 2704 kejadian | Rata-rata: 4.35 | Max: 6.5\n  • 2000: 2886 kejadian | Rata-rata: 4.31 | Max: 7.9\n  • 2001: 3059 kejadian | Rata-rata: 4.13 | Max: 7.4\n  • 2002: 4125 kejadian | Rata-rata: 4.00 | Max: 7.4\n  • 2003: 4370 kejadian | Rata-rata: 3.92 | Max: 7.0\n  • 2004: 4580 kejadian | Rata-rata: 4.06 | Max: 9.0\n  • 2005: 5389 kejadian | Rata-rata: 4.15 | Max: 8.6\n  • 2006: 3784 kejadian | Rata-rata: 3.96 | Max: 7.6\n  • 2007: 5760 kejadian | Rata-rata: 3.94 | Max: 8.4\n  • 2008: 5853 kejadian | Rata-rata: 3.74 | Max: 7.3\n  • 2009: 9431 kejadian | Rata-rata: 3.79 | Max: 7.6\n  • 2010: 7383 kejadian | Rata-rata: 3.67 | Max: 7.7\n  • 2011: 5886 kejadian | Rata-rata: 3.67 | Max: 6.7\n  • 2012: 7797 kejadian | Rata-rata: 3.54 | Max: 7.1\n  • 2013: 5842 kejadian | Rata-rata: 3.64 | Max: 7.0\n  • 2014: 6279 kejadian | Rata-rata: 3.68 | Max: 7.1\n  • 2015: 7362 kejadian | Rata-rata: 3.58 | Max: 6.9\n  • 2016: 7231 kejadian | Rata-rata: 3.55 | Max: 6.6\n  • 2017: 8579 kejadian | Rata-rata: 3.60 | Max: 6.7\n  • 2018: 13398 kejadian | Rata-rata: 3.48 | Max: 7.5\n  • 2019: 964 kejadian | Rata-rata: 4.82 | Max: 7.3\n  • 2020: 617 kejadian | Rata-rata: 4.80 | Max: 6.9\n  • 2021: 741 kejadian | Rata-rata: 4.78 | Max: 7.3\n  • 2022: 774 kejadian | Rata-rata: 4.76 | Max: 6.7\n  • 2023: 800 kejadian | Rata-rata: 4.80 | Max: 7.6\n  • 2024: 1510 kejadian | Rata-rata: 4.46 | Max: 6.7'],0.692307692,0.867333264,,,,,
+trend,Bagaimana perkembangan frekuensi gempa per bulan di Indonesia?,"Berikut adalah perkembangan frekuensi gempa per bulan di Indonesia berdasarkan informasi yang ada.
+
+Pada bulan Januari, terdapat 14.240 gempa yang terjadi di Indonesia dengan rata-rata magnitudo 3,93. Pada bulan Februari, jumlah gempa meningkat menjadi 14.274 dengan rata-rata magnitudo 3,90. Pada bulan Maret, terdapat 14.481 gempa dengan rata-rata magnitudo 3,89.
+
+Pada bulan April, jumlah gempa menurun menjadi 13.812 dengan rata-rata magnitudo 3,91. Pada bulan Mei, terdapat 12.206 gempa dengan rata-rata magnitudo 3,95. Pada bulan Juni, jumlah gempa terus menurun menjadi 11.382 dengan rata-rata magnitudo 4,01.
+
+Pada bulan Juli, terdapat 11.460 gempa dengan rata-rata magnitudo 3,98. Pada bulan Agustus, jumlah gempa meningkat menjadi 13.053 dengan rata-rata magnitudo 3,89. Pada bulan September, terdapat 12.526 gempa dengan rata-rata magnitudo 3,95.
+
+Pada bulan Oktober, jumlah gempa meningkat menjadi 12.793 dengan rata-rata magnitudo 3,93. Pada bulan November, terdapat 13.875 gempa dengan rata-rata magnitudo 3,89. Pada bulan Desember, jumlah gempa menurun menjadi 13.231 dengan rata-rata magnitudo 3,93.
+
+Dari informasi di atas, dapat dilihat bahwa jumlah gempa di Indonesia cenderung meningkat pada bulan-bulan awal tahun dan menurun pada bulan-bulan akhir tahun. Namun, perlu diingat bahwa rata-rata magnitudo gempa juga dapat berubah-ubah tergantung pada bulan dan tahun.",['📌 Filter Data: Lokasi: Indonesia\n------------------------------\n1. month: 1 | month_name: January | count: 14240 | avg_magnitude: 3.93\n2. month: 2 | month_name: February | count: 14274 | avg_magnitude: 3.90\n3. month: 3 | month_name: March | count: 14481 | avg_magnitude: 3.89\n4. month: 4 | month_name: April | count: 13812 | avg_magnitude: 3.91\n5. month: 5 | month_name: May | count: 12206 | avg_magnitude: 3.95\n6. month: 6 | month_name: June | count: 11382 | avg_magnitude: 4.01\n7. month: 7 | month_name: July | count: 11460 | avg_magnitude: 3.98\n8. month: 8 | month_name: August | count: 13053 | avg_magnitude: 3.89\n9. month: 9 | month_name: September | count: 12526 | avg_magnitude: 3.95\n10. month: 10 | month_name: October | count: 12793 | avg_magnitude: 3.93\n11. month: 11 | month_name: November | count: 13875 | avg_magnitude: 3.89\n12. month: 12 | month_name: December | count: 13231 | avg_magnitude: 3.93'],1,0.734257729,,,,,
+trend,Bagaimana tren jumlah gempa selama 10 tahun terakhir di Sumatera?,"Halo! Berdasarkan data seismisitas yang tercatat untuk wilayah Sumatera:
+
+**Tren Jumlah Gempa per Tahun:**
+| Tahun | Jumlah Gempa | Rata-rata Magnitudo | Magnitudo Maksimum |
+| --- | --- | --- | --- |
+| 2015 | 308 | 3.66 | 6.1 |
+| 2016 | 286 | 3.71 | 6.5 |
+| 2017 | 518 | 3.59 | 6.3 |
+| 2018 | 599 | 3.72 | 5.8 |
+| 2019 | 56 | 4.92 | 6.0 |
+| 2020 | 40 | 4.88 | 5.6 |
+| 2021 | 34 | 4.81 | 5.8 |
+| 2022 | 63 | 4.89 | 6.7 |
+| 2023 | 34 | 5.04 | 7.1 |
+| 2024 | 81 | 4.53 | 5.5 |
+
+💡 Insight Singkat: Tren jumlah gempa di Sumatera menunjukkan peningkatan pada tahun 2017 dan 2018, kemudian mengalami penurunan pada tahun 2019-2021. Namun, pada tahun 2022 dan 2023, jumlah gempa meningkat kembali.
+
+🔍 Insight Menarik:
+* Pada tahun 2017, terdapat 518 kejadian gempa, yang merupakan tahun dengan jumlah gempa tertinggi selama 10 tahun terakhir.
+* Pada tahun 2023, terdapat 34 kejadian gempa dengan rata-rata magnitudo 5.04, yang merupakan tahun dengan rata-rata magnitudo tertinggi selama 10 tahun terakhir.
+* Pada tahun 2022, terdapat 63 kejadian gempa dengan magnitudo maksimum 6.7, yang merupakan tahun dengan magnitudo maksimum tertinggi selama 10 tahun terakhir.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Sumatera\n------------------------------\n📊 Tren gempa per tahun:\n  • 2015: 308 kejadian | Rata-rata: 3.66 | Max: 6.1\n  • 2016: 286 kejadian | Rata-rata: 3.71 | Max: 6.5\n  • 2017: 518 kejadian | Rata-rata: 3.59 | Max: 6.3\n  • 2018: 599 kejadian | Rata-rata: 3.72 | Max: 5.8\n  • 2019: 56 kejadian | Rata-rata: 4.92 | Max: 6.0\n  • 2020: 40 kejadian | Rata-rata: 4.88 | Max: 5.6\n  • 2021: 34 kejadian | Rata-rata: 4.81 | Max: 5.8\n  • 2022: 63 kejadian | Rata-rata: 4.89 | Max: 6.7\n  • 2023: 34 kejadian | Rata-rata: 5.04 | Max: 7.1\n  • 2024: 81 kejadian | Rata-rata: 4.53 | Max: 5.5'],1,0.592189378,,,,,
+trend,Apakah gempa makin sering terjadi di Jawa selama dekade terakhir?,"Halo! Berdasarkan data seismisitas untuk wilayah Jawa:
+
+**Tren Gempa Per Tahun:**
+| Tahun | Jumlah Kejadian | Rata-rata Magnitudo | Magnitudo Maksimum |
+| --- | --- | --- | --- |
+| 2015 | 217 | 3.00 | 4.8 |
+| 2016 | 264 | 3.11 | 6.6 |
+| 2017 | 228 | 3.56 | 6.5 |
+| 2018 | 441 | 3.11 | 6.0 |
+| 2019 | 19 | 4.94 | 6.1 |
+| 2020 | 20 | 4.86 | 6.6 |
+| 2021 | 13 | 4.94 | 6.0 |
+| 2022 | 13 | 4.99 | 5.8 |
+| 2023 | 18 | 4.96 | 7.0 |
+| 2024 | 54 | 4.53 | 6.4 |
+
+💡 Insight Singkat: Tren gempa di Jawa selama dekade terakhir menunjukkan peningkatan jumlah kejadian pada tahun 2018, tetapi kemudian mengalami penurunan signifikan pada tahun 2019-2022. Namun, pada tahun 2024, jumlah kejadian meningkat kembali.
+
+🔍 Insight Menarik:
+* Pada tahun 2018, Jawa mengalami jumlah kejadian gempa tertinggi dalam dekade terakhir, dengan 441 kejadian.
+* Pada tahun 2024, Jawa mengalami jumlah kejadian gempa tertinggi dalam 5 tahun terakhir, dengan 54 kejadian.
+* Rata-rata magnitudo gempa di Jawa selama dekade terakhir meningkat dari 3.00 pada tahun 2015 menjadi 4.96 pada tahun 2023.
+
+Ada lagi yang bisa saya bantu?",['📌 Filter Data: Lokasi: Jawa\n------------------------------\n📊 Tren gempa per tahun:\n  • 2015: 217 kejadian | Rata-rata: 3.00 | Max: 4.8\n  • 2016: 264 kejadian | Rata-rata: 3.11 | Max: 6.6\n  • 2017: 228 kejadian | Rata-rata: 3.56 | Max: 6.5\n  • 2018: 441 kejadian | Rata-rata: 3.11 | Max: 6.0\n  • 2019: 19 kejadian | Rata-rata: 4.94 | Max: 6.1\n  • 2020: 20 kejadian | Rata-rata: 4.86 | Max: 6.6\n  • 2021: 13 kejadian | Rata-rata: 4.94 | Max: 6.0\n  • 2022: 13 kejadian | Rata-rata: 4.99 | Max: 5.8\n  • 2023: 18 kejadian | Rata-rata: 4.96 | Max: 7.0\n  • 2024: 54 kejadian | Rata-rata: 4.53 | Max: 6.4'],0.9375,0.604554853,,,,,
+knowledge,Apa itu magnitudo momen?,"Halo! Berdasarkan pengetahuan seismologi, Magnitudo Momen (Mw) adalah skala yang digunakan untuk mengukur kekuatan gempa bumi. Magnitudo Momen adalah standar modern yang lebih akurat dibandingkan Skala Richter, karena dapat mengukur energi yang dilepaskan oleh gempa bumi dengan lebih tepat.
+
+💡 Insight Singkat: Magnitudo Momen digunakan untuk mengukur kekuatan gempa bumi dengan lebih akurat, sehingga dapat membantu dalam memprediksi dampak gempa bumi.",['Pengetahuan umum LLM. Tidak memerlukan konteks spesifik dari database.'],0,0.429195891,,,,,
+knowledge,Mengapa Indonesia sering mengalami gempa bumi?,"Halo! Berdasarkan pengetahuan seismologi, Indonesia sering mengalami gempa bumi karena letak geografisnya yang strategis. Indonesia terletak di pertemuan tiga lempeng tektonik besar, yaitu Lempeng Eurasia, Lempeng Australia, dan Lempeng Filipina. Interaksi antara lempeng-lempeng ini menyebabkan pergerakan dan gesekan yang dapat menyebabkan gempa bumi.
+
+Selain itu, Indonesia juga memiliki banyak gunung berapi aktif yang dapat menyebabkan gempa bumi. Gunung berapi dapat menyebabkan gempa bumi karena pergerakan magma di bawah permukaan bumi.
+
+💡 Insight Singkat: Indonesia terletak di zona subduksi yang aktif, sehingga gempa bumi sering terjadi di wilayah ini.",['Pengetahuan umum LLM. Tidak memerlukan konteks spesifik dari database.'],0,1,,,,,
+knowledge,"Apa perbedaan antara gempa dangkal, menengah, dan dalam?","Halo! Berdasarkan pengetahuan seismologi, perbedaan antara gempa dangkal, menengah, dan dalam dapat dijelaskan sebagai berikut:
+
+**Kedalaman Gempa:**
+
+| Kedalaman | Deskripsi |
+| --- | --- |
+| Dangkal (<60km) | Potensi daya rusak tinggi di permukaan, dapat menyebabkan kerusakan parah pada bangunan dan infrastruktur. |
+| Menengah (60-300km) | Kedalaman yang lebih dalam, namun masih dapat menyebabkan kerusakan pada bangunan dan infrastruktur, tetapi dengan intensitas yang lebih rendah. |
+| Dalam (>300km) | Kedalaman yang sangat dalam, jarang menyebabkan kerusakan pada permukaan, tetapi dapat menyebabkan getaran yang lemah. |
+
+💡 Insight Singkat: Kedalaman gempa sangat mempengaruhi intensitas kerusakan yang dihasilkan. Gempa dangkal lebih berbahaya karena dapat menyebabkan kerusakan parah pada permukaan.
+
+Ada lagi yang bisa saya bantu?",['Pengetahuan umum LLM. Tidak memerlukan konteks spesifik dari database.'],0,0.014989176,,,,,
+knowledge,Apa yang harus dilakukan untuk menyelamatkan diri saat gempa bumi?,"Halo! Berdasarkan pengetahuan seismologi, saat gempa bumi terjadi, ada beberapa langkah yang dapat Anda lakukan untuk menyelamatkan diri:
+
+1. **Tetap tenang**: Jangan panik dan tetap tenang. Panik dapat membuat Anda melakukan tindakan yang tidak tepat dan meningkatkan risiko cedera.
+2. **Berdirilah di tempat yang aman**: Jika Anda berada di dalam bangunan, berdirilah di tempat yang aman, seperti di bawah meja atau di sudut ruangan. Jika Anda berada di luar, berdirilah di tempat yang terbuka dan jauh dari bangunan.
+3. **Jangan mencoba keluar**: Jangan mencoba keluar dari bangunan saat gempa sedang terjadi. Gempa dapat menyebabkan bangunan runtuh atau terjadi kebocoran gas.
+4. **Tunggu sampai gempa berhenti**: Tunggu sampai gempa berhenti sebelum mencoba keluar dari bangunan.
+5. **Periksa sekitar**: Setelah gempa berhenti, periksa sekitar untuk memastikan bahwa tidak ada kerusakan atau bahaya lainnya.
+
+Ingatlah bahwa gempa bumi dapat terjadi kapan saja dan tanpa peringatan. Oleh karena itu, penting untuk selalu siap dan tahu apa yang harus dilakukan saat gempa terjadi.
+
+Ada lagi yang bisa saya bantu?",['Pengetahuan umum LLM. Tidak memerlukan konteks spesifik dari database.'],0.214285714,0.863898537,,,,,
+knowledge,Bagaimana cara kerja seismograf?,"Halo! Berdasarkan pengetahuan seismologi, saya dapat menjelaskan cara kerja seismograf.
+
+**Cara Kerja Seismograf:**
+
+Seismograf adalah alat yang digunakan untuk merekam getaran bumi, seperti gempa bumi. Berikut adalah cara kerja seismograf:
+
+1. **Pengukuran Getaran**: Seismograf menggunakan sensor untuk mengukur getaran bumi. Sensor ini biasanya berupa koil yang terhubung dengan penulang.
+2. **Pengubahan Getaran menjadi Sinyal Listrik**: Ketika getaran bumi terdeteksi, sensor mengubah getaran menjadi sinyal listrik. Sinyal ini kemudian dikirim ke pengolah sinyal.
+3. **Pengolahan Sinyal**: Pengolah sinyal mengubah sinyal listrik menjadi sinyal yang dapat dibaca oleh komputer.
+4. **Perekaman Data**: Komputer merekam data sinyal yang telah diolah. Data ini kemudian dapat dijadikan grafik untuk menampilkan getaran bumi.
+
+**💡 Insight Singkat:** Seismograf sangat penting dalam memahami fenomena gempa bumi dan memprediksi potensi gempa bumi di masa depan.",['Pengetahuan umum LLM. Tidak memerlukan konteks spesifik dari database.'],0.25,0.216445485,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
+,,,,,,,,,,
