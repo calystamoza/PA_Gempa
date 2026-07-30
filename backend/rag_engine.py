@@ -86,6 +86,8 @@ Schema database:
   * place        : TEXT (nama provinsi)
   * year         : INTEGER
   * month        : INTEGER
+  * date         : DATE (tanggal kejadian, format YYYY-MM-DD — GUNAKAN INI untuk urutan terbaru/terakhir)
+  * time         : TIME (waktu kejadian)
   * magnitude    : FLOAT
   * depth        : FLOAT
   * depth_category: TEXT ('dangkal', 'menengah', 'dalam')
@@ -106,7 +108,7 @@ Format JSON yang HARUS dikembalikan:
     "max_magnitude": null
   }},
   "group_by": "year|month|place|day_of_week|null",
-  "order_by": "magnitude|depth|year|count|null",
+  "order_by": "magnitude|depth|year|month|count|date|null",
   "order_dir": "DESC|ASC",
   "limit": 10
 }}
@@ -144,18 +146,21 @@ Panduan Intent:
     * terbesar/terkuat → order_by "magnitude", order_dir "DESC"
     * terdalam → order_by "depth", order_dir "DESC"
     * terdangkal/paling dangkal → order_by "depth", order_dir "ASC"
-    * terbaru → order_by "year", order_dir "DESC"
-    * terlama/pertama → order_by "year", order_dir "ASC"
+    * terbaru/terakhir/terkini → order_by "date", order_dir "DESC"
+    * terlama/tertua/pertama → order_by "date", order_dir "ASC"
 
 [MAX/MIN] JIKA pertanyaan mencari SATU nilai ekstrem tanpa kata "daftar/sebutkan" (misal: "apa gempa terbesar?", "di mana gempa paling dalam?", "kekuatan maksimal berapa?", "gempa terkuat yang pernah tercatat"):
   - Terbesar/terkuat/tertinggi/maksimal → intent "max", order_by sesuai metric, order_dir "DESC"
   - Terkecil/terdangkal/terendah/minimal → intent "min", order_by sesuai metric, order_dir "ASC"
   - PENTING: "paling dangkal" = depth KECIL → intent "min", metric "depth", order_by "depth", order_dir "ASC"
   - PENTING: "paling dalam/terdalam" = depth BESAR → intent "max", metric "depth", order_by "depth", order_dir "DESC"
-  - PENTING: "gempa pertama/terlama yang tercatat" → intent "min", order_by "year", order_dir "ASC"
-  - PENTING: "gempa terbaru/terakhir/paling akhir yang tercatat" → intent "max", order_by "year", order_dir "DESC"
-  - PENTING: "gempa terakhir" / "gempa terkini" / "gempa paling baru" → intent "max", order_by "year", order_dir "DESC"
-  - PENTING: "data terbaru" dalam konteks daftar/gempa terbaru → filters.year = {DATA_TAHUN_TERBARU} (data paling baru yang tersedia), order_by "magnitude", order_dir "DESC"
+  - PENTING: "gempa pertama/terlama/tertua yang tercatat" → intent "list", order_by "date", order_dir "ASC", limit 1
+  - PENTING: "gempa terbaru" / "gempa terakhir" / "gempa terkini" / "gempa paling baru" / "kapan terakhir gempa" / "gempa apa yang terakhir" → intent "list", order_by "date", order_dir "DESC", limit 1
+  - PENTING: Semua variasi frasa 'terbaru/terakhir/terkini' WAJIB menggunakan order_by "date" (BUKAN "year"), karena "date" memiliki resolusi hari sedangkan "year" hanya akurat sampai level tahun.
+  - Contoh: "gempa terbaru" → list, order_by "date", DESC, limit 1
+  - Contoh: "gempa terakhir di Aceh" → list, place "Aceh", order_by "date", DESC, limit 1
+  - Contoh: "kapan gempa terkini di Sulawesi?" → list, place "Sulawesi", order_by "date", DESC, limit 1
+  - Contoh: "gempa pertama yang tercatat" → list, order_by "date", ASC, limit 1
 
 
 [AVERAGE] JIKA pertanyaan mengandung "rata-rata", "rerata", "average", atau "mean" → intent "average"
@@ -294,10 +299,19 @@ def build_sql(intent: dict) -> tuple[str, list]:
         group, limit_clause = "", ""
     elif intent_type in ("max", "min"):
         select = "SELECT place, date, magnitude, depth, depth_category, time"
-        order_col = order_by or (metric if metric in ("magnitude", "depth") else "magnitude")
+        # Support date sebagai order column; fallback chain: order_by → metric → magnitude
+        valid_order_cols = {"magnitude", "depth", "date", "year", "month"}
+        order_col = order_by if order_by in valid_order_cols else (metric if metric in ("magnitude", "depth") else "magnitude")
         forced_dir = "DESC" if intent_type == "max" else "ASC"
-        group = f"ORDER BY {order_col} {forced_dir}"
-        limit_clause = f"LIMIT {int(limit or 5)}"
+        
+        if order_col == "date":
+            group = f"ORDER BY year {forced_dir}, month {forced_dir}, CASE WHEN year >= 2026 THEN split_part(date, '/', 1)::integer ELSE split_part(date, '/', 2)::integer END {forced_dir}, time {forced_dir}"
+        else:
+            group = f"ORDER BY {order_col} {forced_dir}"
+        try:
+            limit_clause = f"LIMIT {int(limit or 5)}"
+        except (ValueError, TypeError):
+            limit_clause = "LIMIT 5"
     elif intent_type == "count":
         select = "SELECT COUNT(*) AS total_earthquakes"
         group, limit_clause = "", ""
@@ -306,8 +320,15 @@ def build_sql(intent: dict) -> tuple[str, list]:
         # Gunakan order_by dari LLM intent; fallback ke magnitude jika tidak ada
         list_order_col = order_by if order_by in SAFE_COLUMNS else "magnitude"
         list_order_dir = order_dir if order_dir in SAFE_DIRECTIONS else "DESC"
-        group = f"ORDER BY {list_order_col} {list_order_dir}"
-        limit_clause = f"LIMIT {int(limit or 10)}"
+        
+        if list_order_col == "date":
+            group = f"ORDER BY year {list_order_dir}, month {list_order_dir}, CASE WHEN year >= 2026 THEN split_part(date, '/', 1)::integer ELSE split_part(date, '/', 2)::integer END {list_order_dir}, time {list_order_dir}"
+        else:
+            group = f"ORDER BY {list_order_col} {list_order_dir}"
+        try:
+            limit_clause = f"LIMIT {int(limit or 10)}"
+        except (ValueError, TypeError):
+            limit_clause = "LIMIT 10"
     elif intent_type == "trend":
         # Trend tanpa group_by eksplisit: default ke per-tahun
         select = "SELECT year, COUNT(*) AS count, ROUND(AVG(magnitude)::numeric, 2) AS avg_magnitude, MAX(magnitude) AS max_magnitude"
@@ -344,9 +365,18 @@ def format_data(data: list, intent: dict) -> str:
         lines.append("-" * 30)
 
     if group_by == "year":
-        lines.append("📊 Tren gempa per tahun:")
+        lines.append("📊 Tren gempa per tahun (SEMUA baris, gunakan untuk validasi insight):")
         for row in data:
             lines.append(f"  • {row.get('year')}: {row.get('count')} kejadian | Rata-rata: {row.get('avg_magnitude')} | Max: {row.get('max_magnitude')}")
+        # Hitung nilai aktual tertinggi/terendah untuk grounding LLM
+        if data:
+            max_count_row = max(data, key=lambda r: int(r.get('count', 0)))
+            min_count_row = min(data, key=lambda r: int(r.get('count', 0)))
+            max_mag_row = max(data, key=lambda r: float(r.get('max_magnitude', 0)))
+            lines.append(f"\n📌 FAKTA TERVERIFIKASI (untuk insight):")
+            lines.append(f"  → Tahun dengan kejadian TERBANYAK: {max_count_row.get('year')} ({max_count_row.get('count')} kejadian)")
+            lines.append(f"  → Tahun dengan kejadian PALING SEDIKIT: {min_count_row.get('year')} ({min_count_row.get('count')} kejadian)")
+            lines.append(f"  → Tahun dengan magnitudo MAX tertinggi: {max_mag_row.get('year')} (M{max_mag_row.get('max_magnitude')})")
     elif group_by == "day_of_week":
         lines.append("📅 Tren gempa per hari:")
         for row in data:
@@ -355,6 +385,10 @@ def format_data(data: list, intent: dict) -> str:
         lines.append("🗺️ Distribusi gempa per provinsi:")
         for i, row in enumerate(data, 1):
             lines.append(f"  {i}. {row.get('place')}: {row.get('count')} kejadian | Rata-rata: {row.get('avg_magnitude')}")
+    elif intent_type == "count":
+        row = data[0]
+        total = row.get('total_earthquakes') or row.get('total') or row.get('count', '?')
+        lines.append(f"  • Total gempa: {total}")
     elif intent_type in ("max", "min", "list"):
         lines.append(f"📋 Data Gempa {intent_type.upper()}:")
         for i, row in enumerate(data, 1):
@@ -444,6 +478,7 @@ TUGAS UTAMA: Jawablah pertanyaan user dengan panduan berikut:
    c. INSIGHT: Setelah data, SELALU tambahkan satu seksi insight:
       - "💡 Insight Singkat:" untuk intent avg/count — berisi 1-2 kalimat interpretasi.
       - "🔍 Insight Menarik:" untuk intent list/max/min/trend — berisi 2-3 poin bullet.
+      KRITIS untuk insight tren: Klaim seperti "tertinggi", "terbesar", "paling banyak" WAJIB diverifikasi dari bagian 'insight' di data. JANGAN menyebut tahun berjalan (⚠️[data belum lengkap]) sebagai rekor tertinggi/terendah. Jika ada tahun dengan label ⚠️[data belum lengkap], sebutkan secara eksplisit bahwa data tersebut masih berjalan/belum lengkap.
       Gunakan kategori berikut untuk interpretasi:
       Magnitudo: <3.0=Mikro(tak terasa), 3.0-3.9=Kecil, 4.0-4.9=Ringan(mulai terasa), 5.0-5.9=Sedang(signifikan), 6.0-6.9=Kuat(berpotensi merusak), 7.0-7.9=Besar, >=8.0=Sangat Besar
       Kedalaman: Dangkal(<60km)=potensi daya rusak tinggi di permukaan, Menengah(60-300km)=berkurang, Dalam(>300km)=jarang merusak
@@ -675,9 +710,15 @@ def process_query(question: str, history: list = [], session_id: str = None) -> 
     # Jika pertanyaan PENDEK (hanya ganti tahun), inherit group_by/order_by/limit
     # dari intent sesi sebelumnya agar konteks terjaga tanpa bergantung LLM.
     is_short_year_swap = bool(_SHORT_Q_MARKERS.match(question.strip()))
+    # Heuristik tambahan: pendek + ada tahun → kemungkinan besar year-swap
+    # KECUALI: mengandung frasa bermakna sendiri (terbaru, terakhir, terbesar, dll)
+    _NO_INHERIT_PATTERNS = re.compile(
+        r'\b(terbaru|terakhir|terkini|terbesar|terkuat|terkecil|paling|pertama|tertua|terlama|tertinggi|terendah|terdalam|terdangkal)\b',
+        re.IGNORECASE
+    )
     if not is_short_year_swap and len(question.strip()) <= 30 and years_in_question:
-        # Heuristik tambahan: pendek + ada tahun → kemungkinan besar year-swap
-        is_short_year_swap = True
+        if not _NO_INHERIT_PATTERNS.search(question):
+            is_short_year_swap = True
 
     if is_short_year_swap and last_intent:
         print(f"[POST-PROC INHERIT] Pertanyaan pendek terdeteksi. Mewarisi struktur dari last_intent.")
@@ -694,12 +735,20 @@ def process_query(question: str, history: list = [], session_id: str = None) -> 
                 print(f"  ↳ Inherited filter.{fk} = {last_filters[fk]}")
         # Jangan warisi filter temporal (year/min_year/max_year) — regex sudah handle
 
-    # ── Post-processing 3: deteksi "data terbaru" → paksa filter year ─────────
+    # ── Post-processing 3: deteksi "data terbaru" → paksa filter year + order ──
     FRASA_TERBARU = ["data terbaru", "data paling baru", "paling terkini"]
     has_temporal = any(filters.get(k) for k in ["year", "min_year", "max_year"])
     if any(frasa in q_lower for frasa in FRASA_TERBARU) and not has_temporal:
         filters["year"] = DATA_TAHUN_TERBARU
-        print(f"[POST-PROC] Frasa 'data terbaru' → year={DATA_TAHUN_TERBARU}")
+        # Pastikan intent dan urutan juga benar untuk frasa 'data terbaru'
+        if intent.get("intent") not in ("list", "max", "min"):
+            intent["intent"] = "list"
+            intent_type = "list"
+        intent["order_by"] = "date"
+        intent["order_dir"] = "DESC"
+        if not intent.get("limit"):
+            intent["limit"] = 10
+        print(f"[POST-PROC] Frasa 'data terbaru' → year={DATA_TAHUN_TERBARU}, intent=list, order_by=date")
 
     # ── Greeting / chit-chat detection (bypass DB) ───────────────────────────
     # Pertanyaan berupa sapaan tidak boleh memicu DB query atau kontaminasi history.
