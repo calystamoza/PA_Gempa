@@ -3533,3 +3533,231 @@ RAW: {
 }
 PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': 'Jawa Timur', 'places': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'date', 'order_dir': 'DESC', 'limit': 1}
 
+SUCCESS
+Q: gempa terbaru
+RAW: {
+  "intent": "list",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "places": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "date",
+   "order_dir": "DESC",
+   "limit": 1
+}
+PARSED: {'intent': 'list', 'metric': 'null', 'filters': {'place': None, 'places': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'date', 'order_dir': 'DESC', 'limit': 1}
+
+SUCCESS
+Q: pola gempa di indonesia tahun 2025
+RAW: {
+  "intent": "trend",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "places": null,
+      "year": null,
+      "min_year": 2025,
+      "max_year": 2025,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'null', 'filters': {'place': None, 'places': None, 'year': None, 'min_year': 2025, 'max_year': 2025, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: pola gempa di indonesia tahun 2025
+RAW: {
+  "intent": "trend",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "places": null,
+      "year": null,
+      "min_year": 2025,
+      "max_year": 2025,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'null', 'filters': {'place': None, 'places': None, 'year': None, 'min_year': 2025, 'max_year': 2025, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: tren gempa dari 10 tahun yang lalu
+RAW: {
+  "intent": "trend",
+   "metric": "null",
+   "filters": {
+      "place": null,
+      "places": null,
+      "year": null,
+      "min_year": 2017,
+      "max_year": 2026,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'null', 'filters': {'place': None, 'places': None, 'year': None, 'min_year': 2017, 'max_year': 2026, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: tren gempa dari 10 tahun yang lalu
+RAW: {
+  "intent": "trend",
+   "metric": "count",
+   "filters": {
+      "place": null,
+      "places": null,
+      "year": null,
+      "min_year": 2017,
+      "max_year": 2026,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "year",
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'trend', 'metric': 'count', 'filters': {'place': None, 'places': None, 'year': None, 'min_year': 2017, 'max_year': 2026, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'year', 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+
+SUCCESS
+Q: kasih tau tentang gempa di jawa timur
+RAW: {
+  "intent": "general",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Timur",
+      "places": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'general', 'metric': 'null', 'filters': {'place': 'Jawa Timur', 'places': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: kasih tau tentang gempa di jawa timur
+RAW: {
+  "intent": "general",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Timur",
+      "places": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": 10
+}
+PARSED: {'intent': 'general', 'metric': 'null', 'filters': {'place': 'Jawa Timur', 'places': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': 10}
+
+SUCCESS
+Q: itu tahun berapa aja terjadi gempa
+RAW: {
+  "intent": "general",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Timur",
+      "places": null,
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": null
+}
+PARSED: {'intent': 'general', 'metric': 'null', 'filters': {'place': 'Jawa Timur', 'places': None, 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': None}
+
+SUCCESS
+Q: tahun berapa saja terjadi gempa di jawa timur
+RAW: {
+  "intent": "general",
+   "metric": "null",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": "null",
+   "order_by": "null",
+   "order_dir": "null",
+   "limit": null
+}
+PARSED: {'intent': 'general', 'metric': 'null', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': 'null', 'order_by': 'null', 'order_dir': 'null', 'limit': None}
+
+SUCCESS
+Q: tahun berapa saja terjadi gempa di jawa timur
+RAW: {
+  "intent": "list",
+   "metric": "year",
+   "filters": {
+      "place": "Jawa Timur",
+      "year": null,
+      "min_year": null,
+      "max_year": null,
+      "month": null,
+      "depth_category": null,
+      "min_magnitude": null,
+      "max_magnitude": null
+   },
+   "group_by": null,
+   "order_by": "year",
+   "order_dir": "ASC",
+   "limit": 10
+}
+PARSED: {'intent': 'list', 'metric': 'year', 'filters': {'place': 'Jawa Timur', 'year': None, 'min_year': None, 'max_year': None, 'month': None, 'depth_category': None, 'min_magnitude': None, 'max_magnitude': None}, 'group_by': None, 'order_by': 'year', 'order_dir': 'ASC', 'limit': 10}
+

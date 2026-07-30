@@ -305,7 +305,7 @@ def build_sql(intent: dict) -> tuple[str, list]:
         forced_dir = "DESC" if intent_type == "max" else "ASC"
         
         if order_col == "date":
-            group = f"ORDER BY year {forced_dir}, month {forced_dir}, CASE WHEN year >= 2026 THEN split_part(date, '/', 1)::integer ELSE split_part(date, '/', 2)::integer END {forced_dir}, time {forced_dir}"
+            group = f"ORDER BY date {forced_dir}, time {forced_dir}"
         else:
             group = f"ORDER BY {order_col} {forced_dir}"
         try:
@@ -322,7 +322,7 @@ def build_sql(intent: dict) -> tuple[str, list]:
         list_order_dir = order_dir if order_dir in SAFE_DIRECTIONS else "DESC"
         
         if list_order_col == "date":
-            group = f"ORDER BY year {list_order_dir}, month {list_order_dir}, CASE WHEN year >= 2026 THEN split_part(date, '/', 1)::integer ELSE split_part(date, '/', 2)::integer END {list_order_dir}, time {list_order_dir}"
+            group = f"ORDER BY date {list_order_dir}, time {list_order_dir}"
         else:
             group = f"ORDER BY {list_order_col} {list_order_dir}"
         try:
@@ -805,7 +805,7 @@ def process_query(question: str, history: list = [], session_id: str = None) -> 
             try:
                 sql_single, params_single = build_sql(intent_copy)
                 sql_queries.append(f"{place_name}: {sql_single} | PARAMS: {params_single}")
-                print(f"  [SQL-{place_name}] {sql_single} | {params_single}")
+                print(f"  [SQL-{place_name}][Intent: {intent_type}] {sql_single} | {params_single}")
             except Exception as e:
                 sql_single, params_single = "SELECT COUNT(*) FROM earthquakes WHERE place ILIKE %s", [f"%{place_name}%"]
                 print(f"  [SQL BUILD ERROR-{place_name}] {e}")
@@ -845,7 +845,7 @@ def process_query(question: str, history: list = [], session_id: str = None) -> 
     # ── Single-place / general mode ────────────────────────────────────────────
     try:
         sql, params = build_sql(intent)
-        print(f"[SQL] {sql} | PARAMS: {params}")
+        print(f"[SQL][Intent: {intent_type}] {sql} | PARAMS: {params}")
     except Exception as e:
         print(f"[SQL BUILD ERROR] {e}")
         sql, params = "SELECT COUNT(*) FROM earthquakes", []
