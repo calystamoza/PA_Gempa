@@ -13,6 +13,7 @@ export interface Message {
   method?: string;
   data_count?: number;
   fetched_data?: any[];
+  inherited_context?: string;
 }
 
 export interface Session {
